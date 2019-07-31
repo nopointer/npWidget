@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="demo.npwidget">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.vivo.permission.manage.permission.ACCESS" />
+
+    <application
+        android:name="demo.npwidget.MainApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name="demo.npwidget.MainActivity"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.keepAlive.activity.Bg1PxActivity"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="false"
+            android:launchMode="singleInstance"
+            android:theme="@style/SingleActivityStyle" />
+
+        <activity
+            android:name="com.vivo.permissionmanager.activity.BgStartUpManagerActivity"
+            android:permission="com.vivo.permission.manage.permission.ACCESS" />
+
+        <service
+            android:name="com.keepAlive.service.KeepService"
+            android:process=":KeepService" />
+        <service
+            android:name="com.keepAlive.service.GuardService"
+            android:process=":GuardService" />
+        <service android:name="com.keepAlive.service.BgCoreService" />
+        <service
+            android:name="com.keepAlive.service.ScheduleService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+    </application>
+
+</manifest>
