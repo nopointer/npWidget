@@ -68,4 +68,17 @@ public class BaseView extends View {
     }
 
 
+    /**
+     * 回收bitmap
+     *
+     * @param bitmap
+     */
+    protected void recycleBitmap(Bitmap bitmap) {
+        if (bitmap != null && !bitmap.isRecycled()) {
+            bitmap.recycle();
+            bitmap = null;
+        }
+
+    }
+
 }
