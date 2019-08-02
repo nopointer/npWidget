@@ -16,7 +16,6 @@ import android.view.MotionEvent;
 
 import npwidget.nopointer.R;
 import npwidget.nopointer.base.BaseView;
-import npwidget.nopointer.datetime.NpTimeBean;
 import npwidget.nopointer.utils.BitmapUtils;
 
 
@@ -47,7 +46,7 @@ public class NpTimeCirclePicker extends BaseView {
 
     private float mWheelRadius;
     private int mMoveFlag;//1,代表开始按钮,2,代表结束按钮
-    private OnTimeChangeListener mOnTimeChangeListener;
+    private NpTimeChangeListener mOnTimeChangeListener;
     private float mLastEventX;
     private float mLastEventY;
 
@@ -352,6 +351,9 @@ public class NpTimeCirclePicker extends BaseView {
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
                 mMoveFlag = -1;
+                if (mOnTimeChangeListener != null) {
+                    mOnTimeChangeListener.onStopTouch();
+                }
                 break;
             default:
                 break;
@@ -420,7 +422,7 @@ public class NpTimeCirclePicker extends BaseView {
     /**
      * 设置监听事件
      */
-    public void setOnTimerChangeListener(OnTimeChangeListener listener) {
+    public void setOnTimerChangeListener(NpTimeChangeListener listener) {
         if (mOnTimeChangeListener == null) {
             this.mOnTimeChangeListener = listener;
             mOnTimeChangeListener.onTimeInitail(mStartDegree, mEndDegree);
@@ -467,7 +469,7 @@ public class NpTimeCirclePicker extends BaseView {
         Log.e("当前实时的角度", realDegree + "");
 
 
-        if (npTimeBean.getMinMinuteUnit()<2){
+        if (npTimeBean.getMinMinuteUnit() < 2) {
             return realDegree;
         }
 
@@ -608,7 +610,7 @@ public class NpTimeCirclePicker extends BaseView {
         //刷新开始结束按钮的位置
         refreshBtnPosition();
 
-        Bitmap tmp = BitmapFactory.decodeResource(getResources(), R.drawable.icon_circle_picker_end_btn);
+        Bitmap tmp = BitmapFactory.decodeResource(getResources(), R.drawable.icon_circle_picker_start_btn);
         //按钮的实际大小，（减去边距后的大小）
         int realBitmapWH = Float.valueOf(npTimeBean.getStartAndEndBtnSize() - npTimeBean.getStartAndEndBtnMargin() * 2).intValue();
 
@@ -623,7 +625,7 @@ public class NpTimeCirclePicker extends BaseView {
 
         //加载结束按钮
         paint.setColor(npTimeBean.getStartColor());
-        tmp = BitmapFactory.decodeResource(getResources(), R.drawable.icon_circle_picker_start_btn);
+        tmp = BitmapFactory.decodeResource(getResources(), R.drawable.icon_circle_picker_end_btn);
         startOrEndBitmap = BitmapUtils.resizeBitmap(tmp, realBitmapWH);
 
         //开始按钮

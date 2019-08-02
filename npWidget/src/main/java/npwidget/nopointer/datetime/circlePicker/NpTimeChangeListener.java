@@ -6,9 +6,10 @@ package npwidget.nopointer.datetime.circlePicker;
  * @Description
  * @Date 2017/12/8
  */
-public interface OnTimeChangeListener {
+public interface NpTimeChangeListener {
     /**
      * 开始时间发生变化
+     *
      * @param startDegree
      */
     void startTimeChanged(float startDegree, float endDegree);
@@ -20,6 +21,7 @@ public interface OnTimeChangeListener {
 
     /**
      * 初始化开始时间和结束时间
+     *
      * @param startDegree
      * @param endDegree
      */
@@ -28,8 +30,15 @@ public interface OnTimeChangeListener {
 
     /**
      * 开始,结束时间都发生变化
+     *
      * @param startDegree
      * @param endDegree
      */
     void onAllTimeChanaged(float startDegree, float endDegree);
+
+
+    /**
+     * 停止滑动了
+     */
+    void onStopTouch();
 }
