@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion var.minSdkVersion
         targetSdkVersion var.targetSdkVersion
-        versionCode 4
-        versionName "beta_0.0.04"
+        versionCode 5
+        versionName "beta_0.0.05"
     }
 
     buildTypes {
@@ -34,4 +34,6 @@ dependencies {
     testImplementation "junit:junit:4.12"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
     implementation 'com.android.support:appcompat-v7:25.3.1'
+
+    implementation "com.qmuiteam:qmui:1.1.7"
 }
