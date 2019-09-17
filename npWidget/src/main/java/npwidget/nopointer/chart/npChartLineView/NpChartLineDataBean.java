@@ -44,6 +44,21 @@ public class NpChartLineDataBean {
 
 
     /**
+     * 阴影的半径
+     */
+    private float shadowRadius = 0;
+
+    /**
+     * 阴影的横线距离
+     */
+    private float shadowX = 0;
+    /**
+     * 阴影的纵向距离
+     */
+    private float shadowY = 0;
+
+
+    /**
      * 数据线的点
      */
     private List<NpLineEntry> npLineEntryList = new ArrayList<>();
@@ -125,6 +140,29 @@ public class NpChartLineDataBean {
         this.shadowColor = shadowColor;
     }
 
+    public float getShadowRadius() {
+        return shadowRadius;
+    }
+
+    public void setShadowRadius(float shadowRadius) {
+        this.shadowRadius = shadowRadius;
+    }
+
+    public float getShadowX() {
+        return shadowX;
+    }
+
+    public void setShadowX(float shadowX) {
+        this.shadowX = shadowX;
+    }
+
+    public float getShadowY() {
+        return shadowY;
+    }
+
+    public void setShadowY(float shadowY) {
+        this.shadowY = shadowY;
+    }
 
     @Override
     public String toString() {
@@ -136,6 +174,9 @@ public class NpChartLineDataBean {
                 ", lineThickness=" + lineThickness +
                 ", showShadow=" + showShadow +
                 ", shadowColor=" + shadowColor +
+                ", shadowRadius=" + shadowRadius +
+                ", shadowX=" + shadowX +
+                ", shadowY=" + shadowY +
                 ", npLineEntryList=" + npLineEntryList +
                 ", showMaxData=" + showMaxData +
                 '}';

@@ -13,8 +13,6 @@ import android.graphics.Shader;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +24,10 @@ import npwidget.nopointer.log.ViewLog;
 
 /**
  * 曲线统计图
+ * <p>
+ * 2.高度问题
+ * 3.一条数据的绘制
+ * 4.阴影的距离
  */
 public class NpChartLineView extends BaseView {
 
@@ -58,8 +60,7 @@ public class NpChartLineView extends BaseView {
 
 
     private void init(Context context) {
-        shadowRadius = QMUIDisplayHelper.dp2px(context, 1);
-        shadowXY = QMUIDisplayHelper.dp2px(context, 5);
+
     }
 
     private Rect viewRectF = new Rect();
@@ -70,10 +71,6 @@ public class NpChartLineView extends BaseView {
 
     //最多横向显示的标签（数据）个数
     private int maxLabel = 0;
-
-
-    private int shadowRadius = 0;
-    private int shadowXY = 0;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -166,7 +163,7 @@ public class NpChartLineView extends BaseView {
             //如果是多个标签的话
             labelWidthSpace = chartBean.getLabelSpaceWidth();
             if (chartBean.getShowDataType() == ShowDataType.Equal) {
-                labelWidthSpace = viewRectF.width() / (maxLabel - 1);
+                labelWidthSpace = viewRectF.width() / (maxLabel - 1.0f);
             }
             if (chartBean.isShowLabels()) {
                 for (int i = 0; i < maxLabel; i++) {
@@ -211,7 +208,10 @@ public class NpChartLineView extends BaseView {
                     if (npLineEntries != null && npLineEntries.size() > 1) {
                         paint.setStrokeWidth(npChartLineDataBean.getLineThickness());
                         if (npChartLineDataBean.isShowShadow()) {
-                            paint.setShadowLayer(shadowRadius, shadowXY, shadowXY, npChartLineDataBean.getShadowColor());
+                            float shadowRadius = npChartLineDataBean.getShadowRadius();
+                            float shadowX = npChartLineDataBean.getShadowX();
+                            float shadowY = npChartLineDataBean.getShadowY();
+                            paint.setShadowLayer(shadowRadius, shadowX, shadowY, npChartLineDataBean.getShadowColor());
                         }
                         PathData pathData = getPath(npLineEntries, false);
                         paint.setColor(npChartLineDataBean.getColor());
@@ -303,11 +303,14 @@ public class NpChartLineView extends BaseView {
             tmpValue1 = min;
         }
 
-        precent1 = (tmpValue1 - min) / (max - min);
-        //先把点移动到最开始的位置
-        path.moveTo(0 * xDisAdd + leftMargin, thisTotalHeight);
-        path.lineTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
-
+        if (isClosed) {
+            precent1 = (tmpValue1 - min) / (max - min);
+            //先把点移动到最开始的位置
+            path.moveTo(0 * xDisAdd + leftMargin, thisTotalHeight);
+            path.lineTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
+        } else {
+            path.moveTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
+        }
         List<Float> tmpList = new ArrayList<>();
         for (NpLineEntry npLineEntry : lineEntryList) {
             tmpList.add(npLineEntry.getValue());
