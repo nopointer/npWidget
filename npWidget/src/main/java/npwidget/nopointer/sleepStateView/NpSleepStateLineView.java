@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import npwidget.nopointer.base.BaseView;
+import npwidget.nopointer.log.ViewLog;
 
 /**
  * 睡眠状态图
@@ -78,6 +79,7 @@ public class NpSleepStateLineView extends BaseView {
         if (npStateBean != null && npStateBean.getDataList() != null && npStateBean.getDataList().size() > 0) {
             sleepPartCount = npStateBean.getDataList().size();
         }
+        ViewLog.e("碎片个数==>" + sleepPartCount);
     }
 
     /**
@@ -279,12 +281,11 @@ public class NpSleepStateLineView extends BaseView {
             paint.setStyle(Paint.Style.FILL);
 
             float totalTimeLength = 0.0f;//总时长
-            int partCount = npStateBean.getDataList().size();
             for (NpSleepEntry sleepEntry : npStateBean.getDataList()) {
                 totalTimeLength += sleepEntry.getDuration();
             }
             float tmpLeft = viewRectF.left;
-            for (int i = 0; i < partCount; i++) {
+            for (int i = 0; i < sleepPartCount; i++) {
                 //算出这段数据占总数据的百分比
                 float precent = npStateBean.getDataList().get(i).getDuration() / (totalTimeLength);
                 float rectWidth = precent * viewRectF.width();
@@ -313,8 +314,7 @@ public class NpSleepStateLineView extends BaseView {
             paint.setAntiAlias(true);
             paint.setStrokeWidth(npStateBean.getLineWidth());
 
-            int dataListSize = npStateBean.getDataList().size();
-            if (dataListSize == 1) {//如果只有一个数据的话,就绘制一条直线咯
+            if (sleepPartCount == 1) {//如果只有一个数据的话,就绘制一条直线咯
 
             } else {
                 Path dataLine = new Path();
@@ -332,7 +332,7 @@ public class NpSleepStateLineView extends BaseView {
                 }
 
                 float tmpLeft = viewRectF.left;
-                for (int i = 0; i < dataListSize - 1; i++) {
+                for (int i = 0; i < sleepPartCount - 1; i++) {
 
                     float precent = npStateBean.getDataList().get(i).getDuration() / (totalTimeLength);
                     float rectWidth = precent * viewRectF.width();
@@ -341,10 +341,10 @@ public class NpSleepStateLineView extends BaseView {
                     rectF.right = rectF.left + rectWidth;
 
                     x1 = rectF.left;
-                    y1 = getYPointHeight(npStateBean.getDataList().get(i).getSleepType(), dataListSize);
+                    y1 = getYPointHeight(npStateBean.getDataList().get(i).getSleepType());
 
                     float x2 = rectF.right;
-                    float y2 = getYPointHeight(npStateBean.getDataList().get(i + 1).getSleepType(), dataListSize);
+                    float y2 = getYPointHeight(npStateBean.getDataList().get(i + 1).getSleepType());
 
                     startDataPoint = new DataPoint(x1, y1);
                     endDataPoint = new DataPoint(x2, y2);
@@ -352,7 +352,7 @@ public class NpSleepStateLineView extends BaseView {
                     p3 = new DataPoint(wt, startDataPoint.y);
                     p4 = new DataPoint(wt, endDataPoint.y);
 
-//                    dataLine.moveTo(startDataPoint.x, startDataPoint.y);
+                    dataLine.moveTo(startDataPoint.x, startDataPoint.y);
                     dataLine.cubicTo(p3.x, p3.y, p4.x, p4.y, endDataPoint.x, endDataPoint.y);
 
                     tmpLeft += rectF.width();
@@ -381,7 +381,7 @@ public class NpSleepStateLineView extends BaseView {
         return super.onTouchEvent(event);
     }
 
-    private float getYPointHeight(int xData, int dataSize) {
+    private float getYPointHeight(int xData) {
         float result = viewRectF.top;
         switch (xData) {
             case 0:
