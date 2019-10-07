@@ -352,7 +352,7 @@ public class NpSleepStateLineView extends BaseView {
                     p3 = new DataPoint(wt, startDataPoint.y);
                     p4 = new DataPoint(wt, endDataPoint.y);
 
-                    dataLine.moveTo(startDataPoint.x, startDataPoint.y);
+//                    dataLine.moveTo(startDataPoint.x, startDataPoint.y);
                     dataLine.cubicTo(p3.x, p3.y, p4.x, p4.y, endDataPoint.x, endDataPoint.y);
 
                     tmpLeft += rectF.width();
