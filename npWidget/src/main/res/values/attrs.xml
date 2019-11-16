@@ -2,11 +2,10 @@
 <resources>
 
 
-
     <declare-styleable name="Circle_Picker">
 
         <!--角度的周期-->
-        <attr name="Degree_Cycle" format="integer"/>
+        <attr name="Degree_Cycle" format="integer" />
         <!--开始时间的圆盘角度-->
         <attr name="Start_Degree" format="float" />
         <!--结束时间的圆盘角度-->
@@ -26,6 +25,44 @@
         <!--开始,结束按钮的宽度-->
         <attr name="Btn_Width" format="integer" />
         <!--开始结束按钮图片与按钮的offset-->
-        <attr name="Btn_Offset_Size" format="integer"/>
+        <attr name="Btn_Offset_Size" format="integer" />
     </declare-styleable>
+
+
+    <declare-styleable name="NpDateTypeSelectView">
+
+        <!--显示类型-->
+        <attr name="show_type" format="enum">
+            <!--连续-->
+            <enum name="Continuous" value="1" />
+            <!--分割-->
+            <enum name="Depart" value="2" />
+        </attr>
+
+        <!--显示的item-->
+        <attr name="show_item" format="enum">
+            <!--全部显示-->
+            <enum name="all" value="0" />
+            <!--日周月-->
+            <enum name="day_week_month" value="1" />
+            <!--周月年-->
+            <enum name="week_month_year" value="2" />
+        </attr>
+
+
+        <!--自定义的日样式-->
+        <attr name="bg_selector_by_day" format="reference" />
+        <!--自定义的周样式-->
+        <attr name="bg_selector_by_week" format="reference" />
+        <!--自定义的月样式-->
+        <attr name="bg_selector_by_month" format="reference" />
+        <!--自定义年样式-->
+        <attr name="bg_selector_by_year" format="reference" />
+        <!--自定义文字样式-->
+        <attr name="text_selector" format="reference" />
+
+
+    </declare-styleable>
+
+
 </resources>

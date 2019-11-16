@@ -22,29 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.keepAlive.activity.Bg1PxActivity"
-            android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="false"
-            android:launchMode="singleInstance"
-            android:theme="@style/SingleActivityStyle" />
 
-        <activity
-            android:name="com.vivo.permissionmanager.activity.BgStartUpManagerActivity"
-            android:permission="com.vivo.permission.manage.permission.ACCESS" />
 
-        <service
-            android:name="com.keepAlive.service.KeepService"
-            android:process=":KeepService" />
-        <service
-            android:name="com.keepAlive.service.GuardService"
-            android:process=":GuardService" />
-        <service android:name="com.keepAlive.service.BgCoreService" />
-        <service
-            android:name="com.keepAlive.service.ScheduleService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <activity android:name=".NpTimeCirclePickerViewActivity" />
+        <activity android:name=".NpWaterViewActivity" />
+        <activity android:name=".NpLineViewActivity" />
+        <activity android:name=".NpLineViewActivity" />
+        <activity android:name=".NpRectViewActivity" />
+        <activity android:name=".NpOxWaveViewActivity" />
+        <activity android:name=".NpOxWaveViewActivity" />
+        <activity android:name=".NpDateTypeActivity" />
 
     </application>
 

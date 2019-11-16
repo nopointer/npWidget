@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:minHeight="36dp">
+
+    <RadioGroup
+        android:id="@+id/date_type_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="1dp">
+
+        <RadioButton
+            android:id="@+id/date_type_day"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/date_type_default_selector_all"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:minWidth="60dp"
+            android:text="日"
+            android:textColor="@drawable/date_type_text_selector"
+            android:textSize="12sp" />
+
+        <View
+            android:id="@+id/date_type_day_line"
+            style="@style/match"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <RadioButton
+            android:id="@+id/date_type_week"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/date_type_default_selector_all"
+            android:button="@null"
+            android:gravity="center"
+            android:minWidth="60dp"
+            android:text="周"
+            android:textColor="@drawable/date_type_text_selector"
+            android:textSize="12sp" />
+
+        <View
+            android:id="@+id/date_type_week_line"
+            style="@style/match"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <RadioButton
+            android:id="@+id/date_type_month"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/date_type_default_selector_all"
+            android:button="@null"
+            android:gravity="center"
+            android:minWidth="60dp"
+            android:text="月"
+            android:textColor="@drawable/date_type_text_selector"
+            android:textSize="12sp" />
+
+        <View
+            android:id="@+id/date_type_month_line"
+            style="@style/match"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <RadioButton
+            android:id="@+id/date_type_year"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/date_type_default_selector_all"
+            android:button="@null"
+            android:gravity="center"
+            android:minWidth="60dp"
+            android:text="年"
+            android:textColor="@drawable/date_type_text_selector"
+            android:textSize="12sp" />
+
+    </RadioGroup>
+
+</LinearLayout>

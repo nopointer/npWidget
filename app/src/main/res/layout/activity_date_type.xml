@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <npwidget.nopointer.combinationControl.date.dateType.NpDateTypeSelectView
+        android:id="@+id/dateTypeSelectView"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="12dp"
+        app:show_type="Depart"
+        app:text_selector="@drawable/date_type_text_selector" />
+
+    <npwidget.nopointer.combinationControl.date.dateChoose.NpDateChooseView
+        android:id="@+id/npDateChooseView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+
+</LinearLayout>

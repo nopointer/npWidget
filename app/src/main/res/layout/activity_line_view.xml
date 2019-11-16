@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="#F5F5F5"
+        android:orientation="vertical">
+
+        <npwidget.nopointer.chart.npChartLineView.NpChartLineView
+            android:id="@+id/npChartLineView"
+            android:layout_centerHorizontal="true"
+            android:layout_width="300dp"
+            android:background="#90909090"
+            android:layout_height="300dp" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -1,12 +1,10 @@
 package demo.npwidget;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-
-import com.keepAlive.utils.PageType;
-import com.keepAlive.utils.SettingsPageUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,12 +27,20 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         npStateLineView = findViewById(R.id.NpChartLineView);
         time_tv = findViewById(R.id.time_tv);
-        loadDebug();
+//        loadDebug();
 
 //        startService(new Intent(this, KeepService.class));
 //        startService(new Intent(this, GuardService.class));
 
-        SettingsPageUtils.goToSettingPage(this, PageType.AUTO_START);
+//        SettingsPageUtils.goToSettingPage(this, PageType.AUTO_START);
+
+//        startActivity(new Intent(this, NpTimeCirclePickerViewActivity.class));
+//        startActivity(new Intent(this, NpLineViewActivity.class));
+        //进度
+//        startActivity(new Intent(this, NpRectViewActivity.class));
+//        startActivity(new Intent(this, NpOxWaveViewActivity.class));
+
+        startActivity(new Intent(this, NpDateTypeActivity.class));
 
     }
 
