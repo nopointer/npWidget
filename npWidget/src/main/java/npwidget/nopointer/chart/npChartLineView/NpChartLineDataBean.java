@@ -166,7 +166,7 @@ public class NpChartLineDataBean {
 
     @Override
     public String toString() {
-        return "NpChartLineDataBean{" +
+        return "NpChartColumnDataBean{" +
                 "color=" + color +
                 ", startColor=" + startColor +
                 ", endColor=" + endColor +

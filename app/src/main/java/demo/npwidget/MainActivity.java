@@ -41,6 +41,9 @@ public class MainActivity extends Activity {
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
 
         startActivity(new Intent(this, NpDateTypeActivity.class));
+//        startActivity(new Intent(this, NpColumnViewActivity.class));
+
+
 
     }
 

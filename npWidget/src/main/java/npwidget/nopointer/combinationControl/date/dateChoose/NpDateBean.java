@@ -89,7 +89,9 @@ public class NpDateBean {
         //拼标题
         result.setStartDate(getWeekStartDate(date, index));
         result.setEndDate(getWeekEndDate(date, index));
-        result.setSimpleTitle(result.getStartDate() + " ~ " + result.getEndDate());
+        String title = new SimpleDateFormat("yyyy-MM-dd").format(result.getStartDate());
+        title += " ~ " + new SimpleDateFormat("MM-dd").format(result.getEndDate());
+        result.setSimpleTitle(title);
         result.setDateType(NpDateType.WEEK);
         return result;
     }
@@ -105,7 +107,7 @@ public class NpDateBean {
         NpDateBean result = new NpDateBean();
         result.setStartDate(getMonthStartDate(date, index));
         result.setEndDate(getMonthEndDate(date, index));
-        result.setSimpleTitle(getMonthStartDate(date, index).toString());
+        result.setSimpleTitle(new SimpleDateFormat("yyyy-MM").format(result.getEndDate()));
         result.setDateType(NpDateType.MONTH);
         return result;
     }
@@ -121,7 +123,7 @@ public class NpDateBean {
         NpDateBean result = new NpDateBean();
         result.setStartDate(getYearStartDate(date, index));
         result.setEndDate(getYearEndStartDate(date, index));
-        result.setSimpleTitle(getYearStartDate(date, index).toString());
+        result.setSimpleTitle(new SimpleDateFormat("yyyy").format(result.getEndDate()));
         result.setDateType(NpDateType.YEAR);
         return result;
     }

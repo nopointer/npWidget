@@ -1,9 +1,9 @@
-package npwidget.nopointer.chart.npChartLineView;
+package npwidget.nopointer.chart.npChartColumnView;
 
 /**
  * 线的数据节点对象，最小单元
  */
-public class NpLineEntry {
+public class NpColumnEntry {
 
     /**
      * 数据
@@ -14,14 +14,14 @@ public class NpLineEntry {
      */
     private String tag;
 
-    public NpLineEntry() {
+    public NpColumnEntry() {
     }
 
-    public NpLineEntry(float value) {
+    public NpColumnEntry(float value) {
         this.value = value;
     }
 
-    public NpLineEntry(float value, String tag) {
+    public NpColumnEntry(float value, String tag) {
         this.value = value;
         this.tag = tag;
     }

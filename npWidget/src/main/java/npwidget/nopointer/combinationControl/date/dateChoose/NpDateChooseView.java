@@ -1,11 +1,14 @@
 package npwidget.nopointer.combinationControl.date.dateChoose;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -29,11 +32,13 @@ public class NpDateChooseView extends RelativeLayout {
     private int yearIndex = 0;
 
 
+    private ImageView leftIconIv;
+    private ImageView rightIconIv;
+    private TextView titleTv;
+
     //选择当前的日期类型
     private NpDateType dateType = NpDateType.MONTH;
 
-
-    private TextView date_choose_content_tv;
 
     private NpDateBean npDateBean;
 
@@ -67,7 +72,26 @@ public class NpDateChooseView extends RelativeLayout {
     private void initView(Context context, AttributeSet attrs) {
         LayoutInflater.from(context).inflate(R.layout.date_choose_layout, this, true);
 
-        findViewById(R.id.date_choose_left_iv).setOnClickListener(new OnClickListener() {
+        leftIconIv = findViewById(R.id.date_choose_left_iv);
+        rightIconIv = findViewById(R.id.date_choose_right_iv);
+        titleTv = findViewById(R.id.date_choose_content_tv);
+
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NpDateChooseView);
+            int leftIcon = typedArray.getResourceId(R.styleable.NpDateChooseView_leftIcon, R.drawable.icon_date_left);
+            leftIconIv.setImageResource(leftIcon);
+
+            int rightIcon = typedArray.getResourceId(R.styleable.NpDateChooseView_rightIcon, R.drawable.icon_date_right);
+            rightIconIv.setImageResource(rightIcon);
+
+            int textColor = typedArray.getColor(R.styleable.NpDateChooseView_textColor, context.getResources().getColor(R.color.gray));
+            titleTv.setTextColor(textColor);
+
+            typedArray.recycle();
+        }
+
+
+        leftIconIv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (dateType) {
@@ -88,7 +112,7 @@ public class NpDateChooseView extends RelativeLayout {
             }
         });
 
-        findViewById(R.id.date_choose_right_iv).setOnClickListener(new OnClickListener() {
+        rightIconIv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (dateType) {
@@ -125,7 +149,7 @@ public class NpDateChooseView extends RelativeLayout {
     }
 
     private void init() {
-        date_choose_content_tv = findViewById(R.id.date_choose_content_tv);
+
         loadDateToView();
     }
 
@@ -157,11 +181,15 @@ public class NpDateChooseView extends RelativeLayout {
     private void updateDateShow() {
         if (npDateBean != null) {
             if (npDataChooseCallback != null) {
-                date_choose_content_tv.setText(npDataChooseCallback.formatDateShow(npDateBean));
+                titleTv.setText(npDataChooseCallback.formatDateShow(npDateBean));
             } else {
-                date_choose_content_tv.setText(npDateBean.getSimpleTitle());
+                titleTv.setText(npDateBean.getSimpleTitle());
             }
         }
+    }
+
+    public void setTextSize(float spValue) {
+        titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, spValue);
     }
 
 }

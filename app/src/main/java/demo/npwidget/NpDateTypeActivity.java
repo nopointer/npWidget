@@ -35,6 +35,7 @@ public class NpDateTypeActivity extends Activity {
             }
         });
         npDateChooseView.setDateType(NpDateType.DAY);
+        npDateChooseView.setTextSize(14);
     }
 
 

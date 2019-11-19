@@ -18,8 +18,7 @@ import java.util.Collections;
 import java.util.List;
 
 import npwidget.nopointer.base.BaseView;
-import npwidget.nopointer.chart.ChartBean;
-import npwidget.nopointer.chart.ShowDataType;
+import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.log.ViewLog;
 
 /**
@@ -32,13 +31,13 @@ import npwidget.nopointer.log.ViewLog;
 public class NpChartLineView extends BaseView {
 
 
-    private ChartBean chartBean;
+    private NpChartLineBean chartBean;
 
-    public ChartBean getChartBean() {
+    public NpChartLineBean getChartBean() {
         return chartBean;
     }
 
-    public void setChartBean(ChartBean chartBean) {
+    public void setChartBean(NpChartLineBean chartBean) {
         this.chartBean = chartBean;
     }
 
@@ -162,7 +161,7 @@ public class NpChartLineView extends BaseView {
         } else {
             //如果是多个标签的话
             labelWidthSpace = chartBean.getLabelSpaceWidth();
-            if (chartBean.getShowDataType() == ShowDataType.Equal) {
+            if (chartBean.getShowDataType() == NpShowDataType.Equal) {
                 labelWidthSpace = viewRectF.width() / (maxLabel - 1.0f);
             }
             if (chartBean.isShowLabels()) {

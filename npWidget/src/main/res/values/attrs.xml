@@ -29,8 +29,8 @@
     </declare-styleable>
 
 
+    <!--日期类型选择控件自定义属性-->
     <declare-styleable name="NpDateTypeSelectView">
-
         <!--显示类型-->
         <attr name="show_type" format="enum">
             <!--连续-->
@@ -49,7 +49,6 @@
             <enum name="week_month_year" value="2" />
         </attr>
 
-
         <!--自定义的日样式-->
         <attr name="bg_selector_by_day" format="reference" />
         <!--自定义的周样式-->
@@ -61,6 +60,13 @@
         <!--自定义文字样式-->
         <attr name="text_selector" format="reference" />
 
+    </declare-styleable>
+
+    <!--配合日期类型使用的选择控件-->
+    <declare-styleable name="NpDateChooseView">
+        <attr name="leftIcon" format="reference" />
+        <attr name="rightIcon" format="reference" />
+        <attr name="textColor" format="color" />
 
     </declare-styleable>
 

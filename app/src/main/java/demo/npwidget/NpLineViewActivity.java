@@ -7,7 +7,7 @@ import android.os.Handler;
 import java.util.ArrayList;
 import java.util.List;
 
-import npwidget.nopointer.chart.ChartBean;
+import npwidget.nopointer.chart.npChartLineView.NpChartLineBean;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineDataBean;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineView;
 import npwidget.nopointer.chart.npChartLineView.NpLineEntry;
@@ -30,7 +30,7 @@ public class NpLineViewActivity extends Activity {
     }
 
     private void debug() {
-        ChartBean chartBean = new ChartBean();
+        NpChartLineBean chartBean = new NpChartLineBean();
         chartBean.setShowXAxis(true);
         chartBean.setShowYAxis(false);
 

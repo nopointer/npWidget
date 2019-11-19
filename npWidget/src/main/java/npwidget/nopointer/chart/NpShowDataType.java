@@ -3,7 +3,7 @@ package npwidget.nopointer.chart;
 /**
  * 数据展示方式
  */
-public enum ShowDataType {
+public enum NpShowDataType {
 
     /**
      * 平分

@@ -1,11 +1,11 @@
-package npwidget.nopointer.chart;
+package npwidget.nopointer.chart.npChartLineView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import npwidget.nopointer.chart.npChartLineView.NpChartLineDataBean;
+import npwidget.nopointer.chart.NpShowDataType;
 
-public class ChartBean {
+public class NpChartLineBean {
 
     /**
      * 最大值 y轴上
@@ -29,7 +29,7 @@ public class ChartBean {
     /**
      * 数据展示方式，有两种 一种是可滑动 一种是平分宽度，默认是平分给定的宽度
      */
-    private ShowDataType showDataType = ShowDataType.Equal;
+    private NpShowDataType showDataType = NpShowDataType.Equal;
 
 
     /**
@@ -59,11 +59,11 @@ public class ChartBean {
     private float noDataTextSize = 40;
 
 
-    public ShowDataType getShowDataType() {
+    public NpShowDataType getShowDataType() {
         return showDataType;
     }
 
-    public void setShowDataType(ShowDataType showDataType) {
+    public void setShowDataType(NpShowDataType showDataType) {
         this.showDataType = showDataType;
     }
 

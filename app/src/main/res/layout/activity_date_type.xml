@@ -22,7 +22,8 @@
     <npwidget.nopointer.combinationControl.date.dateChoose.NpDateChooseView
         android:id="@+id/npDateChooseView"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        app:textColor="@color/colorPrimary" />
 
 
 </LinearLayout>

@@ -9,4 +9,6 @@
     <color name="ring_default_color">#143C4E</color>
     <color name="duration">#FF4081</color>
     <color name="time">#66ffff</color>
+
+    <color name="gray">#999</color>
 </resources>
