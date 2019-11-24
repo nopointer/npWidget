@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,10 +50,23 @@ public class NpChartColumnView extends BaseView {
 
     //上次选择的柱子索引
     private int lastSelectIndex = -1;
-    //当前选择的柱子
-    private int currentSelectIndex = -1;
 
+    //最大值
+    private float columnMaxValue = 0;
     private List<RectF> allTmpRectList = new ArrayList<>();
+
+    //绘制没有数据的时候的文字大小
+    private float getNoDataTextSize = 0;
+
+    //绘制没有数据的时候的文字
+    private String noDataText = "no data ~ ";
+
+    //无数据是文本的颜色
+    private int noDataTextColor =0xFF888888;
+
+    public void setNoDataTextColor(int noDataTextColor) {
+        this.noDataTextColor = noDataTextColor;
+    }
 
     public NpChartColumnView(Context context) {
         super(context);
@@ -70,11 +85,20 @@ public class NpChartColumnView extends BaseView {
 
 
     private void init(Context context) {
-
+        getNoDataTextSize = QMUIDisplayHelper.sp2px(context, 14);
     }
 
     public NpChartColumnBean getChartColumnBean() {
         return chartColumnBean;
+    }
+
+
+    public void setGetNoDataTextSize(float getNoDataTextSize) {
+        this.getNoDataTextSize = getNoDataTextSize;
+    }
+
+    public void setNoDataText(String noDataText) {
+        this.noDataText = noDataText;
     }
 
     public void setChartColumnBean(NpChartColumnBean chartColumnBean) {
@@ -99,12 +123,16 @@ public class NpChartColumnView extends BaseView {
 
 
     private void draw() {
-        if (canDraw() && chartColumnBean != null) {
-            loadCfg();
-            if (chartColumnBean.getNpChartColumnDataBeans() != null && chartColumnBean.getNpChartColumnDataBeans().size() > 0) {
-                clearBitmap();
-                drawXYAxis();
-                drawDataColumns();
+        if (canDraw()) {
+            clearBitmap();
+            if (chartColumnBean != null) {
+                loadCfg();
+                if (chartColumnBean.getNpChartColumnDataBeans() != null && chartColumnBean.getNpChartColumnDataBeans().size() > 0) {
+                    drawXYAxis();
+                    drawDataColumns();
+                } else {
+                    drawNoData();
+                }
             } else {
                 drawNoData();
             }
@@ -141,8 +169,9 @@ public class NpChartColumnView extends BaseView {
         Paint paint = new Paint();
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setAntiAlias(true);
-        paint.setTextSize(chartColumnBean.getNoDataTextSize());
-        String text = TextUtils.isEmpty(chartColumnBean.getNoDataText()) ? "no Data" : chartColumnBean.getNoDataText();
+        paint.setTextSize(getNoDataTextSize);
+        String text = TextUtils.isEmpty(noDataText) ? "no Data" : noDataText;
+        paint.setColor(noDataTextColor);
         canvas.drawText(text, viewRectF.centerX(), viewRectF.centerY(), paint);
     }
 
@@ -224,7 +253,12 @@ public class NpChartColumnView extends BaseView {
     private ColumnData createRect(List<NpColumnEntry> columnEntryList, float xColumnCenterX) {
 
         ColumnData pathData = new ColumnData();
+
+        float columnBottomPosition = viewRectF.height() - bottomLabelRangeHeight;
+
+
         float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
+
         int dataLen = columnEntryList.size();
 
         List<RectF> rectFList = new ArrayList<>();
@@ -234,13 +268,25 @@ public class NpChartColumnView extends BaseView {
             maxValue += npColumnEntry.getValue();
         }
 
+        ViewLog.e("columnMaxValue===>" + columnMaxValue);
+        float thisPercentWithColumnMax = 1.0f;
+        if (columnMaxValue > 0) {
+            thisPercentWithColumnMax = maxValue / columnMaxValue;
+        }
+        if (thisPercentWithColumnMax >= 1) {
+            thisPercentWithColumnMax = 1;
+        }
+
+        ViewLog.e("thisPercentWithColumnMax===>" + thisPercentWithColumnMax);
+        thisTotalHeight *= thisPercentWithColumnMax;
+
         //累计分段计算小柱子的高度百分比
         float tmpPercent = 0;
         float left = xColumnCenterX - columnWidth / 2.0f;
         float right = xColumnCenterX + columnWidth / 2.0f;
         for (int i = 0; i < dataLen; i++) {
             RectF rectF = new RectF(left, 0, right, 0);
-            rectF.bottom = thisTotalHeight - thisTotalHeight * (tmpPercent);
+            rectF.bottom = columnBottomPosition - thisTotalHeight * (tmpPercent);
             tmpPercent += columnEntryList.get(i).getValue() / maxValue;
             rectF.top = rectF.bottom - thisTotalHeight * tmpPercent;
             rectFList.add(rectF);
@@ -295,7 +341,7 @@ public class NpChartColumnView extends BaseView {
     private void loadCfg() {
         labelTextSize = chartColumnBean.getLabelTextSize();
         bottomLabelRangeHeight = chartColumnBean.getBottomHeight();
-
+        columnMaxValue = chartColumnBean.getMaxY();
         if (labelTextSize * 1.6f > bottomLabelRangeHeight) {
             bottomLabelRangeHeight = labelTextSize * 2f;
         }

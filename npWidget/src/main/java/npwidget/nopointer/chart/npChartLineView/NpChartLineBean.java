@@ -37,10 +37,7 @@ public class NpChartLineBean {
      */
     private float labelSpaceWidth = 100;
 
-    /**
-     * 没有数据的时候展示的view
-     */
-    private String noDataText = "no Data ~ ";
+
 
 
     /**
@@ -53,10 +50,7 @@ public class NpChartLineBean {
      */
     private float labelTextSize = 40;
 
-    /**
-     * 没有数据提示语的文字大小
-     */
-    private float noDataTextSize = 40;
+
 
 
     public NpShowDataType getShowDataType() {
@@ -67,13 +61,6 @@ public class NpChartLineBean {
         this.showDataType = showDataType;
     }
 
-    public String getNoDataText() {
-        return noDataText;
-    }
-
-    public void setNoDataText(String noDataText) {
-        this.noDataText = noDataText;
-    }
 
     public List<NpChartLineDataBean> getNpChartLineDataBeans() {
         return npChartLineDataBeans;
@@ -148,14 +135,6 @@ public class NpChartLineBean {
 
     public void setLabelTextSize(float labelTextSize) {
         this.labelTextSize = labelTextSize;
-    }
-
-    public float getNoDataTextSize() {
-        return noDataTextSize;
-    }
-
-    public void setNoDataTextSize(float noDataTextSize) {
-        this.noDataTextSize = noDataTextSize;
     }
 
     public boolean isShowLabels() {

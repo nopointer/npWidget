@@ -61,11 +61,6 @@ public class NpChartColumnBean {
      */
     private float columnSpaceWidth = 10;
 
-    /**
-     * 没有数据的时候展示的view
-     */
-    private String noDataText = "no Data ~ ";
-
 
     /**
      * 是否显示labels
@@ -82,10 +77,6 @@ public class NpChartColumnBean {
      */
     private int labelTextColor = 0xFF000000;
 
-    /**
-     * 没有数据提示语的文字大小
-     */
-    private float noDataTextSize = 40;
 
     /**
      * 底部绘制横向标签的高度
@@ -114,14 +105,6 @@ public class NpChartColumnBean {
 
     public void setShowDataType(NpShowDataType showDataType) {
         this.showDataType = showDataType;
-    }
-
-    public String getNoDataText() {
-        return noDataText;
-    }
-
-    public void setNoDataText(String noDataText) {
-        this.noDataText = noDataText;
     }
 
     public float getMaxY() {
@@ -178,14 +161,6 @@ public class NpChartColumnBean {
 
     public void setLabelTextSize(float labelTextSize) {
         this.labelTextSize = labelTextSize;
-    }
-
-    public float getNoDataTextSize() {
-        return noDataTextSize;
-    }
-
-    public void setNoDataTextSize(float noDataTextSize) {
-        this.noDataTextSize = noDataTextSize;
     }
 
     public boolean isShowLabels() {
@@ -278,10 +253,8 @@ public class NpChartColumnBean {
                 ", showDataType=" + showDataType +
                 ", columnWidth=" + columnWidth +
                 ", columnSpaceWidth=" + columnSpaceWidth +
-                ", noDataText='" + noDataText + '\'' +
                 ", showLabels=" + showLabels +
                 ", labelTextSize=" + labelTextSize +
-                ", noDataTextSize=" + noDataTextSize +
                 ", npChartColumnDataBeans=" + npChartColumnDataBeans +
                 ", npLabelList=" + npLabelList +
                 '}';

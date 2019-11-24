@@ -13,6 +13,8 @@ import android.graphics.Shader;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,8 +60,30 @@ public class NpChartLineView extends BaseView {
     }
 
 
-    private void init(Context context) {
+    //绘制没有数据的时候的文字大小
+    private float noDataTextSize = 0;
 
+    //绘制没有数据的时候的文字
+    private String noDataText = "no data ~ ";
+
+    //无数据是文本的颜色
+    private int noDataTextColor = 0xFF888888;
+
+
+    public void setNoDataTextSize(float noDataTextSize) {
+        this.noDataTextSize = noDataTextSize;
+    }
+
+    public void setNoDataText(String noDataText) {
+        this.noDataText = noDataText;
+    }
+
+    public void setNoDataTextColor(int noDataTextColor) {
+        this.noDataTextColor = noDataTextColor;
+    }
+
+    private void init(Context context) {
+        noDataTextSize = QMUIDisplayHelper.sp2px(context, 14);
     }
 
     private Rect viewRectF = new Rect();
@@ -85,14 +109,16 @@ public class NpChartLineView extends BaseView {
 
 
     private void draw() {
-        if (canDraw() && chartBean != null) {
-            if (chartBean.getNpChartLineDataBeans() != null && chartBean.getNpChartLineDataBeans().size() > 0) {
-                clearBitmap();
-                drawLine();
-                drawXYAxis();
-                drawLabels();
-                drawDataLineGradient();
-                drawDataLines();
+        if (canDraw()) {
+            clearBitmap();
+            if (chartBean != null) {
+                if (chartBean.getNpChartLineDataBeans() != null && chartBean.getNpChartLineDataBeans().size() > 0) {
+                    drawLine();
+                    drawXYAxis();
+                    drawLabels();
+                    drawDataLineGradient();
+                    drawDataLines();
+                }
             } else {
                 drawNoData();
             }
@@ -139,8 +165,8 @@ public class NpChartLineView extends BaseView {
         Paint paint = new Paint();
         paint.setTextAlign(Paint.Align.CENTER);
         paint.setAntiAlias(true);
-        paint.setTextSize(chartBean.getNoDataTextSize());
-        String text = TextUtils.isEmpty(chartBean.getNoDataText()) ? "no Data" : chartBean.getNoDataText();
+        paint.setTextSize(noDataTextSize);
+        String text = TextUtils.isEmpty(noDataText) ? "no Data" : noDataText;
         canvas.drawText(text, viewRectF.centerX(), viewRectF.centerY(), paint);
     }
 
@@ -306,7 +332,7 @@ public class NpChartLineView extends BaseView {
             precent1 = (tmpValue1 - min) / (max - min);
             //先把点移动到最开始的位置
             path.moveTo(0 * xDisAdd + leftMargin, thisTotalHeight);
-            path.lineTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
+//            path.lineTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
         } else {
             path.moveTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
         }
