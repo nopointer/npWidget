@@ -62,7 +62,7 @@ public class NpChartColumnView extends BaseView {
     private String noDataText = "no data ~ ";
 
     //无数据是文本的颜色
-    private int noDataTextColor =0xFF888888;
+    private int noDataTextColor = 0xFF888888;
 
     public void setNoDataTextColor(int noDataTextColor) {
         this.noDataTextColor = noDataTextColor;
@@ -254,7 +254,7 @@ public class NpChartColumnView extends BaseView {
 
         ColumnData pathData = new ColumnData();
 
-        float columnBottomPosition = viewRectF.height() - bottomLabelRangeHeight;
+        float columnBottomPosition = viewRectF.bottom - bottomLabelRangeHeight;
 
 
         float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
@@ -287,12 +287,13 @@ public class NpChartColumnView extends BaseView {
         for (int i = 0; i < dataLen; i++) {
             RectF rectF = new RectF(left, 0, right, 0);
             rectF.bottom = columnBottomPosition - thisTotalHeight * (tmpPercent);
-            tmpPercent += columnEntryList.get(i).getValue() / maxValue;
-            rectF.top = rectF.bottom - thisTotalHeight * tmpPercent;
+            float percent = columnEntryList.get(i).getValue() / maxValue;
+            rectF.top = rectF.bottom - thisTotalHeight * percent;
+            tmpPercent += percent;
             rectFList.add(rectF);
         }
         pathData.setRectFList(rectFList);
-        pathData.clickRange = new RectF(left, viewRectF.top, right, viewRectF.top + thisTotalHeight);
+        pathData.clickRange = new RectF(left, columnBottomPosition - thisTotalHeight, right, columnBottomPosition);
         return pathData;
     }
 
@@ -325,14 +326,16 @@ public class NpChartColumnView extends BaseView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            ViewLog.e("x=>" + event.getX() + " ///y=>" + event.getY());
             for (int i = 0; i < allTmpRectList.size(); i++) {
                 if (allTmpRectList.get(i).contains(event.getX(), event.getY())) {
                     lastSelectIndex = i;
+                    postInvalidateDelayed(20);
                     ViewLog.e("lastSelectIndex===>" + lastSelectIndex);
                     break;
                 }
             }
-            postInvalidateDelayed(20);
+
         }
         return super.onTouchEvent(event);
 
