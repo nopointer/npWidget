@@ -9,6 +9,9 @@ import android.util.AttributeSet;
 
 import npwidget.nopointer.base.BaseView;
 
+/**
+ * 常规的条形进度条，支持背景色和进度色的设置
+ */
 public class NpRectProgressView extends BaseView {
 
     public NpRectProgressView(Context context) {
