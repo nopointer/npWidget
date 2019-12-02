@@ -27,7 +27,7 @@ public class NpCountDownView extends BaseView {
      * 可以绘制的RectF 边界，是一个正方形 会根据小边长适配大小
      */
     private RectF viewRectF = new RectF();
-    private float mProgress = 0.5f;
+    private float mProgress = 0f;
 
     //表盘的指针长度
     private float dialLength = 0;
@@ -41,6 +41,9 @@ public class NpCountDownView extends BaseView {
     private float innerMargin = 0;
     //外部的颜色
     private int outSideColor = 0xFF0000FF;
+
+    //倒计时的秒数
+    private int second = 5;
 
     private OutSideStyle outSideStyle = OutSideStyle.DIAL;
 
@@ -58,6 +61,10 @@ public class NpCountDownView extends BaseView {
      * 进度的颜色
      */
     private int circleProgressColor = 0xFF00FF00;
+    /**
+     * 进度线的宽度
+     */
+    private float circleWidth = 2;
 
     private ValueAnimator startAnimator = null;
     private ValueAnimator endAnimator = null;
@@ -111,6 +118,10 @@ public class NpCountDownView extends BaseView {
         this.outSideColor = outSideColor;
     }
 
+    public void setCircleWidth(float circleWidth) {
+        this.circleWidth = circleWidth;
+    }
+
     public NpCountDownView(Context context) {
         super(context);
         init(context);
@@ -134,7 +145,10 @@ public class NpCountDownView extends BaseView {
         innerMargin = QMUIDisplayHelper.dp2px(context, 10);
 
         progressBarRadius = QMUIDisplayHelper.dp2px(context, 6);
+        circleWidth = QMUIDisplayHelper.dp2px(context, 2);
+
         unitDp = QMUIDisplayHelper.dp2px(context, 1);
+
     }
 
 
@@ -237,6 +251,7 @@ public class NpCountDownView extends BaseView {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(circleWidth);
 
         float circleRadius = viewRectF.width() / 2;
         circleRadius = circleRadius - outSideMargin - dialLength - innerMargin;
@@ -315,14 +330,20 @@ public class NpCountDownView extends BaseView {
 //        }
     }
 
-    public void startCountDown() {
+    /**
+     * 开始倒计时
+     *
+     * @param second
+     */
+    public void startCountDown(int second) {
         if (endAnimator != null) {
             endAnimator.removeAllUpdateListeners();
             endAnimator.cancel();
         }
+        this.second = second;
         isStarting = true;
         startAnimator = ObjectAnimator.ofFloat(0, 1.0f);
-        startAnimator.setDuration(10000);
+        startAnimator.setDuration(second * 1000);
         startAnimator.setInterpolator(new DecelerateInterpolator());
         startAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -365,7 +386,7 @@ public class NpCountDownView extends BaseView {
         isStarting = false;
         float tmpValue = mProgress;
         endAnimator = ObjectAnimator.ofFloat(tmpValue, 0);
-        endAnimator.setDuration((long) (10000 * tmpValue * 0.2f));
+        endAnimator.setDuration((long) (second * tmpValue * 0.2f));
         endAnimator.setInterpolator(new DecelerateInterpolator());
         endAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
