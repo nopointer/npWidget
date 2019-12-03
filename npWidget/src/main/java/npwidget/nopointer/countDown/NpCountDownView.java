@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
@@ -71,6 +70,21 @@ public class NpCountDownView extends BaseView {
     private boolean isStarting = false;
 
     private float progressBarRadius = 0;
+
+    /**
+     * 进度小球的外层颜色
+     */
+    private int progressBarOutSideColor = 0xFFFF0000;
+    /**
+     * 进度小球的圆环颜色
+     */
+    private int progressBarCircleColor = 0xFFFFFFFF;
+    /**
+     * 进度小球的背景颜色（即圆环以内层颜色）
+     */
+    private int progressBarColor = 0xFFFF0000;
+
+
     private float unitDp = 0;
     private NpCountDownListener npCountDownListener;
 
@@ -120,6 +134,18 @@ public class NpCountDownView extends BaseView {
 
     public void setCircleWidth(float circleWidth) {
         this.circleWidth = circleWidth;
+    }
+
+    public void setProgressBarOutSideColor(int progressBarOutSideColor) {
+        this.progressBarOutSideColor = progressBarOutSideColor;
+    }
+
+    public void setProgressBarCircleColor(int progressBarCircleColor) {
+        this.progressBarCircleColor = progressBarCircleColor;
+    }
+
+    public void setProgressBarColor(int progressBarColor) {
+        this.progressBarColor = progressBarColor;
     }
 
     public NpCountDownView(Context context) {
@@ -280,12 +306,12 @@ public class NpCountDownView extends BaseView {
         float progressBarCenterX = (float) (viewRectF.centerX() + getXDistance(circleRadius, 360 * mProgress));
         float progressBarCenterY = (float) (viewRectF.centerY() - getYDistance(circleRadius, 360 * mProgress));
 
-        paint.setColor(0xFFF3106D);
+        paint.setColor(progressBarOutSideColor);
         canvas.drawCircle(progressBarCenterX, progressBarCenterY, progressBarRadius + unitDp, paint);
-        paint.setColor(0xFFF30969);
+        paint.setColor(progressBarColor);
         canvas.drawCircle(progressBarCenterX, progressBarCenterY, progressBarRadius, paint);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.WHITE);
+        paint.setColor(progressBarCircleColor);
         paint.setStrokeWidth(unitDp);
         canvas.drawCircle(progressBarCenterX, progressBarCenterY, progressBarRadius - unitDp + 2, paint);
     }

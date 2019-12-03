@@ -1,5 +1,8 @@
 package npwidget.nopointer.chart.npChartLineView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,6 +15,9 @@ import android.graphics.Rect;
 import android.graphics.Shader;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.view.animation.DecelerateInterpolator;
 
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
@@ -31,6 +37,10 @@ import npwidget.nopointer.log.ViewLog;
  * 4.阴影的距离
  */
 public class NpChartLineView extends BaseView {
+
+
+    private ValueAnimator valueAnimator;
+    private VelocityTracker velocityTracker = VelocityTracker.obtain();
 
 
     private NpChartLineBean chartBean;
@@ -59,6 +69,24 @@ public class NpChartLineView extends BaseView {
         init(context);
     }
 
+    private void init(Context context) {
+        noDataTextSize = QMUIDisplayHelper.sp2px(context, 14);
+        dataMarginLeft = QMUIDisplayHelper.dp2px(context, 20);
+
+        valueAnimator = new ValueAnimator();
+
+        noDataPaint =new Paint();
+        noDataPaint.setAntiAlias(true);
+
+        dataLinePaint =new Paint();
+        dataLinePaint.setAntiAlias(true);
+        dataLinePaint.setStyle(Paint.Style.STROKE);
+
+        dataLineGradientPaint =new Paint();
+        dataLineGradientPaint.setAntiAlias(true);
+        dataLineGradientPaint.setStyle(Paint.Style.FILL);
+
+    }
 
     //绘制没有数据的时候的文字大小
     private float noDataTextSize = 0;
@@ -68,7 +96,6 @@ public class NpChartLineView extends BaseView {
 
     //无数据是文本的颜色
     private int noDataTextColor = 0xFF888888;
-
 
     public void setNoDataTextSize(float noDataTextSize) {
         this.noDataTextSize = noDataTextSize;
@@ -82,9 +109,6 @@ public class NpChartLineView extends BaseView {
         this.noDataTextColor = noDataTextColor;
     }
 
-    private void init(Context context) {
-        noDataTextSize = QMUIDisplayHelper.sp2px(context, 14);
-    }
 
     private Rect viewRectF = new Rect();
 
@@ -94,6 +118,20 @@ public class NpChartLineView extends BaseView {
 
     //最多横向显示的标签（数据）个数
     private int maxLabel = 0;
+
+    //数据线距离左边距的位置
+    private float dataMarginLeft = 20;
+
+
+    //无数据时的画笔
+    private Paint noDataPaint = null;
+
+    //数据曲线的画笔
+    private Paint dataLinePaint =null;
+
+    //数据渐变区域的画笔
+    private Paint dataLineGradientPaint =null;
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -112,13 +150,18 @@ public class NpChartLineView extends BaseView {
         if (canDraw()) {
             clearBitmap();
             if (chartBean != null) {
+                drawLine();
+                drawXYAxis();
+                canvas.save();
+                canvas.translate(lastMoveX, 0);
+                drawLabels();
                 if (chartBean.getNpChartLineDataBeans() != null && chartBean.getNpChartLineDataBeans().size() > 0) {
-                    drawLine();
-                    drawXYAxis();
-                    drawLabels();
                     drawDataLineGradient();
                     drawDataLines();
+                } else {
+                    drawNoData();
                 }
+                canvas.restore();
             } else {
                 drawNoData();
             }
@@ -162,12 +205,11 @@ public class NpChartLineView extends BaseView {
 
     //绘制没有数据的时候的显示样子
     private void drawNoData() {
-        Paint paint = new Paint();
-        paint.setTextAlign(Paint.Align.CENTER);
-        paint.setAntiAlias(true);
-        paint.setTextSize(noDataTextSize);
+        noDataPaint.setTextAlign(Paint.Align.CENTER);
+        noDataPaint.setAntiAlias(true);
+        noDataPaint.setTextSize(noDataTextSize);
         String text = TextUtils.isEmpty(noDataText) ? "no Data" : noDataText;
-        canvas.drawText(text, viewRectF.centerX(), viewRectF.centerY(), paint);
+        canvas.drawText(text, viewRectF.centerX(), viewRectF.centerY(), noDataPaint);
     }
 
 
@@ -180,6 +222,7 @@ public class NpChartLineView extends BaseView {
         List<String> chartLabels = chartBean.getNpLabelList();
         //最多要显示的label个数
         maxLabel = getMaxLabelCount(chartLabels);
+        scaleCount =maxLabel;
         if (maxLabel == 0) {
             //没有数据
         } else if (maxLabel == 1) {
@@ -190,19 +233,21 @@ public class NpChartLineView extends BaseView {
             if (chartBean.getShowDataType() == NpShowDataType.Equal) {
                 labelWidthSpace = viewRectF.width() / (maxLabel - 1.0f);
             }
+            scaleGap = labelWidthSpace;
             if (chartBean.isShowLabels()) {
                 for (int i = 0; i < maxLabel; i++) {
-                    float xPosition = labelWidthSpace * i + viewRectF.left;
+                    float xPosition = labelWidthSpace * i + viewRectF.left + dataMarginLeft;
                     String text = chartLabels.get(i);
-                    if (i == 0) {
-                        xPosition += 10;
-                        paint.setTextAlign(Paint.Align.LEFT);
-                    } else if (i == maxLabel - 1) {
-                        xPosition -= 10;
-                        paint.setTextAlign(Paint.Align.RIGHT);
-                    } else {
-                        paint.setTextAlign(Paint.Align.CENTER);
-                    }
+                    paint.setTextAlign(Paint.Align.CENTER);
+//                    if (i == 0) {
+//                        xPosition += 10;
+//                        paint.setTextAlign(Paint.Align.LEFT);
+//                    } else if (i == maxLabel - 1) {
+//                        xPosition -= 10;
+//                        paint.setTextAlign(Paint.Align.RIGHT);
+//                    } else {
+//
+//                    }
                     canvas.drawText(text, xPosition, viewRectF.bottom - 30, paint);
                 }
             }
@@ -216,11 +261,6 @@ public class NpChartLineView extends BaseView {
     private void drawDataLines() {
         List<NpChartLineDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
         if (lineDataBeanList != null && lineDataBeanList.size() > 0) {
-
-            Paint paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setStyle(Paint.Style.STROKE);
-
             if (maxLabel <= 0) {
                 ViewLog.e("没有标签，不绘制渐变曲线");
             } else if (maxLabel == 1) {
@@ -231,16 +271,16 @@ public class NpChartLineView extends BaseView {
                 for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
                     List<NpLineEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
                     if (npLineEntries != null && npLineEntries.size() > 1) {
-                        paint.setStrokeWidth(npChartLineDataBean.getLineThickness());
+                        dataLinePaint.setStrokeWidth(npChartLineDataBean.getLineThickness());
                         if (npChartLineDataBean.isShowShadow()) {
                             float shadowRadius = npChartLineDataBean.getShadowRadius();
                             float shadowX = npChartLineDataBean.getShadowX();
                             float shadowY = npChartLineDataBean.getShadowY();
-                            paint.setShadowLayer(shadowRadius, shadowX, shadowY, npChartLineDataBean.getShadowColor());
+                            dataLinePaint.setShadowLayer(shadowRadius, shadowX, shadowY, npChartLineDataBean.getShadowColor());
                         }
                         PathData pathData = getPath(npLineEntries, false);
-                        paint.setColor(npChartLineDataBean.getColor());
-                        canvas.drawPath(pathData.getPath(), paint);
+                        dataLinePaint.setColor(npChartLineDataBean.getColor());
+                        canvas.drawPath(pathData.getPath(), dataLinePaint);
                     }
                 }
             }
@@ -262,9 +302,6 @@ public class NpChartLineView extends BaseView {
             } else {
                 ViewLog.e("多个标签，制渐变曲线");
 
-                Paint paint = new Paint();
-                paint.setAntiAlias(true);
-                paint.setStyle(Paint.Style.FILL);
 
                 for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
 
@@ -279,8 +316,8 @@ public class NpChartLineView extends BaseView {
                                 npChartLineDataBean.getStartColor(), npChartLineDataBean.getEndColor(),
                                 Shader.TileMode.CLAMP);
                         //mask画笔设置渐变效果
-                        paint.setShader(lg);
-                        canvas.drawPath(pathData.getPath(), paint);
+                        dataLineGradientPaint.setShader(lg);
+                        canvas.drawPath(pathData.getPath(), dataLineGradientPaint);
                     }
                 }
             }
@@ -328,14 +365,19 @@ public class NpChartLineView extends BaseView {
             tmpValue1 = min;
         }
 
-        if (isClosed) {
-            precent1 = (tmpValue1 - min) / (max - min);
-            //先把点移动到最开始的位置
-            path.moveTo(0 * xDisAdd + leftMargin, thisTotalHeight);
-//            path.lineTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
-        } else {
-            path.moveTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
-        }
+        precent1 = (tmpValue1 - min) / (max - min);
+        path.moveTo(dataMarginLeft + leftMargin, (thisTotalHeight * (1.0f - precent1)));
+//        if (isClosed) {
+//            precent1 = (tmpValue1 - min) / (max - min);
+//            //先把点移动到最开始的位置
+////            path.moveTo(0 * xDisAdd + leftMargin, thisTotalHeight);
+//            path.moveTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
+//        } else {
+//            precent1 = (tmpValue1 - min) / (max - min);
+//            path.moveTo(0 * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent1)));
+//        }
+
+
         List<Float> tmpList = new ArrayList<>();
         for (NpLineEntry npLineEntry : lineEntryList) {
             tmpList.add(npLineEntry.getValue());
@@ -355,7 +397,7 @@ public class NpChartLineView extends BaseView {
 
             precent1 = (tmpValue1 - min) / (max - min);
 
-            float x1 = i * xDisAdd + leftMargin;
+            float x1 = i * xDisAdd + leftMargin + dataMarginLeft;
             float y1 = (thisTotalHeight * (1.0f - precent1)) + getPaddingTop() + viewRectF.top;
 
 
@@ -369,7 +411,7 @@ public class NpChartLineView extends BaseView {
 
             precent2 = (tmpValue2 - min) / (max - min);
 
-            float x2 = (i + 1) * xDisAdd + leftMargin;
+            float x2 = (i + 1) * xDisAdd + leftMargin + dataMarginLeft;
             float y2 = (thisTotalHeight * (1.0f - precent2)) + getPaddingTop() + viewRectF.top;
 
             PointF startp = new PointF(x1, y1);
@@ -383,9 +425,9 @@ public class NpChartLineView extends BaseView {
         }
 
         if (isClosed) {
-            path.lineTo((dataLen - 1) * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent2)));
-            path.lineTo((dataLen - 1) * xDisAdd + leftMargin, thisTotalHeight);
-            path.lineTo(0 * xDisAdd + leftMargin, thisTotalHeight);
+            path.lineTo((dataLen - 1) * xDisAdd + leftMargin + dataMarginLeft, (thisTotalHeight * (1.0f - precent2)));
+            path.lineTo((dataLen - 1) * xDisAdd + leftMargin + dataMarginLeft, thisTotalHeight);
+            path.lineTo(leftMargin + dataMarginLeft, thisTotalHeight);
         }
 
         pathData.setPath(path);
@@ -426,5 +468,107 @@ public class NpChartLineView extends BaseView {
     public void invalidate() {
         draw();
         super.invalidate();
+    }
+
+
+    private float downX;
+    private float moveX = 0;
+    private float currentX;
+    private float lastMoveX = 0;
+    private boolean isUp = false;
+
+    private int leftScroll;
+    private int rightScroll;
+    private int xVelocity;
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        currentX = event.getX();
+        isUp = false;
+        velocityTracker.computeCurrentVelocity(500);
+        velocityTracker.addMovement(event);
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                //按下时如果属性动画还没执行完,就终止,记录下当前按下点的位置
+                if (valueAnimator != null && valueAnimator.isRunning()) {
+                    valueAnimator.end();
+                    valueAnimator.cancel();
+                }
+                downX = event.getX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                //滑动时候,通过假设的滑动距离,做超出左边界以及右边界的限制。
+                moveX = currentX - downX + lastMoveX;
+                if (moveX >= 0) {
+                    moveX = 0;
+                } else if (moveX <= getWhichScalMovex()) {
+                    moveX = getWhichScalMovex();
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+                //手指抬起时候制造惯性滑动
+                lastMoveX = moveX;
+                xVelocity = (int) velocityTracker.getXVelocity();
+                autoVelocityScroll(xVelocity);
+                velocityTracker.clear();
+                break;
+        }
+        invalidate();
+        return true;
+    }
+
+    private void autoVelocityScroll(int xVelocity) {
+        //惯性滑动的代码,速率和滑动距离,以及滑动时间需要控制的很好,应该网上已经有关于这方面的算法了吧。。这里是经过N次测试调节出来的惯性滑动
+        if (Math.abs(xVelocity) < 50) {
+            isUp = true;
+            return;
+        }
+        if (valueAnimator.isRunning()) {
+            return;
+        }
+        valueAnimator = ValueAnimator.ofInt(0, xVelocity / 20).setDuration(Math.abs(xVelocity / 10));
+        valueAnimator.setInterpolator(new DecelerateInterpolator());
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                moveX += (int) animation.getAnimatedValue();
+                if (moveX >= 0) {
+                    moveX = 0;
+                } else if (moveX <= getWhichScalMovex()) {
+                    moveX = getWhichScalMovex();
+                }
+                lastMoveX = moveX;
+                invalidate();
+            }
+
+        });
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                isUp = true;
+                invalidate();
+            }
+        });
+
+        valueAnimator.start();
+    }
+
+    /**
+     * 刻度平分多少份
+     */
+    private int scaleCount = 10;  //刻度评分多少份
+    /**
+     * 刻度间距
+     */
+    private float scaleGap = 20;
+
+    /**
+     * 刻度最小值
+     */
+    private int minScale = 0;
+
+    private float getWhichScalMovex() {
+        return viewRectF.width() / 2 - scaleGap * scaleCount +viewRectF.width()/2;
     }
 }
