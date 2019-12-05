@@ -154,6 +154,14 @@ public class NpChartLineView extends BaseView {
         this.onLineSelectListener = onLineSelectListener;
     }
 
+    public void setPointRadius(float pointRadius) {
+        this.pointRadius = pointRadius;
+    }
+
+    public void setClickRangeWidth(float clickRangeWidth) {
+        this.clickRangeWidth = clickRangeWidth;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -173,6 +181,10 @@ public class NpChartLineView extends BaseView {
             if (chartBean != null) {
                 drawLine();
                 drawXYAxis();
+                Paint paint = new Paint();
+                paint.setAntiAlias(true);
+                paint.setStyle(Paint.Style.STROKE);
+                canvas.drawRect(viewRectF, paint);
                 canvas.save();
                 canvas.translate(lastMoveX, 0);
                 drawLabels();
@@ -250,11 +262,12 @@ public class NpChartLineView extends BaseView {
             //如果是多个标签的话
             labelWidthSpace = chartBean.getLabelSpaceWidth();
             if (chartBean.getShowDataType() == NpShowDataType.Equal && maxLabel > 1) {
-                labelWidthSpace = viewRectF.width() / (maxLabel - 1.0f);
+                labelWidthSpace = (viewRectF.width() - dataMarginLeft * 2) / (maxLabel - 1.0f);
+                ViewLog.e("满足平分的场景？" + maxLabel + "///" + labelWidthSpace);
             }
             if (chartBean.isShowLabels()) {
                 for (int i = 0; i < maxLabel; i++) {
-                    float xPosition = labelWidthSpace * i + viewRectF.left + dataMarginLeft;
+                    float xPosition = labelWidthSpace * i + dataMarginLeft;
                     String text = chartLabels.get(i);
                     paint.setTextAlign(Paint.Align.CENTER);
                     canvas.drawText(text, xPosition, viewRectF.bottom - 30, paint);
@@ -585,7 +598,7 @@ public class NpChartLineView extends BaseView {
                 downX = event.getX();
 
                 for (int i = 0; i < allTmpRectList.size(); i++) {
-                    if (allTmpRectList.get(i).contains(event.getX(), event.getY())) {
+                    if (allTmpRectList.get(i).contains(event.getX() - moveX, event.getY())) {
                         lastSelectIndex = i;
                         postInvalidateDelayed(20);
                         ViewLog.e("lastSelectIndex===>" + lastSelectIndex);
@@ -600,7 +613,7 @@ public class NpChartLineView extends BaseView {
                 if (moveX >= 0) {
                     moveX = 0;
                 } else {
-                    if (maxLabel * labelWidthSpace <= viewRectF.width() + dataMarginLeft) {
+                    if (maxLabel * labelWidthSpace <= viewRectF.width() + dataMarginLeft * 2) {
                         moveX = 0;
                     } else if (moveX <= getWhichScaleMovex()) {
                         moveX = getWhichScaleMovex();
@@ -637,7 +650,7 @@ public class NpChartLineView extends BaseView {
                 if (moveX >= 0) {
                     moveX = 0;
                 } else {
-                    if (maxLabel * labelWidthSpace <= viewRectF.width() + dataMarginLeft) {
+                    if (maxLabel * labelWidthSpace <= viewRectF.width() + dataMarginLeft * 2) {
                         moveX = 0;
                     } else if (moveX <= getWhichScaleMovex()) {
                         moveX = getWhichScaleMovex();
@@ -661,7 +674,7 @@ public class NpChartLineView extends BaseView {
 
 
     private float getWhichScaleMovex() {
-        return viewRectF.width() / 2 - labelWidthSpace * maxLabel + viewRectF.width() / 2;
+        return viewRectF.width() / 2 - labelWidthSpace * (maxLabel - 1) + viewRectF.width() / 2 - dataMarginLeft * 2;
     }
 
 

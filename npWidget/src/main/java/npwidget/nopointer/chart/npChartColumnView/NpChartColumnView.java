@@ -3,6 +3,7 @@ package npwidget.nopointer.chart.npChartColumnView;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -34,9 +35,6 @@ public class NpChartColumnView extends BaseView {
     //可绘制的画布范围
     private Rect viewRectF = new Rect();
 
-    //最多横向显示的标签（数据）个数
-    private int maxLabel = 0;
-
     //每个柱子分配的宽度
     private float columnWidth = 0;
 
@@ -64,6 +62,13 @@ public class NpChartColumnView extends BaseView {
     //无数据是文本的颜色
     private int noDataTextColor = 0xFF888888;
 
+    //可以点击的宽度范围
+    private float clickRangeWidth = 0;
+
+    public void setClickRangeWidth(float clickRangeWidth) {
+        this.clickRangeWidth = clickRangeWidth;
+    }
+
     public void setNoDataTextColor(int noDataTextColor) {
         this.noDataTextColor = noDataTextColor;
     }
@@ -86,6 +91,7 @@ public class NpChartColumnView extends BaseView {
 
     private void init(Context context) {
         getNoDataTextSize = QMUIDisplayHelper.sp2px(context, 14);
+        clickRangeWidth = QMUIDisplayHelper.dp2px(context, 20);
     }
 
     public NpChartColumnBean getChartColumnBean() {
@@ -127,14 +133,57 @@ public class NpChartColumnView extends BaseView {
             clearBitmap();
             if (chartColumnBean != null) {
                 loadCfg();
+                drawXYAxis();
+                drawLabels();
                 if (chartColumnBean.getNpChartColumnDataBeans() != null && chartColumnBean.getNpChartColumnDataBeans().size() > 0) {
-                    drawXYAxis();
                     drawDataColumns();
                 } else {
                     drawNoData();
                 }
             } else {
                 drawNoData();
+            }
+        }
+    }
+
+
+    //绘制标签
+    private void drawLabels() {
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(Color.BLACK);
+        paint.setTextSize(chartColumnBean.getLabelTextSize());
+        List<String> chartLabels = chartColumnBean.getNpLabelList();
+        //最多要显示的label个数
+        int labelCount = chartLabels.size();
+        if (labelCount < 0) {
+            ViewLog.e("没有Label 不绘制");
+            return;
+        } else {
+            //横向的柱子之间的间距
+            float xDisAdd = chartColumnBean.getColumnSpaceWidth();
+
+            if (chartColumnBean.getShowDataType() == NpShowDataType.Equal) {
+                ViewLog.e("平分宽度");
+                //可以被平分的宽度
+                float totalWidth = (viewRectF.width() - chartColumnBean.getMarginLeft() - chartColumnBean.getMarginRight());
+                xDisAdd = (totalWidth - labelCount * columnWidth) / (labelCount - 1);
+            }
+
+            ViewLog.e("xDisAdd====>" + xDisAdd);
+
+            String label = "";
+
+            for (int i = 0; i < labelCount; i++) {
+                paint.setColor(chartColumnBean.getLabelTextColor());
+                paint.setTextSize(labelTextSize);
+                label = chartColumnBean.getNpLabelList().get(i);
+                paint.setTextAlign(Paint.Align.CENTER);
+                paint.setAlpha(0xFF);
+                //计算柱子的中心点
+                float xColumnCenterX = i * xDisAdd + viewRectF.left + chartColumnBean.getMarginLeft() + columnWidth * i + columnWidth / 2.0f;
+
+                canvas.drawText(label, xColumnCenterX, viewRectF.bottom - labelTextSize / 2, paint);
             }
         }
     }
@@ -226,18 +275,13 @@ public class NpChartColumnView extends BaseView {
 
                     if (tmpI == lastSelectIndex) {
                         paint.setColor(chartColumnBean.getSelectColumenColor());
+                        pathData.clickRange.left = xColumnCenterX - columnWidth / 2;
+                        pathData.clickRange.right = xColumnCenterX + columnWidth / 2;
                         canvas.drawRect(pathData.clickRange, paint);
                         if (onColumnSelectListener != null) {
                             onColumnSelectListener.onSelectColumn(columnDataBean, tmpI);
                         }
                     }
-
-                    paint.setColor(chartColumnBean.getLabelTextColor());
-                    paint.setTextSize(labelTextSize);
-                    label = chartColumnBean.getNpLabelList().get(tmpI);
-                    paint.setTextAlign(Paint.Align.CENTER);
-                    paint.setAlpha(0xFF);
-                    canvas.drawText(label, xColumnCenterX, viewRectF.bottom - labelTextSize / 2, paint);
                 }
                 tmpI++;
             }
@@ -293,7 +337,10 @@ public class NpChartColumnView extends BaseView {
             rectFList.add(rectF);
         }
         pathData.setRectFList(rectFList);
-        pathData.clickRange = new RectF(left, columnBottomPosition - thisTotalHeight, right, columnBottomPosition);
+        RectF clickRangeRect = new RectF(0, columnBottomPosition - thisTotalHeight, 0, columnBottomPosition);
+        clickRangeRect.left = xColumnCenterX - clickRangeWidth;
+        clickRangeRect.right = clickRangeRect.left + clickRangeWidth * 2;
+        pathData.clickRange = clickRangeRect;
         return pathData;
     }
 
