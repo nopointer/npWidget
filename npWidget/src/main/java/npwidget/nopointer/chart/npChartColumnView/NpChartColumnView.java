@@ -183,7 +183,14 @@ public class NpChartColumnView extends BaseView {
                 //计算柱子的中心点
                 float xColumnCenterX = i * xDisAdd + viewRectF.left + chartColumnBean.getMarginLeft() + columnWidth * i + columnWidth / 2.0f;
 
-                canvas.drawText(label, xColumnCenterX, viewRectF.bottom - labelTextSize / 2, paint);
+//                canvas.drawText(label, xColumnCenterX, viewRectF.bottom - labelTextSize / 2, paint);
+
+                paint.setTextAlign(Paint.Align.CENTER);
+                RectF rectF = new RectF(xColumnCenterX, viewRectF.bottom - bottomLabelRangeHeight, xColumnCenterX, viewRectF.bottom);
+                Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+                float distance = (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
+                float baseline = rectF.centerY() + distance;
+                canvas.drawText(label, rectF.centerX(), baseline, paint);
             }
         }
     }
@@ -392,9 +399,6 @@ public class NpChartColumnView extends BaseView {
         labelTextSize = chartColumnBean.getLabelTextSize();
         bottomLabelRangeHeight = chartColumnBean.getBottomHeight();
         columnMaxValue = chartColumnBean.getMaxY();
-        if (labelTextSize * 1.6f > bottomLabelRangeHeight) {
-            bottomLabelRangeHeight = labelTextSize * 2f;
-        }
     }
 
     public interface OnColumnSelectListener {

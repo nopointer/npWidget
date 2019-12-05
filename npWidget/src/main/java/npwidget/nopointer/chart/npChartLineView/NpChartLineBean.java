@@ -51,6 +51,11 @@ public class NpChartLineBean {
     private float labelTextSize = 40;
 
 
+    /**
+     * 底部绘制横向标签的高度
+     */
+    private float bottomHeight = 20;
+
 
 
     public NpShowDataType getShowDataType() {
@@ -143,5 +148,13 @@ public class NpChartLineBean {
 
     public void setShowLabels(boolean showLabels) {
         this.showLabels = showLabels;
+    }
+
+    public float getBottomHeight() {
+        return bottomHeight;
+    }
+
+    public void setBottomHeight(float bottomHeight) {
+        this.bottomHeight = bottomHeight;
     }
 }

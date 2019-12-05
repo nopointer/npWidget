@@ -47,6 +47,13 @@ public class NpChartLineView extends BaseView {
     private NpChartLineBean chartBean;
 
 
+    //底部文字的高度
+    private float bottomLabelRangeHeight = 0;
+
+    //底部文字的大小
+    private float labelTextSize = 0;
+
+
     public void setChartBean(NpChartLineBean chartBean) {
         this.chartBean = chartBean;
     }
@@ -179,12 +186,14 @@ public class NpChartLineView extends BaseView {
         if (canDraw()) {
             clearBitmap();
             if (chartBean != null) {
+                loadCfg();
                 drawLine();
                 drawXYAxis();
-                Paint paint = new Paint();
-                paint.setAntiAlias(true);
-                paint.setStyle(Paint.Style.STROKE);
-                canvas.drawRect(viewRectF, paint);
+                //绘制可是区域的范围，调试用
+//                Paint paint = new Paint();
+//                paint.setAntiAlias(true);
+//                paint.setStyle(Paint.Style.STROKE);
+//                canvas.drawRect(viewRectF, paint);
                 canvas.save();
                 canvas.translate(lastMoveX, 0);
                 drawLabels();
@@ -213,14 +222,14 @@ public class NpChartLineView extends BaseView {
         paint.setAntiAlias(true);
         if (chartBean.isShowXAxis()) {
             //绘制X轴 纵向高度一致，统一一个变量记录高度
-            float lineBottom = viewRectF.bottom - 100;
+            float lineBottom = viewRectF.bottom - bottomLabelRangeHeight;
             canvas.drawLine(viewRectF.left, lineBottom, viewRectF.right, lineBottom, paint);
         }
 
         if (chartBean.isShowYAxis()) {
             //绘制Y轴 横向宽度一致，统一一个变量记录宽度
-            float lineLeft = viewRectF.left + 100;
-            canvas.drawLine(lineLeft, viewRectF.top, lineLeft, viewRectF.bottom - 100, paint);
+            float lineLeft = viewRectF.left;
+            canvas.drawLine(lineLeft, viewRectF.top, lineLeft, viewRectF.bottom - bottomLabelRangeHeight, paint);
         }
 
     }
@@ -251,7 +260,7 @@ public class NpChartLineView extends BaseView {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(Color.BLACK);
-        paint.setTextSize(chartBean.getLabelTextSize());
+        paint.setTextSize(labelTextSize);
         List<String> chartLabels = chartBean.getNpLabelList();
         //最多要显示的label个数
         maxLabel = getMaxLabelCount(chartLabels);
@@ -270,7 +279,11 @@ public class NpChartLineView extends BaseView {
                     float xPosition = labelWidthSpace * i + dataMarginLeft;
                     String text = chartLabels.get(i);
                     paint.setTextAlign(Paint.Align.CENTER);
-                    canvas.drawText(text, xPosition, viewRectF.bottom - 30, paint);
+                    RectF rectF = new RectF(xPosition, viewRectF.bottom - bottomLabelRangeHeight, xPosition, viewRectF.bottom);
+                    Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+                    float distance = (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
+                    float baseline = rectF.centerY() + distance;
+                    canvas.drawText(text, rectF.centerX(), baseline, paint);
                 }
             }
         }
@@ -423,7 +436,7 @@ public class NpChartLineView extends BaseView {
      * @return
      */
     private float getDataPointYPosition(NpLineEntry npLineEntry) {
-        float thisTotalHeight = viewRectF.height() - 100;
+        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
         float min = chartBean.getMinY();
         float max = chartBean.getMaxY();
         if (max == min) {
@@ -443,7 +456,7 @@ public class NpChartLineView extends BaseView {
     private PathData getPath(List<NpLineEntry> lineEntryList, boolean isClosed) {
         PathData pathData = new PathData();
         Path path = new Path();
-        float thisTotalHeight = viewRectF.height() - 100;
+        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
         float leftMargin = viewRectF.left;
         float xDisAdd = labelWidthSpace;
         float min = chartBean.getMinY();
@@ -573,19 +586,13 @@ public class NpChartLineView extends BaseView {
     private float moveX = 0;
     private float currentX;
     private float lastMoveX = 0;
-    private boolean isUp = false;
 
-    private int leftScroll;
-    private int rightScroll;
     private int xVelocity;
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-
         currentX = event.getX();
-        isUp = false;
         velocityTracker.computeCurrentVelocity(500);
         velocityTracker.addMovement(event);
         switch (event.getAction()) {
@@ -635,7 +642,6 @@ public class NpChartLineView extends BaseView {
     private void autoVelocityScroll(int xVelocity) {
         //惯性滑动的代码,速率和滑动距离,以及滑动时间需要控制的很好,应该网上已经有关于这方面的算法了吧。。这里是经过N次测试调节出来的惯性滑动
         if (Math.abs(xVelocity) < 50) {
-            isUp = true;
             return;
         }
         if (valueAnimator.isRunning()) {
@@ -664,12 +670,16 @@ public class NpChartLineView extends BaseView {
         valueAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                isUp = true;
                 invalidate();
             }
         });
 
         valueAnimator.start();
+    }
+
+    private void loadCfg() {
+        labelTextSize = chartBean.getLabelTextSize();
+        bottomLabelRangeHeight = chartBean.getBottomHeight();
     }
 
 

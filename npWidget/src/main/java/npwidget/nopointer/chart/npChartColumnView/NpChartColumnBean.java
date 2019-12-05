@@ -73,15 +73,17 @@ public class NpChartColumnBean {
     private float labelTextSize = 20;
 
     /**
+     * 底部绘制横向标签的高度
+     */
+    private float bottomHeight = 20;
+
+    /**
      * 标签的颜色
      */
     private int labelTextColor = 0xFF000000;
 
 
-    /**
-     * 底部绘制横向标签的高度
-     */
-    private float bottomHeight = 20;
+
 
     /**
      * 数据曲线集合
