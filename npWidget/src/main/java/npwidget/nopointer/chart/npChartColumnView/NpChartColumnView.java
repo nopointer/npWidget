@@ -14,6 +14,7 @@ import android.view.MotionEvent;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import npwidget.nopointer.base.BaseView;
@@ -64,6 +65,8 @@ public class NpChartColumnView extends BaseView {
 
     //可以点击的宽度范围
     private float clickRangeWidth = 0;
+    //是否是已经点击过了
+    private boolean hasClick = false;
 
     public void setClickRangeWidth(float clickRangeWidth) {
         this.clickRangeWidth = clickRangeWidth;
@@ -137,6 +140,14 @@ public class NpChartColumnView extends BaseView {
                 drawLabels();
                 if (chartColumnBean.getNpChartColumnDataBeans() != null && chartColumnBean.getNpChartColumnDataBeans().size() > 0) {
                     drawDataColumns();
+                    if (  !hasClick && chartColumnBean.isAutoSelectMaxData()) {
+                        for (int i = 0; i < allColumnDataSum.size(); i++) {
+                            if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
+                                lastSelectIndex = i;
+                                break;
+                            }
+                        }
+                    }
                 } else {
                     drawNoData();
                 }
@@ -292,10 +303,18 @@ public class NpChartColumnView extends BaseView {
                 }
                 tmpI++;
             }
+
+
         } else {
             ViewLog.e("chartColumnBean.getNpChartColumnDataBeans()=null !!!!");
         }
     }
+
+
+    /**
+     * 每个柱子（分段）的实际值总和
+     */
+    private List<Float> allColumnDataSum = new ArrayList<>();
 
     /**
      * @param columnEntryList
@@ -318,6 +337,8 @@ public class NpChartColumnView extends BaseView {
         for (NpColumnEntry npColumnEntry : columnEntryList) {
             maxValue += npColumnEntry.getValue();
         }
+        pathData.setCloumnValueSum(maxValue);
+        allColumnDataSum.add(maxValue);
 
         ViewLog.e("columnMaxValue===>" + columnMaxValue);
         float thisPercentWithColumnMax = 1.0f;
@@ -358,6 +379,7 @@ public class NpChartColumnView extends BaseView {
     public class ColumnData {
         private RectF clickRange = null;
         private List<RectF> rectFList = null;
+        private float cloumnValueSum = 0;
 
         public ColumnData() {
         }
@@ -368,6 +390,14 @@ public class NpChartColumnView extends BaseView {
 
         public void setRectFList(List<RectF> rectFList) {
             this.rectFList = rectFList;
+        }
+
+        public float getCloumnValueSum() {
+            return cloumnValueSum;
+        }
+
+        public void setCloumnValueSum(float cloumnValueSum) {
+            this.cloumnValueSum = cloumnValueSum;
         }
     }
 
@@ -384,6 +414,7 @@ public class NpChartColumnView extends BaseView {
             for (int i = 0; i < allTmpRectList.size(); i++) {
                 if (allTmpRectList.get(i).contains(event.getX(), event.getY())) {
                     lastSelectIndex = i;
+                    hasClick = true;
                     postInvalidateDelayed(20);
                     ViewLog.e("lastSelectIndex===>" + lastSelectIndex);
                     break;
@@ -395,10 +426,13 @@ public class NpChartColumnView extends BaseView {
 
     }
 
+
     private void loadCfg() {
+        hasClick = false;
         labelTextSize = chartColumnBean.getLabelTextSize();
         bottomLabelRangeHeight = chartColumnBean.getBottomHeight();
         columnMaxValue = chartColumnBean.getMaxY();
+        allColumnDataSum.clear();
     }
 
     public interface OnColumnSelectListener {

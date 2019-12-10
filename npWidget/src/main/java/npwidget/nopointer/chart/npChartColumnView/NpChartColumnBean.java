@@ -83,6 +83,10 @@ public class NpChartColumnBean {
     private int labelTextColor = 0xFF000000;
 
 
+    /**
+     * 是否是自动选中最高的数据
+     */
+    private boolean isAutoSelectMaxData = false;
 
 
     /**
@@ -93,7 +97,7 @@ public class NpChartColumnBean {
     /**
      * 选择中的柱子的颜色
      */
-    private int selectColumenColor =0xA0333333;
+    private int selectColumenColor = 0xA0333333;
 
     /**
      * 横向的lable集合
@@ -245,19 +249,35 @@ public class NpChartColumnBean {
         this.selectColumenColor = selectColumenColor;
     }
 
+    public boolean isAutoSelectMaxData() {
+        return isAutoSelectMaxData;
+    }
+
+    public void setAutoSelectMaxData(boolean autoSelectMaxData) {
+        isAutoSelectMaxData = autoSelectMaxData;
+    }
+
     @Override
     public String toString() {
         return "NpChartColumnBean{" +
                 "maxY=" + maxY +
                 ", minY=" + minY +
                 ", showXAxis=" + showXAxis +
+                ", XAxisLineColor=" + XAxisLineColor +
                 ", showYAxis=" + showYAxis +
+                ", YAxisLineColor=" + YAxisLineColor +
                 ", showDataType=" + showDataType +
                 ", columnWidth=" + columnWidth +
+                ", marginLeft=" + marginLeft +
+                ", marginRight=" + marginRight +
                 ", columnSpaceWidth=" + columnSpaceWidth +
                 ", showLabels=" + showLabels +
                 ", labelTextSize=" + labelTextSize +
+                ", bottomHeight=" + bottomHeight +
+                ", labelTextColor=" + labelTextColor +
+                ", isAutoSelectMaxData=" + isAutoSelectMaxData +
                 ", npChartColumnDataBeans=" + npChartColumnDataBeans +
+                ", selectColumenColor=" + selectColumenColor +
                 ", npLabelList=" + npLabelList +
                 '}';
     }
