@@ -54,6 +54,8 @@ public class NpChartColumnView extends BaseView {
     private float columnMaxValue = 0;
     private List<RectF> allTmpRectList = new ArrayList<>();
 
+    private List<ColumnData> columnDataList = new ArrayList<>();
+
     //绘制没有数据的时候的文字大小
     private float getNoDataTextSize = 0;
 
@@ -112,6 +114,7 @@ public class NpChartColumnView extends BaseView {
 
     public void setChartColumnBean(NpChartColumnBean chartColumnBean) {
         this.chartColumnBean = chartColumnBean;
+        hasClick = false;
     }
 
     public void setOnColumnSelectListener(OnColumnSelectListener onColumnSelectListener) {
@@ -140,7 +143,7 @@ public class NpChartColumnView extends BaseView {
                 drawLabels();
                 if (chartColumnBean.getNpChartColumnDataBeans() != null && chartColumnBean.getNpChartColumnDataBeans().size() > 0) {
                     drawDataColumns();
-                    if (  !hasClick && chartColumnBean.isAutoSelectMaxData()) {
+                    if (!hasClick && chartColumnBean.isAutoSelectMaxData()) {
                         for (int i = 0; i < allColumnDataSum.size(); i++) {
                             if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
                                 lastSelectIndex = i;
@@ -148,6 +151,7 @@ public class NpChartColumnView extends BaseView {
                             }
                         }
                     }
+                    drawSelectColumn();
                 } else {
                     drawNoData();
                 }
@@ -242,6 +246,26 @@ public class NpChartColumnView extends BaseView {
         canvas.drawText(text, viewRectF.centerX(), viewRectF.centerY(), paint);
     }
 
+
+    private void drawSelectColumn() {
+
+        if (lastSelectIndex == -1) return;
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.FILL);
+
+        paint.setColor(chartColumnBean.getSelectColumenColor());
+        ColumnData pathData = columnDataList.get(lastSelectIndex);
+        pathData.clickRange.left = pathData.clickRange.centerX() - chartColumnBean.getColumnWidth() / 2;
+        pathData.clickRange.right = pathData.clickRange.left+chartColumnBean.getColumnWidth();
+        canvas.drawRect(pathData.clickRange, paint);
+        if (onColumnSelectListener != null) {
+            onColumnSelectListener.onSelectColumn(chartColumnBean.getNpChartColumnDataBeans().get(lastSelectIndex), lastSelectIndex);
+        }
+
+    }
+
     /**
      * 绘制数据柱子
      */
@@ -275,6 +299,7 @@ public class NpChartColumnView extends BaseView {
 
             String label = "";
             allTmpRectList.clear();
+            columnDataList.clear();
             for (NpChartColumnDataBean columnDataBean : chartColumnDataBeans) {
                 List<NpColumnEntry> npColumnEntries = columnDataBean.getNpColumnEntryList();
                 if (npColumnEntries != null && npColumnEntries.size() > 0) {
@@ -286,19 +311,10 @@ public class NpChartColumnView extends BaseView {
                     allTmpRectList.add(pathData.clickRange);
                     int smallRectCount = pathData.rectFList.size();
 
+                    columnDataList.add(pathData);
                     for (int i = 0; i < smallRectCount; i++) {
                         paint.setColor(columnDataBean.getColorList().get(i));
                         canvas.drawRect(pathData.getRectFList().get(i), paint);
-                    }
-
-                    if (tmpI == lastSelectIndex) {
-                        paint.setColor(chartColumnBean.getSelectColumenColor());
-                        pathData.clickRange.left = xColumnCenterX - columnWidth / 2;
-                        pathData.clickRange.right = xColumnCenterX + columnWidth / 2;
-                        canvas.drawRect(pathData.clickRange, paint);
-                        if (onColumnSelectListener != null) {
-                            onColumnSelectListener.onSelectColumn(columnDataBean, tmpI);
-                        }
                     }
                 }
                 tmpI++;
@@ -428,7 +444,6 @@ public class NpChartColumnView extends BaseView {
 
 
     private void loadCfg() {
-        hasClick = false;
         labelTextSize = chartColumnBean.getLabelTextSize();
         bottomLabelRangeHeight = chartColumnBean.getBottomHeight();
         columnMaxValue = chartColumnBean.getMaxY();
