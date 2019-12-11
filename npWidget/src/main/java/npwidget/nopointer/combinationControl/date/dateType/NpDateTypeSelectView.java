@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import npwidget.nopointer.R;
 import npwidget.nopointer.combinationControl.date.NpDateType;
+import npwidget.nopointer.log.ViewLog;
 
 /**
  * 日周月年的选择样式组合控件
@@ -45,6 +46,25 @@ public class NpDateTypeSelectView extends RelativeLayout {
     private RadioButton[] dateTypeViews = new RadioButton[4];
     //中间的分割线
     private View[] dateTypeViewLines = new View[3];
+
+
+    /**
+     * 设置日周月年的文本，4个文本都要设置！！
+     *
+     * @param dayWeekMonthYearTexts
+     */
+    public void setDayWeekMonthYearText(String[] dayWeekMonthYearTexts) {
+        int len = dayWeekMonthYearTexts.length;
+        if (len != 4) {
+            ViewLog.e("设置日周月年的文本，4个文本都要设置！！");
+            return;
+        }
+        if (dateTypeViews.length != 4 || dateTypeViews[0] == null || dateTypeViews[3] == null)
+            return;
+        for (int i = 0; i < len; i++) {
+            dateTypeViews[i].setText(dayWeekMonthYearTexts[i]);
+        }
+    }
 
 
     public NpDateTypeSelectView(Context context, AttributeSet attrs) {
