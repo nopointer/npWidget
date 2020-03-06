@@ -142,16 +142,27 @@ public class NpChartColumnView extends BaseView {
                 drawXYAxis();
                 drawLabels();
                 if (chartColumnBean.getNpChartColumnDataBeans() != null && chartColumnBean.getNpChartColumnDataBeans().size() > 0) {
-                    drawDataColumns();
-                    if (!hasClick && chartColumnBean.isAutoSelectMaxData()) {
-                        for (int i = 0; i < allColumnDataSum.size(); i++) {
-                            if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
-                                lastSelectIndex = i;
-                                break;
-                            }
+                    int dataSum = 0;
+
+                    for (NpChartColumnDataBean chartColumnDataBean : chartColumnBean.getNpChartColumnDataBeans()) {
+                        for (NpColumnEntry columnEntry : chartColumnDataBean.getNpColumnEntryList()) {
+                            dataSum += columnEntry.getValue();
                         }
                     }
-                    drawSelectColumn();
+                    if (dataSum <= 0) {
+                        drawNoData();
+                    } else {
+                        drawDataColumns();
+                        if (!hasClick && chartColumnBean.isAutoSelectMaxData()) {
+                            for (int i = 0; i < allColumnDataSum.size(); i++) {
+                                if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
+                                    lastSelectIndex = i;
+                                    break;
+                                }
+                            }
+                        }
+                        drawSelectColumn();
+                    }
                 } else {
                     drawNoData();
                 }
@@ -258,7 +269,7 @@ public class NpChartColumnView extends BaseView {
         paint.setColor(chartColumnBean.getSelectColumenColor());
         ColumnData pathData = columnDataList.get(lastSelectIndex);
         pathData.clickRange.left = pathData.clickRange.centerX() - chartColumnBean.getColumnWidth() / 2;
-        pathData.clickRange.right = pathData.clickRange.left+chartColumnBean.getColumnWidth();
+        pathData.clickRange.right = pathData.clickRange.left + chartColumnBean.getColumnWidth();
         canvas.drawRect(pathData.clickRange, paint);
         if (onColumnSelectListener != null) {
             onColumnSelectListener.onSelectColumn(chartColumnBean.getNpChartColumnDataBeans().get(lastSelectIndex), lastSelectIndex);

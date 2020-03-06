@@ -197,8 +197,19 @@ public class NpChartLineView extends BaseView {
                 canvas.translate(lastMoveX, 0);
                 drawLabels();
                 if (chartBean.getNpChartLineDataBeans() != null && chartBean.getNpChartLineDataBeans().size() > 0) {
-                    drawDataLineGradient();
-                    drawDataLines();
+                    int dataSum = 0;
+
+                    for (NpChartLineDataBean chartLineDataBean : chartBean.getNpChartLineDataBeans()) {
+                        for (NpLineEntry lineEntry : chartLineDataBean.getNpLineEntryList()) {
+                            dataSum += lineEntry.getValue();
+                        }
+                    }
+                    if (dataSum <= 0) {
+                        drawNoData();
+                    } else {
+                        drawDataLineGradient();
+                        drawDataLines();
+                    }
                 } else {
                     drawNoData();
                 }
