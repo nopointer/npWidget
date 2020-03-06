@@ -1,4 +1,4 @@
-package npwidget.nopointer.sleepStateView;
+package npwidget.nopointer.sleepView.sleepStateLineView;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -22,9 +22,10 @@ import java.util.List;
 
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.sleepView.NpSleepEntry;
 
 /**
- * 睡眠状态图
+ * 睡眠状态曲线图
  */
 public class NpSleepStateLineView extends BaseView {
     public NpSleepStateLineView(Context context) {
@@ -70,9 +71,9 @@ public class NpSleepStateLineView extends BaseView {
      */
     private RectF viewRectF = new RectF();
 
-    private NpSleepStateBean npStateBean = null;
+    private NpSleepStateLineBean npStateBean = null;
 
-    public void setNpStateBean(NpSleepStateBean npStateBean) {
+    public void setNpStateBean(NpSleepStateLineBean npStateBean) {
         this.npStateBean = npStateBean;
         sleepPartCount = 0;
         selectPartIndex = -1;
@@ -123,7 +124,7 @@ public class NpSleepStateLineView extends BaseView {
 
         if (npStateBean != null && npStateBean.getBgColors() != null && npStateBean.getBgColors().size() > 0 && npStateBean.getBgType() != null) {
             //平铺的方式
-            if (npStateBean.getBgType() == NpSleepStateBean.BgType.Tile) {
+            if (npStateBean.getBgType() == NpSleepStateLineBean.BgType.Tile) {
                 int colorSize = npStateBean.getBgColors().size();
                 float rectFHeight = viewRectF.height() / colorSize;
                 for (int i = 0; i < colorSize; i++) {

@@ -33,6 +33,8 @@
         <activity android:name=".NpOxWaveViewActivity" />
         <activity android:name=".NpDateTypeActivity" />
         <activity android:name=".NpColumnViewActivity" />
+        <activity android:name=".NpCountDwonViewActivity" />
+        <activity android:name=".NpPolylineViewActivity" />
 
     </application>
 

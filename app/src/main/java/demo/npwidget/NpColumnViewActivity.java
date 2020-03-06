@@ -2,11 +2,10 @@ package demo.npwidget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnDataBean;
@@ -22,19 +21,24 @@ public class NpColumnViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_column_view);
         npChartColumnView = findViewById(R.id.npChartColumnView);
-        new Handler().postDelayed(new Runnable() {
+        debug();
+
+        findViewById(R.id.debugBtn).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
+            public void onClick(View v) {
                 debug();
             }
-        }, 0);
+        });
+
     }
 
     private void debug() {
         NpChartColumnBean chartBean = new NpChartColumnBean();
+        chartBean.setAutoSelectMaxData(true);
         chartBean.setShowXAxis(true);
         chartBean.setShowYAxis(false);
 
+        chartBean.setMinY(0);
 
         List<NpChartColumnDataBean> npChartColumnDataBeans = new ArrayList<>();
 
@@ -45,14 +49,12 @@ public class NpColumnViewActivity extends Activity {
         List<Integer> colorList = new ArrayList<>();
         colorList.add(0xFF00FF99);
         colorList.add(0xFFFF0099);
-        Random r = new Random(10);
-        for (int i = 0; i < 7; i++) {
+        for (int i = 1; i <= 7; i++) {
             NpChartColumnDataBean npChartColumnDataBean = new NpChartColumnDataBean();
             npChartColumnDataBean.setColorList(colorList);
 
             List<NpColumnEntry> npColumnEntries = new ArrayList<>();
-            npColumnEntries.add(new NpColumnEntry(r.nextInt(100)));
-            npColumnEntries.add(new NpColumnEntry(r.nextInt(12) * 10));
+            npColumnEntries.add(new NpColumnEntry((i * 13)%30));
             if (i % 7 == 0) {
                 stringList.add(i + "");
             } else {
@@ -64,17 +66,20 @@ public class NpColumnViewActivity extends Activity {
 
         chartBean.setXAxisLineColor(0xFF000000);
         chartBean.setYAxisLineColor(0xFF000000);
+        chartBean.setSelectColumenColor(0xFF000000);
         chartBean.setNpLabelList(stringList);
         chartBean.setMarginLeft(40);
         chartBean.setMarginRight(40);
         chartBean.setNpChartColumnDataBeans(npChartColumnDataBeans);
-        chartBean.setMinY(0);
-        chartBean.setMaxY(60);
         chartBean.setShowLabels(true);
+        chartBean.setMaxY(220);
         chartBean.setColumnWidth(50);
-        chartBean.setLabelTextColor(0xFf00ff00);
+        chartBean.setLabelTextColor(0xFF660000);
+        chartBean.setLabelTextSize(40);
+        chartBean.setBottomHeight(80);
         chartBean.setLabelTextSize(40);
         npChartColumnView.setChartColumnBean(chartBean);
+
         npChartColumnView.invalidate();
     }
 }

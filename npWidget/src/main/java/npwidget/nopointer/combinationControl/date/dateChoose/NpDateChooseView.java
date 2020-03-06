@@ -44,6 +44,20 @@ public class NpDateChooseView extends RelativeLayout {
 
     private NpDataChooseCallback npDataChooseCallback;
 
+
+    public void setLeftAndRightIcon(int leftIcon, int rightIcon) {
+        setLeftIcon(leftIcon);
+        setRightIcon(rightIcon);
+    }
+
+    public void setLeftIcon(int leftIcon) {
+        rightIconIv.setImageResource(leftIcon);
+    }
+
+    public void setRightIcon(int rightIcon) {
+        rightIconIv.setImageResource(rightIcon);
+    }
+
     public void setNpDataChooseCallback(NpDataChooseCallback npDataChooseCallback) {
         this.npDataChooseCallback = npDataChooseCallback;
     }

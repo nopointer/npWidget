@@ -1,4 +1,4 @@
-package npwidget.nopointer.sleepStateView;
+package npwidget.nopointer.sleepView;
 
 /**
  * 睡眠数据
@@ -25,6 +25,10 @@ public class NpSleepEntry {
      */
     private int color;
 
+    /**
+     * 该状态的数据在等分高度中的位置（该参数只对睡眠区间的等分模式有效）,从0开始
+     */
+    private int position;
 
     public int getSleepType() {
         return sleepType;
@@ -64,6 +68,17 @@ public class NpSleepEntry {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        if (position <= 0) {
+            position = 0;
+        }
+        this.position = position;
     }
 
     @Override

@@ -66,7 +66,6 @@ public class NpChartLineView extends BaseView {
     public NpChartLineView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
-        init(context);
     }
 
     public NpChartLineView(Context context, AttributeSet attrs, int defStyleAttr) {

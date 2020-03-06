@@ -10,29 +10,21 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="320dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
+        android:background="#909090"
         android:orientation="vertical">
 
-        <npwidget.nopointer.chart.npChartColumnView.NpChartColumnView
-            android:id="@+id/npChartColumnView"
+        <npwidget.nopointer.countDown.NpCountDownView
+            android:id="@+id/npCountDownView"
             android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
             android:layout_width="match_parent"
-            android:layout_marginLeft="24dp"
-            android:background="@color/gray"
-            android:layout_marginRight="24dp"
-            android:layout_height="300dp" />
+            android:layout_height="240dp" />
 
 
     </RelativeLayout>
-
-    <Button
-        android:layout_marginTop="60dp"
-        android:id="@+id/debugBtn"
-        android:text="debug"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

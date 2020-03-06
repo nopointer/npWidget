@@ -7,6 +7,7 @@ import android.os.Handler;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineBean;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineDataBean;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineView;
@@ -32,22 +33,30 @@ public class NpLineViewActivity extends Activity {
     private void debug() {
         NpChartLineBean chartBean = new NpChartLineBean();
         chartBean.setShowXAxis(true);
-        chartBean.setShowYAxis(false);
+        chartBean.setShowYAxis(true);
+        chartBean.setBottomHeight(100);
+//        chartBean.setLabelTextSize(100);
 
 
         List<NpChartLineDataBean> npChartLineDataBeans = new ArrayList<>();
 
-        NpChartLineDataBean npChartLineDataBean1 = new NpChartLineDataBean();
+
         List<String> stringList = new ArrayList<>();
 
+        NpChartLineDataBean npChartLineDataBean1 = new NpChartLineDataBean();
+        NpChartLineDataBean npChartLineDataBean2 = new NpChartLineDataBean();
+
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            npLineEntries1.add(new NpLineEntry((i * 7) % 30));
-            stringList.add(i % 10 + "");
+        List<NpLineEntry> npLineEntries2 = new ArrayList<>();
+        for (int i = 1; i <=12; i++) {
+            npLineEntries1.add(new NpLineEntry((i * 6) % 100));
+            npLineEntries2.add(new NpLineEntry((i * 5) % 100));
+            stringList.add(i  + "");
         }
         npChartLineDataBean1.setLineThickness(3);
         npChartLineDataBean1.setShowGradient(false);
         npChartLineDataBean1.setShowShadow(false);
+
         npChartLineDataBean1.setColor(0xFFFF00FF);
         npChartLineDataBean1.setStartColor(0xFF000000);
         npChartLineDataBean1.setEndColor(0xFFFFFFFF);
@@ -55,14 +64,28 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBeans.add(npChartLineDataBean1);
 
 
+        npChartLineDataBean2.setLineThickness(3);
+        npChartLineDataBean2.setShowGradient(false);
+        npChartLineDataBean2.setShowShadow(false);
+
+        npChartLineDataBean2.setColor(0xFFFF00FF);
+        npChartLineDataBean2.setStartColor(0xFF000000);
+        npChartLineDataBean2.setEndColor(0xFFFFFFFF);
+        npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
+        npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpLabelList(stringList);
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
+        chartBean.setShowDataType(NpShowDataType.Slide);
+        chartBean.setLabelSpaceWidth(200);
         chartBean.setMinY(0);
-        chartBean.setMaxY(60);
+        chartBean.setMaxY(100);
         chartBean.setShowLabels(true);
-        chartBean.setLabelTextSize(30);
+        chartBean.setLabelTextSize(40);
         npChartLineView.setChartBean(chartBean);
         npChartLineView.invalidate();
     }
+
+
+
 }

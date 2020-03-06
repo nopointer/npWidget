@@ -1,12 +1,14 @@
-package npwidget.nopointer.sleepStateView;
+package npwidget.nopointer.sleepView.sleepStateLineView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.sleepView.NpSleepEntry;
+
 /**
- * 睡眠数据
+ * 睡眠曲线图数据
  */
-public class NpSleepStateBean {
+public class NpSleepStateLineBean {
 
     /**
      * 背景图层颜色，平分纵向
@@ -175,7 +177,7 @@ public class NpSleepStateBean {
 
     @Override
     public String toString() {
-        return "NpSleepStateBean{" +
+        return "NpSleepStateLineBean{" +
                 "bgColors=" + bgColors +
                 ", bgType=" + bgType +
                 ", dataList=" + dataList +
