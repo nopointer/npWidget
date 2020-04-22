@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import npwidget.nopointer.progress.NpCircleProgressView;
+import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
+import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
+import npwidget.nopointer.progress.npColorBars.cursorTop.NpColorBarProgressView;
 import npwidget.nopointer.sleepView.NpSleepEntry;
 import npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaBean;
 import npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaView;
@@ -20,7 +23,7 @@ public class MainActivity extends Activity {
 
     private NpSleepStateAreaView npStateLineView;
 
-    NpCircleProgressView npCircleProgressView;
+    NpColorBarProgressView npCircleProgressView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +32,6 @@ public class MainActivity extends Activity {
         npStateLineView = findViewById(R.id.NpChartLineView);
         npCircleProgressView = findViewById(R.id.npCircleProgressView);
 
-        npCircleProgressView.setCircleWidth(10);
-        npCircleProgressView.setStartAngle(-90);
-        npCircleProgressView.setCircleProgressBgColor(0xFF999999);
-        npCircleProgressView.setCircleProgressColor(0xFFFF0000);
-        npCircleProgressView.updateProgress(0.5f);
 //        loadDebug();
 
 //        startService(new Intent(this, KeepService.class));
@@ -52,10 +50,30 @@ public class MainActivity extends Activity {
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
 //        startActivity(new Intent(this, NpPolylineViewActivity.class));
 
-    loadDebug();
+        loadDebug();
+
+        loadColorBar();
 
     }
 
+
+    private void loadColorBar() {
+        NpColorBarBean localNpColorBarBean = new NpColorBarBean();
+        localNpColorBarBean.setMinValue(35.0F);
+        localNpColorBarBean.setCursorColor(-65536);
+        localNpColorBarBean.setValueColor(-16777216);
+        localNpColorBarBean.setCurrentValue(-38.5F);
+        localNpColorBarBean.setMaxValue(42.0F);
+        localNpColorBarBean.setUseRoundMode(true);
+        ArrayList localArrayList = new ArrayList();
+        localArrayList.add(new NpColorBarEntity(0xFFFF00FF, 0xFFFF0000));
+        localArrayList.add(new NpColorBarEntity(0xFFFF0000, 0xFF0000FF));
+        localArrayList.add(new NpColorBarEntity(-1771130, -6779));
+        localArrayList.add(new NpColorBarEntity(-6779, -11643));
+        localNpColorBarBean.setNpColorBarEntityList(localArrayList);
+        this.npCircleProgressView.setNpColorBarBean(localNpColorBarBean);
+        this.npCircleProgressView.invalidate();
+    }
 
     private void loadDebug() {
         NpSleepStateAreaBean npStateBean = new NpSleepStateAreaBean();
