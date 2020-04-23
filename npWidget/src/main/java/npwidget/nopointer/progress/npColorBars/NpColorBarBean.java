@@ -37,6 +37,11 @@ public class NpColorBarBean {
      * 是否使用圆角模式
      */
     private boolean useRoundMode = false;
+
+    /**
+     * 是否显示游标，默认显示
+     */
+    private boolean isShowCursor = true;
     /**
      * 文字颜色
      */
@@ -115,6 +120,14 @@ public class NpColorBarBean {
         this.valueFormatCallback = valueFormatCallback;
     }
 
+    public boolean isShowCursor() {
+        return isShowCursor;
+    }
+
+    public void setShowCursor(boolean showCursor) {
+        isShowCursor = showCursor;
+    }
+
     @Override
     public String toString() {
         return "NpColorBarBean{" +
@@ -125,6 +138,7 @@ public class NpColorBarBean {
                 ", npColorBarEntityList=" + npColorBarEntityList +
                 ", textSize=" + textSize +
                 ", useRoundMode=" + useRoundMode +
+                ", isShowCursor=" + isShowCursor +
                 ", valueColor=" + valueColor +
                 ", valueFormatCallback=" + valueFormatCallback +
                 '}';

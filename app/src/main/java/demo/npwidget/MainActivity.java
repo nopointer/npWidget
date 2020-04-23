@@ -58,21 +58,44 @@ public class MainActivity extends Activity {
 
 
     private void loadColorBar() {
+//        NpColorBarBean localNpColorBarBean = new NpColorBarBean();
+//        localNpColorBarBean.setMinValue(35.0F);
+//        localNpColorBarBean.setCursorColor(-65536);
+//        localNpColorBarBean.setValueColor(-16777216);
+//        localNpColorBarBean.setCurrentValue(-38.5F);
+//        localNpColorBarBean.setMaxValue(42.0F);
+//        localNpColorBarBean.setUseRoundMode(true);
+//        ArrayList localArrayList = new ArrayList();
+//        localArrayList.add(new NpColorBarEntity(0xFFFF00FF, 0xFFFF0000));
+//        localArrayList.add(new NpColorBarEntity(0xFFFF0000, 0xFF0000FF));
+//        localArrayList.add(new NpColorBarEntity(-1771130, -6779));
+//        localArrayList.add(new NpColorBarEntity(-6779, -11643));
+//        localNpColorBarBean.setNpColorBarEntityList(localArrayList);
+//        this.npCircleProgressView.setNpColorBarBean(localNpColorBarBean);
+//        this.npCircleProgressView.invalidate();
+
+
+
+
         NpColorBarBean localNpColorBarBean = new NpColorBarBean();
         localNpColorBarBean.setMinValue(35.0F);
-        localNpColorBarBean.setCursorColor(-65536);
-        localNpColorBarBean.setValueColor(-16777216);
+        localNpColorBarBean.setCursorColor(0xFFFF3500);
+        localNpColorBarBean.setValueColor(0xFF8A8A8A);
         localNpColorBarBean.setCurrentValue(-38.5F);
         localNpColorBarBean.setMaxValue(42.0F);
         localNpColorBarBean.setUseRoundMode(true);
         ArrayList localArrayList = new ArrayList();
-        localArrayList.add(new NpColorBarEntity(0xFFFF00FF, 0xFFFF0000));
-        localArrayList.add(new NpColorBarEntity(0xFFFF0000, 0xFF0000FF));
-        localArrayList.add(new NpColorBarEntity(-1771130, -6779));
-        localArrayList.add(new NpColorBarEntity(-6779, -11643));
+        localArrayList.add(new NpColorBarEntity(0xFF05B4F2, 0xFF39F2FF));//35 36
+        localArrayList.add(new NpColorBarEntity(0xFF39F2FF, 0xFFF4F785));//36 37
+        localArrayList.add(new NpColorBarEntity(0xFFFFE785, 0xFFFFE585));//37 38
+        localArrayList.add(new NpColorBarEntity(0xFFFFD285, 0xFFFFD285));//38 39
+        localArrayList.add(new NpColorBarEntity(0xFFFFBE86, 0xFFFFB886));//39 40
+        localArrayList.add(new NpColorBarEntity(0xFFFFA886, 0xFFFFA886));//40 41
+        localArrayList.add(new NpColorBarEntity(0xFFFF9386, 0xFFFF9386));//41 42
         localNpColorBarBean.setNpColorBarEntityList(localArrayList);
-        this.npCircleProgressView.setNpColorBarBean(localNpColorBarBean);
-        this.npCircleProgressView.invalidate();
+        npCircleProgressView.setNpColorBarBean(localNpColorBarBean);
+        npCircleProgressView.invalidate();
+
     }
 
     private void loadDebug() {

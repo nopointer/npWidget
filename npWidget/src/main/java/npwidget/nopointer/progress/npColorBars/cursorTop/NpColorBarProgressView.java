@@ -84,7 +84,9 @@ public class NpColorBarProgressView extends BaseView {
                     drawRoundMode();
                 }
                 drawValues();
-                drawCursor();
+                if (npColorBarBean.isShowCursor()) {
+                    drawCursor();
+                }
             }
         }
     }
@@ -105,7 +107,7 @@ public class NpColorBarProgressView extends BaseView {
         tempRectF.bottom -= tempHeight;
         float rectWidth = tempRectF.width() / colorBarCount;
 
-        for (int i=0;i<colorBarCount;i++){
+        for (int i = 0; i < colorBarCount; i++) {
             NpColorBarEntity npColorBarEntity = npColorBarEntityList.get(i);
             RectF rectF = new RectF(tempRectF);
             rectF.left += i * rectWidth;
