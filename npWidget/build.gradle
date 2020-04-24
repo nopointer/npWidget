@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion var.minSdkVersion
         targetSdkVersion var.targetSdkVersion
-        versionCode 27
-        versionName "beta_0.0.27"
+        versionCode 29
+        versionName "beta_0.0.29"
     }
 
     buildTypes {
@@ -34,5 +34,5 @@ dependencies {
     testImplementation "junit:junit:4.12"
     implementation 'com.android.support:appcompat-v7:25.3.1'
 
-    implementation "com.qmuiteam:qmui:1.1.7"
+//    implementation "com.qmuiteam:qmui:1.1.7"
 }

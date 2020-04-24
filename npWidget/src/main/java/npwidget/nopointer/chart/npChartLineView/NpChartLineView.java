@@ -20,7 +20,6 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.animation.DecelerateInterpolator;
 
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +28,7 @@ import java.util.List;
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.utils.SizeUtils;
 
 /**
  * 曲线统计图
@@ -74,11 +74,11 @@ public class NpChartLineView extends BaseView {
     }
 
     private void init(Context context) {
-        noDataTextSize = QMUIDisplayHelper.sp2px(context, 14);
-        dataMarginLeft = QMUIDisplayHelper.dp2px(context, 20);
-        pointRadius = QMUIDisplayHelper.dp2px(context, 4);
-        unitDp = QMUIDisplayHelper.dp2px(context, 1);
-        clickRangeWidth = QMUIDisplayHelper.dp2px(context, 12);
+        noDataTextSize = SizeUtils.sp2px(context, 14);
+        dataMarginLeft = SizeUtils.dp2px(context, 20);
+        pointRadius = SizeUtils.dp2px(context, 4);
+        unitDp = SizeUtils.dp2px(context, 1);
+        clickRangeWidth = SizeUtils.dp2px(context, 12);
 
         valueAnimator = new ValueAnimator();
 

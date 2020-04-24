@@ -7,10 +7,10 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.utils.SizeUtils;
 
 
 /**
@@ -77,7 +77,7 @@ public class NpCircleProgressView extends BaseView {
 
     private void init(Context context) {
 
-        circleWidth = QMUIDisplayHelper.dp2px(context, 6);
+        circleWidth = SizeUtils.dp2px(context, 6);
 
 
     }

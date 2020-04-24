@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,6 +19,7 @@ import java.util.List;
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.utils.SizeUtils;
 
 /**
  * 柱状统计图
@@ -95,8 +95,8 @@ public class NpChartColumnView extends BaseView {
 
 
     private void init(Context context) {
-        getNoDataTextSize = QMUIDisplayHelper.sp2px(context, 14);
-        clickRangeWidth = QMUIDisplayHelper.dp2px(context, 20);
+        getNoDataTextSize = SizeUtils.sp2px(context, 14);
+        clickRangeWidth = SizeUtils.dp2px(context, 20);
     }
 
     public NpChartColumnBean getChartColumnBean() {

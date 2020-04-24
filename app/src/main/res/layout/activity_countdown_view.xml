@@ -4,24 +4,22 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="320dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="#909090"
-        android:orientation="vertical">
+        android:layout_height="295dp"
+        android:layout_gravity="center"
+        android:gravity="center">
 
         <npwidget.nopointer.countDown.NpCountDownView
             android:id="@+id/npCountDownView"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_width="match_parent"
-            android:layout_height="240dp" />
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_centerInParent="true" />
 
 
     </RelativeLayout>

@@ -11,10 +11,10 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.animation.DecelerateInterpolator;
 
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.utils.SizeUtils;
 
 
 /**
@@ -25,7 +25,7 @@ public class NpCountDownView extends BaseView {
     /**
      * 可以绘制的RectF 边界，是一个正方形 会根据小边长适配大小
      */
-    private RectF viewRectF = new RectF();
+    private RectF viewRectF = null;
     private float mProgress = 0f;
 
     //表盘的指针长度
@@ -165,15 +165,15 @@ public class NpCountDownView extends BaseView {
 
     private void init(Context context) {
 
-        dialLength = QMUIDisplayHelper.dp2px(context, 8);
-        dialWidth = QMUIDisplayHelper.dp2px(context, 1);
+        dialLength = SizeUtils.dp2px(context, 8);
+        dialWidth = SizeUtils.dp2px(context, 1);
 
-        innerMargin = QMUIDisplayHelper.dp2px(context, 10);
+        innerMargin = SizeUtils.dp2px(context, 10);
 
-        progressBarRadius = QMUIDisplayHelper.dp2px(context, 6);
-        circleWidth = QMUIDisplayHelper.dp2px(context, 2);
+        progressBarRadius = SizeUtils.dp2px(context, 6);
+        circleWidth = SizeUtils.dp2px(context, 2);
 
-        unitDp = QMUIDisplayHelper.dp2px(context, 1);
+        unitDp = SizeUtils.dp2px(context, 1);
 
     }
 
@@ -182,12 +182,19 @@ public class NpCountDownView extends BaseView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        viewRectF = new RectF(getPaddingLeft(), getPaddingTop(), getMeasuredWidth() - getPaddingRight(), getMeasuredHeight() - getPaddingBottom());
+        if (getWidth()<0||getHeight()<0)return;
 
+
+        ViewLog.e("viewRectF,fuck,onMeasure");
+
+        RectF viewRectF = new RectF(getPaddingLeft(), getPaddingTop(), getMeasuredWidth() - getPaddingRight(), getMeasuredHeight() - getPaddingBottom());
+
+        ViewLog.e("viewRectF====>" + viewRectF.toString());
         reSizeRect(viewRectF);
 
         bitmap = Bitmap.createBitmap(getMeasuredWidth(), getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
+
         draw();
     }
 

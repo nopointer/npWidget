@@ -9,6 +9,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import java.util.Date;
 
 import npwidget.nopointer.R;
 import npwidget.nopointer.combinationControl.date.NpDateType;
+import npwidget.nopointer.utils.SizeUtils;
 
 /**
  * 日期选择范围的控件
@@ -38,6 +40,9 @@ public class NpDateChooseView extends RelativeLayout {
 
     //选择当前的日期类型
     private NpDateType dateType = NpDateType.MONTH;
+
+    //文字大小
+    private float textSize = 14;
 
 
     private NpDateBean npDateBean;
@@ -100,6 +105,10 @@ public class NpDateChooseView extends RelativeLayout {
 
             int textColor = typedArray.getColor(R.styleable.NpDateChooseView_textColor, context.getResources().getColor(R.color.gray));
             titleTv.setTextColor(textColor);
+
+            textSize = typedArray.getDimension(R.styleable.NpDateChooseView_textSize, SizeUtils.sp2px(context, 14));
+
+            textSize = SizeUtils.px2sp(context, (int) textSize);
 
             typedArray.recycle();
         }
@@ -165,6 +174,7 @@ public class NpDateChooseView extends RelativeLayout {
     private void init() {
 
         loadDateToView();
+        refreshTextSize();
     }
 
 
@@ -202,8 +212,17 @@ public class NpDateChooseView extends RelativeLayout {
         }
     }
 
-    public void setTextSize(float spValue) {
-        titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, spValue);
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+        refreshTextSize();
     }
 
+
+    //刷新view的大小
+    void refreshTextSize() {
+        if (textSize <= 0) {
+            textSize = 14;
+        }
+        titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+    }
 }

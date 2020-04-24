@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
@@ -16,6 +17,7 @@ import android.widget.RelativeLayout;
 import npwidget.nopointer.R;
 import npwidget.nopointer.combinationControl.date.NpDateType;
 import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.utils.SizeUtils;
 
 /**
  * 日周月年的选择样式组合控件
@@ -34,6 +36,9 @@ public class NpDateTypeSelectView extends RelativeLayout {
 
     //文字颜色选择样式
     private int textSelector = 0;
+
+    //文字大小
+    private float textSize = 14;
 
 
     private int daySelector = 0;
@@ -111,6 +116,9 @@ public class NpDateTypeSelectView extends RelativeLayout {
                 showItem = typedArray.getInt(R.styleable.NpDateTypeSelectView_show_item, 0);
 
                 textSelector = typedArray.getResourceId(R.styleable.NpDateTypeSelectView_text_selector, R.drawable.date_type_text_selector);
+                textSize = typedArray.getDimension(R.styleable.NpDateTypeSelectView_text_size, SizeUtils.sp2px(context, 14));
+
+                textSize = SizeUtils.px2sp(context, (int) textSize);
 
                 typedArray.recycle();
             }
@@ -144,6 +152,8 @@ public class NpDateTypeSelectView extends RelativeLayout {
         dateTypeViewLines[1] = findViewById(R.id.date_type_week_line);
         dateTypeViewLines[2] = findViewById(R.id.date_type_month_line);
 
+
+        refreshTextSize();
 
         date_type_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -196,4 +206,22 @@ public class NpDateTypeSelectView extends RelativeLayout {
     public void setDateTypeSelectCallback(NpDateTypeSelectCallback dateTypeSelectCallback) {
         this.dateTypeSelectCallback = dateTypeSelectCallback;
     }
+
+    public void setTextSize(float textSize) {
+        this.textSize = textSize;
+        refreshTextSize();
+    }
+
+    //刷新view的大小
+    void refreshTextSize() {
+        if (textSize <= 0) {
+            textSize = 14;
+        }
+        ViewLog.e("fuck==Size" + textSize);
+        for (RadioButton radioButton : dateTypeViews) {
+            radioButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        }
+    }
+
+
 }

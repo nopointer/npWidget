@@ -2,6 +2,7 @@ package demo.npwidget;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import npwidget.nopointer.combinationControl.date.NpDateType;
@@ -14,6 +15,7 @@ public class NpDateTypeActivity extends Activity {
 
     private NpDateTypeSelectView dateTypeSelectView;
     private NpDateChooseView npDateChooseView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,8 @@ public class NpDateTypeActivity extends Activity {
             }
         });
         npDateChooseView.setDateType(NpDateType.DAY);
-        npDateChooseView.setTextSize(14);
+        dateTypeSelectView.setTextSize(14);
+        npDateChooseView.setTextSize(10);
     }
 
 

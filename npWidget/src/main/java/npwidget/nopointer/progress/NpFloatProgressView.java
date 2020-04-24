@@ -9,10 +9,10 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.utils.SizeUtils;
 
 /**
  * 浮动的进度条
@@ -36,9 +36,9 @@ public class NpFloatProgressView extends BaseView {
 
 
     private void init(Context context) {
-        width = QMUIDisplayHelper.dp2px(context, 32);
-        raduis = QMUIDisplayHelper.dp2px(context, 3);
-        textSize = QMUIDisplayHelper.sp2px(context, 9);
+        width = SizeUtils.dp2px(context, 32);
+        raduis = SizeUtils.dp2px(context, 3);
+        textSize = SizeUtils.sp2px(context, 9);
     }
 
     /**

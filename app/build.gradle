@@ -28,4 +28,9 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     testImplementation 'junit:junit:4.12'
     implementation project(':npWidget')
+
+    implementation "com.qmuiteam:qmui:1.1.7"
+
+    //np 图表库
+//    implementation 'com.github.nopointer:npWidget:beta_0.0.27'
 }

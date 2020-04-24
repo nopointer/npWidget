@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.View;
+
+import npwidget.nopointer.log.ViewLog;
 
 public class BaseView extends View {
 
@@ -31,7 +34,7 @@ public class BaseView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (canvas != null && bitmap != null) {
-            canvas.drawBitmap(bitmap, (canvas.getWidth() - bitmap.getWidth()) / 2, (canvas.getHeight() - bitmap.getHeight()) / 2, null);
+            canvas.drawBitmap(bitmap, 0,0, null);
         }
     }
 
