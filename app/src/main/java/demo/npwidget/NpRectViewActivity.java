@@ -24,8 +24,9 @@ public class NpRectViewActivity extends Activity {
     }
 
     private void debug() {
+        npRectProgressView.setUseRoundMode(true);
         npRectProgressView.setProgressColor(0xFFFF0000);
         npRectProgressView.setBgColor(0xFFFFFFFF);
-        npRectProgressView.setmProgress(0.9f);
+        npRectProgressView.setProgress(0.9f);
     }
 }

@@ -20,7 +20,6 @@
             android:id="@+id/npRectProgressView"
             android:layout_centerHorizontal="true"
             android:layout_width="300dp"
-            android:background="#90909090"
             android:layout_height="10dp" />
 
 

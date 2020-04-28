@@ -35,6 +35,10 @@ public class NpRectProgressView extends BaseView {
     private float mProgress = 0;
     private int bgColor = 0xFFFFFF;
     private int progressColor = 0xFFFFFF;
+    /**
+     * 是否使用圆角模式
+     */
+    private boolean useRoundMode = false;
 
 
     @Override
@@ -47,8 +51,17 @@ public class NpRectProgressView extends BaseView {
     }
 
 
-    public void setmProgress(float mProgress) {
-        this.mProgress = mProgress;
+    public void setUseRoundMode(boolean useRoundMode) {
+        this.useRoundMode = useRoundMode;
+    }
+
+    /**
+     * 设置进度
+     *
+     * @param progress
+     */
+    public void setProgress(float progress) {
+        this.mProgress = progress;
         if (mProgress <= 0) {
             mProgress = 0;
         }
@@ -85,14 +98,22 @@ public class NpRectProgressView extends BaseView {
         paint.setAntiAlias(true);
 
         paint.setColor(bgColor);
-        canvas.drawRect(viewRectF, paint);
+        if (useRoundMode) {
+            canvas.drawRoundRect(viewRectF, viewRectF.height() / 2, viewRectF.height() / 2, paint);
+        } else {
+            canvas.drawRect(viewRectF, paint);
+        }
 
 
         RectF rectF = new RectF(viewRectF);
         rectF.right = viewRectF.width() * mProgress + rectF.left;
 
         paint.setColor(progressColor);
-        canvas.drawRect(rectF, paint);
+        if (useRoundMode) {
+            canvas.drawRoundRect(rectF, rectF.height() / 2, rectF.height() / 2, paint);
+        } else {
+            canvas.drawRect(rectF, paint);
+        }
 
 
     }
