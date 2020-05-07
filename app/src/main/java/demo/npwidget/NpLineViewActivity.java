@@ -3,6 +3,7 @@ package demo.npwidget;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,10 +49,10 @@ public class NpLineViewActivity extends Activity {
 
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
-        for (int i = 1; i <=12; i++) {
+        for (int i = 1; i <= 12; i++) {
             npLineEntries1.add(new NpLineEntry((i * 6) % 100));
             npLineEntries2.add(new NpLineEntry((i * 5) % 100));
-            stringList.add(i  + "");
+            stringList.add(i + "");
         }
         npChartLineDataBean1.setLineThickness(3);
         npChartLineDataBean1.setShowGradient(false);
@@ -72,7 +73,7 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBean2.setStartColor(0xFF000000);
         npChartLineDataBean2.setEndColor(0xFFFFFFFF);
         npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
-        npChartLineDataBeans.add(npChartLineDataBean2);
+//        npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpLabelList(stringList);
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
@@ -84,8 +85,15 @@ public class NpLineViewActivity extends Activity {
         chartBean.setLabelTextSize(40);
         npChartLineView.setChartBean(chartBean);
         npChartLineView.invalidate();
-    }
 
+        npChartLineView.setOnLineSelectListener(new NpChartLineView.OnLineSelectListener() {
+            @Override
+            public void onSelectLine(List<NpChartLineDataBean> lineDataBeans, int index) {
+                Log.e("fuck,onSelectLine", lineDataBeans.size() + "///" + index);
+               Log.e("fuck,tag",lineDataBeans.get(0).getNpLineEntryList().get(index).getValue()+"");
+            }
+        });
+    }
 
 
 }

@@ -12,7 +12,7 @@ public class NpLineEntry {
     /**
      * 横向的小标签
      */
-    private String tag;
+    private Object tag;
 
     public NpLineEntry() {
     }
@@ -21,7 +21,7 @@ public class NpLineEntry {
         this.value = value;
     }
 
-    public NpLineEntry(float value, String tag) {
+    public NpLineEntry(float value, Object tag) {
         this.value = value;
         this.tag = tag;
     }
@@ -34,11 +34,11 @@ public class NpLineEntry {
         this.value = value;
     }
 
-    public String getTag() {
+    public Object getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(Object tag) {
         this.tag = tag;
     }
 

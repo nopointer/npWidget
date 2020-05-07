@@ -10,9 +10,9 @@ public class NpColumnEntry {
      */
     private float value;
     /**
-     * 横向的小标签
+     * 标签
      */
-    private String tag;
+    private Object tag;
 
     public NpColumnEntry() {
     }
@@ -21,7 +21,7 @@ public class NpColumnEntry {
         this.value = value;
     }
 
-    public NpColumnEntry(float value, String tag) {
+    public NpColumnEntry(float value, Object tag) {
         this.value = value;
         this.tag = tag;
     }
@@ -34,11 +34,11 @@ public class NpColumnEntry {
         this.value = value;
     }
 
-    public String getTag() {
+    public Object getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(Object tag) {
         this.tag = tag;
     }
 

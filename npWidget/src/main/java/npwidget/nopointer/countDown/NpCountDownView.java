@@ -182,7 +182,7 @@ public class NpCountDownView extends BaseView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        if (getWidth()<0||getHeight()<0)return;
+        if (getWidth() < 0 || getHeight() < 0) return;
 
 
         ViewLog.e("viewRectF,fuck,onMeasure");
@@ -411,6 +411,9 @@ public class NpCountDownView extends BaseView {
         });
     }
 
+    /**
+     * 停止计时
+     */
     public void stopCountDown() {
         if (startAnimator != null) {
             startAnimator.removeAllUpdateListeners();
@@ -452,6 +455,20 @@ public class NpCountDownView extends BaseView {
             public void onAnimationRepeat(Animator animation) {
             }
         });
+    }
+
+
+    public void finish() {
+        if (startAnimator != null) {
+            startAnimator.removeAllUpdateListeners();
+            startAnimator.cancel();
+        }
+        isStarting = false;
+        mProgress = 1f;
+        invalidate();
+        if (npCountDownListener != null) {
+            npCountDownListener.onCountdownFinished();
+        }
     }
 
 
