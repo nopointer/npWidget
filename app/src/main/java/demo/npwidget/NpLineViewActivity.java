@@ -23,12 +23,7 @@ public class NpLineViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_view);
         npChartLineView = findViewById(R.id.npChartLineView);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                debug();
-            }
-        }, 0);
+        debug();
     }
 
     private void debug() {
@@ -49,7 +44,7 @@ public class NpLineViewActivity extends Activity {
 
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
-        for (int i = 1; i <= 12; i++) {
+        for (int i = 1; i <= 1; i++) {
             npLineEntries1.add(new NpLineEntry((i * 6) % 100));
             npLineEntries2.add(new NpLineEntry((i * 5) % 100));
             stringList.add(i + "");

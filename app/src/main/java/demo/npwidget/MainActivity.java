@@ -41,8 +41,8 @@ public class MainActivity extends Activity {
 //        SettingsPageUtils.goToSettingPage(this, PageType.AUTO_START);
 
 //        startActivity(new Intent(this, NpTimeCirclePickerViewActivity.class));
-        startActivity(new Intent(this, NpCountDwonViewActivity.class));
-//        startActivity(new Intent(this, NpLineViewActivity.class));
+//        startActivity(new Intent(this, NpCountDwonViewActivity.class));
+        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
 //        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));

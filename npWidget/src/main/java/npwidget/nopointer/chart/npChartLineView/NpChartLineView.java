@@ -19,12 +19,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.animation.DecelerateInterpolator;
-
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.log.ViewLog;
@@ -43,16 +40,13 @@ public class NpChartLineView extends BaseView {
     private ValueAnimator valueAnimator;
     private VelocityTracker velocityTracker = VelocityTracker.obtain();
 
-
     private NpChartLineBean chartBean;
-
 
     //底部文字的高度
     private float bottomLabelRangeHeight = 0;
 
     //底部文字的大小
     private float labelTextSize = 0;
-
 
     public void setChartBean(NpChartLineBean chartBean) {
         this.chartBean = chartBean;
@@ -312,6 +306,8 @@ public class NpChartLineView extends BaseView {
                 ViewLog.e("只有一个数据点，不绘制数据曲线");
                 for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
                     List<NpLineEntry> npLineEntryList = npChartLineDataBean.getNpLineEntryList();
+                    allTmpRectList.clear();
+
                     if (npLineEntryList.size() != 1) {
                         ViewLog.e("数据有误");
                     } else {
@@ -320,6 +316,14 @@ public class NpChartLineView extends BaseView {
                         paint.setAntiAlias(true);
                         float x = dataMarginLeft + viewRectF.left;
                         float y = getDataPointYPosition(npLineEntryList.get(0));
+
+                        RectF rectF = new RectF();
+                        rectF.left = x - clickRangeWidth;
+                        rectF.right = x + clickRangeWidth;
+                        rectF.top = y - clickRangeWidth;
+                        rectF.bottom = y + clickRangeWidth;
+                        allTmpRectList.add(rectF);
+
                         paint.setColor(Color.WHITE);
                         paint.setStrokeWidth(unitDp);
                         canvas.drawCircle(x, y, pointRadius, paint);
@@ -327,6 +331,9 @@ public class NpChartLineView extends BaseView {
                         paint.setColor(npChartLineDataBean.getColor());
                         canvas.drawCircle(x, y, pointRadius, paint);
                     }
+                }
+                if (onLineSelectListener != null && lastSelectIndex != -1) {
+                    onLineSelectListener.onSelectLine(lineDataBeanList, lastSelectIndex);
                 }
             } else {
                 ViewLog.e("多个数据点，可以绘制数据曲线");
@@ -613,7 +620,7 @@ public class NpChartLineView extends BaseView {
                     valueAnimator.cancel();
                 }
                 downX = event.getX();
-
+                ViewLog.e("fuck" + downX + "///");
                 for (int i = 0; i < allTmpRectList.size(); i++) {
                     if (allTmpRectList.get(i).contains(event.getX() - moveX, event.getY())) {
                         lastSelectIndex = i;
