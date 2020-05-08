@@ -19,9 +19,11 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.animation.DecelerateInterpolator;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.log.ViewLog;
@@ -50,6 +52,7 @@ public class NpChartLineView extends BaseView {
 
     public void setChartBean(NpChartLineBean chartBean) {
         this.chartBean = chartBean;
+        lastSelectIndex = -1;
     }
 
     public NpChartLineView(Context context) {
