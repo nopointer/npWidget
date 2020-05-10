@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.base.ValueFormatCallback;
+import npwidget.nopointer.log.ViewLog;
 
 /**
  * 常规的条形进度条，支持背景色和进度色的设置
@@ -303,8 +304,12 @@ public class NpRectWithValueProgressView extends BaseView {
         rectF.bottom = rectF.top + barHeight - borderWidth;
         float startProgress = (startV - minValue) / (maxValue - minValue);
         float endProgress = (endV - minValue) / (maxValue - minValue);
-        rectF.left = rectF.left + startProgress * rectF.width();
-        rectF.right = rectF.left + endProgress * rectF.width();
+
+        ViewLog.e(startProgress + "///" + endProgress);
+        float rectWidth = rectF.width();//宽度需要提前取出来 不然改了左右位置 ，宽度也会一起变
+        float startLeft = rectF.left;
+        rectF.left = startLeft + startProgress * rectWidth;
+        rectF.right = startLeft + endProgress * rectWidth;
         paint.setColor(progressColor);
         if (useRoundMode) {
             canvas.drawRoundRect(rectF, rectF.height() / 2, rectF.height() / 2, paint);

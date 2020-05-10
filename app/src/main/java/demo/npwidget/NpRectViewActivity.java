@@ -31,15 +31,15 @@ public class NpRectViewActivity extends Activity {
 
 
         npRectWithValueProgressView.setUseRoundMode(false);
-        npRectWithValueProgressView.setSegmentCount(5);
+        npRectWithValueProgressView.setSegmentCount(4);
         npRectWithValueProgressView.setBarHeight(SizeUtils.dp2px(this,20));
         npRectWithValueProgressView.setProgressColor(0xFF0000FF);
         npRectWithValueProgressView.setBorderColor(0xFF00FFFF);
         npRectWithValueProgressView.setBgColor(0xFFFFFFFF);
-        npRectWithValueProgressView.setMinValue(20);
+        npRectWithValueProgressView.setMinValue(0);
         npRectWithValueProgressView.setMaxValue(200);
-        npRectWithValueProgressView.setStartValue(30);
-        npRectWithValueProgressView.setEndValue(31);
+        npRectWithValueProgressView.setStartValue(50);
+        npRectWithValueProgressView.setEndValue(100);
         npRectWithValueProgressView.invalidate();
     }
 }
