@@ -5,7 +5,8 @@ import android.content.res.Resources;
 import android.util.DisplayMetrics;
 
 public class SizeUtils {
-    private SizeUtils(){}
+    private SizeUtils() {
+    }
 
 
     /**
@@ -52,7 +53,6 @@ public class SizeUtils {
     }
 
 
-
     /**
      * 单位转换: dp -> px
      *
@@ -91,6 +91,16 @@ public class SizeUtils {
      */
     public static int px2sp(Context context, int px) {
         return (int) (px / getFontDensity(context) + 0.5);
+    }
+
+    /**
+     * 开根号
+     *
+     * @param value
+     * @return
+     */
+    public static float getSqrt(float value) {
+        return (float) Math.sqrt(value);
     }
 
 

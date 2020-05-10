@@ -17,6 +17,7 @@ import npwidget.nopointer.progress.npColorBars.cursorTop.NpColorBarProgressView;
 import npwidget.nopointer.sleepView.NpSleepEntry;
 import npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaBean;
 import npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaView;
+import npwidget.nopointer.utils.SizeUtils;
 
 
 public class MainActivity extends Activity {
@@ -42,7 +43,7 @@ public class MainActivity extends Activity {
 
 //        startActivity(new Intent(this, NpTimeCirclePickerViewActivity.class));
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
-        startActivity(new Intent(this, NpLineViewActivity.class));
+//        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
 //        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
@@ -77,23 +78,28 @@ public class MainActivity extends Activity {
 //        this.npCircleProgressView.invalidate();
 
 
-
-
         NpColorBarBean localNpColorBarBean = new NpColorBarBean();
+        localNpColorBarBean.setShowStartEndValue(true);
         localNpColorBarBean.setMinValue(35.0F);
         localNpColorBarBean.setCursorColor(0xFFFF3500);
-        localNpColorBarBean.setValueColor(0xFF8A8A8A);
-        localNpColorBarBean.setCurrentValue(-38.5F);
+        localNpColorBarBean.setValueColor(0xFFFF0000);
+        localNpColorBarBean.setTextSize(SizeUtils.sp2px(this,14));
+        localNpColorBarBean.setValuePosition(NpColorBarBean.positionCenter);
+        localNpColorBarBean.setCursorPosition(NpColorBarBean.PositionTop);
+        localNpColorBarBean.setCursorEquilateral(true);
+        localNpColorBarBean.setCursorWidth(34);
+        localNpColorBarBean.setCursorMarginColorBar(5);
+        localNpColorBarBean.setCurrentValue(38.5F);
         localNpColorBarBean.setMaxValue(42.0F);
         localNpColorBarBean.setUseRoundMode(true);
         ArrayList localArrayList = new ArrayList();
         localArrayList.add(new NpColorBarEntity(0xFF05B4F2, 0xFF39F2FF));//35 36
         localArrayList.add(new NpColorBarEntity(0xFF39F2FF, 0xFFF4F785));//36 37
-        localArrayList.add(new NpColorBarEntity(0xFFFFE785, 0xFFFFE585));//37 38
-        localArrayList.add(new NpColorBarEntity(0xFFFFD285, 0xFFFFD285));//38 39
-        localArrayList.add(new NpColorBarEntity(0xFFFFBE86, 0xFFFFB886));//39 40
-        localArrayList.add(new NpColorBarEntity(0xFFFFA886, 0xFFFFA886));//40 41
-        localArrayList.add(new NpColorBarEntity(0xFFFF9386, 0xFFFF9386));//41 42
+//        localArrayList.add(new NpColorBarEntity(0xFFFFE785, 0xFFFFE585));//37 38
+//        localArrayList.add(new NpColorBarEntity(0xFFFFD285, 0xFFFFD285));//38 39
+//        localArrayList.add(new NpColorBarEntity(0xFFFFBE86, 0xFFFFB886));//39 40
+//        localArrayList.add(new NpColorBarEntity(0xFFFFA886, 0xFFFFA886));//40 41
+//        localArrayList.add(new NpColorBarEntity(0xFFFF9386, 0xFFFF9386));//41 42
         localNpColorBarBean.setNpColorBarEntityList(localArrayList);
         npCircleProgressView.setNpColorBarBean(localNpColorBarBean);
         npCircleProgressView.invalidate();

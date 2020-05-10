@@ -14,6 +14,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.base.ValueFormatCallback;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
 import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
+import npwidget.nopointer.utils.SizeUtils;
 
 /**
  * 带有颜色条块的进度View
@@ -92,6 +94,9 @@ public class NpColorBarProgressView extends BaseView {
     }
 
 
+    /**
+     * 绘制颜色条块
+     */
     void drawColorBars() {
         List<NpColorBarEntity> npColorBarEntityList = npColorBarBean.getNpColorBarEntityList();
         colorBarCount = npColorBarEntityList.size();
@@ -135,19 +140,44 @@ public class NpColorBarProgressView extends BaseView {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(npColorBarBean.getCursorColor());
-        float f1 = (mValue - mMinValue) / (mMaxValue - mMinValue * 1.0F);
-        f1 = viewRectF.left + viewRectF.width() * f1;
-        float f2 = viewRectF.height() / 3.0F;
-        RectF localRectF = new RectF(viewRectF);
-        localRectF.bottom = (localRectF.top + f2);
-        localRectF.top += 5.0F;
-        localRectF.bottom -= 5.0F;
-        Path localPath = new Path();
-        f2 = localRectF.height();
-        localPath.moveTo(f1, localRectF.bottom);
-        localPath.lineTo(f1 - f2 / 1.5F, localRectF.top);
-        localPath.lineTo(f2 / 1.5F + f1, localRectF.top);
-        canvas.drawPath(localPath, paint);
+        //进度
+        float progress = (mValue - mMinValue) / (mMaxValue - mMinValue * 1.0f);
+        //游标尖角指向的横坐标位置
+        float xPosition = viewRectF.left + viewRectF.width() * progress;
+        float tempHeight = viewRectF.height() / 3.0F;//总view的高度的三分之一
+
+        Path path = null;
+        float cursorWidth = npColorBarBean.getCursorWidth();
+        float cursorMarginColorBar = npColorBarBean.getCursorMarginColorBar();
+        //如果在底部的话
+        if (npColorBarBean.getCursorPosition() == NpColorBarBean.PositionBottom) {
+            path = new Path();
+            if (npColorBarBean.isCursorEquilateral()) {
+                path.moveTo(xPosition - cursorWidth / SizeUtils.getSqrt(3), viewRectF.top + tempHeight * 2 + cursorWidth + cursorMarginColorBar);
+                path.lineTo(xPosition + cursorWidth / SizeUtils.getSqrt(3), viewRectF.top + tempHeight * 2 + cursorWidth + cursorMarginColorBar);
+                path.lineTo(xPosition, viewRectF.top + tempHeight * 2 + cursorMarginColorBar);
+            } else {
+                path.moveTo(xPosition - cursorWidth, viewRectF.top + tempHeight * 2 + cursorWidth + cursorMarginColorBar);
+                path.lineTo(xPosition + cursorWidth, viewRectF.top + tempHeight * 2 + cursorWidth + cursorMarginColorBar);
+                path.lineTo(xPosition, viewRectF.top + tempHeight * 2 + cursorMarginColorBar);
+            }
+
+        } else if (npColorBarBean.getCursorPosition() == NpColorBarBean.PositionTop) {
+            //顶部
+            path = new Path();
+            if (npColorBarBean.isCursorEquilateral()) {
+                path.moveTo(xPosition - cursorWidth / SizeUtils.getSqrt(3), viewRectF.top + tempHeight - cursorWidth - cursorMarginColorBar);
+                path.lineTo(xPosition + cursorWidth / SizeUtils.getSqrt(3), viewRectF.top + tempHeight - cursorWidth - cursorMarginColorBar);
+                path.lineTo(xPosition, viewRectF.top + tempHeight - cursorMarginColorBar);
+            } else {
+                path.moveTo(xPosition - cursorWidth, viewRectF.top + tempHeight - cursorWidth - cursorMarginColorBar);
+                path.lineTo(xPosition + cursorWidth, viewRectF.top + tempHeight - cursorWidth - cursorMarginColorBar);
+                path.lineTo(xPosition, viewRectF.top + tempHeight - cursorMarginColorBar);
+            }
+        }
+        if (path != null) {
+            canvas.drawPath(path, paint);
+        }
     }
 
     /**
@@ -177,37 +207,62 @@ public class NpColorBarProgressView extends BaseView {
         if (colorBarCount <= 0) {
             return;
         }
-        float f2 = viewRectF.height() / 3.0F;
-        float f3 = viewRectF.width() / colorBarCount;
+        float tempHeight = viewRectF.height() / 3.0F;//总高度的3分之1
+        //颜色块的递增宽度
+        float rectWidthAdd = viewRectF.width() / colorBarCount;
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(npColorBarBean.getValueColor());
         ValueFormatCallback localValueFormatCallback = npColorBarBean.getValueFormatCallback();
         paint.setTextSize(npColorBarBean.getTextSize());
         paint.setStyle(Style.FILL);
-        float f4 = (mMaxValue - mMinValue) / colorBarCount;
-        int i = 0;
-        while (i <= colorBarCount) {
-            float f1 = mMinValue;
-            float f5 = i;
-            String str;
+        //递增值
+        float valueAddSpace = (mMaxValue - mMinValue) / colorBarCount;
+
+        //值的纵坐标位置
+        float valuePositionY = 0;
+        //底部
+        if (npColorBarBean.getValuePosition() == NpColorBarBean.PositionBottom) {
+            valuePositionY = viewRectF.bottom - tempHeight / 3.0F;
+        } else if (npColorBarBean.getValuePosition() == NpColorBarBean.PositionTop) {
+            //顶部
+            valuePositionY = viewRectF.bottom - tempHeight / 3.0F;
+        } else {
+            //中间
+            RectF rectF = new RectF(viewRectF);
+            rectF.top = viewRectF.top + tempHeight;
+            rectF.bottom = viewRectF.bottom - tempHeight;
+            Paint.FontMetrics fontMetrics = paint.getFontMetrics();
+            float distance = (fontMetrics.bottom - fontMetrics.top) / 2.0f - fontMetrics.bottom;
+            valuePositionY = rectF.centerY() + distance;
+        }
+        boolean isDrawThisValue = true;//是否要绘制这个数据（部分需求可能不会绘制左右起始的值）
+        for (int i = 0; i <= colorBarCount; i++) {
+            //数据值
+            float valueF = mMinValue + i * valueAddSpace;
+            //文字的横坐标
+            float textPositionX = i * rectWidthAdd + viewRectF.left;
+            String valueText;
             if (localValueFormatCallback != null) {
-                str = localValueFormatCallback.valueFormat(Float.valueOf(f1 + f5 * f4));
+                valueText = localValueFormatCallback.valueFormat(valueF);
             } else {
-                str = String.format("%d", new Object[]{Integer.valueOf(Float.valueOf(mMinValue + i * f4).intValue())});
+                valueText = String.format("%d", Float.valueOf(valueF).intValue());
             }
-            f1 = i * f3 + viewRectF.left;
             if (i == colorBarCount) {
                 paint.setTextAlign(Align.RIGHT);
-                f1 -= npColorBarBean.getTextSize() * 0.5F;
+                textPositionX -= npColorBarBean.getTextSize() * 0.5F;
+                isDrawThisValue = npColorBarBean.isShowStartEndValue();
             } else if (i == 0) {
                 paint.setTextAlign(Align.LEFT);
-                f1 += npColorBarBean.getTextSize() * 0.5F;
+                textPositionX += npColorBarBean.getTextSize() * 0.5F;
+                isDrawThisValue = npColorBarBean.isShowStartEndValue();
             } else {
                 paint.setTextAlign(Align.CENTER);
+                isDrawThisValue = true;
             }
-            canvas.drawText(str, f1, viewRectF.bottom - f2 / 3.0F, paint);
-            i += 1;
+            if (isDrawThisValue) {
+                canvas.drawText(valueText, textPositionX, valuePositionY, paint);
+            }
         }
     }
 
@@ -220,4 +275,6 @@ public class NpColorBarProgressView extends BaseView {
     public void setNpColorBarBean(NpColorBarBean paramNpColorBarBean) {
         npColorBarBean = paramNpColorBarBean;
     }
+
+
 }
