@@ -8,22 +8,18 @@
     android:orientation="vertical">
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:background="#F5F5F5"
-        android:orientation="vertical">
+    <npwidget.nopointer.progress.NpRectProgressView
+        android:id="@+id/npRectProgressView"
+        android:layout_width="300dp"
+        android:layout_height="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
 
-        <npwidget.nopointer.progress.NpRectProgressView
-            android:id="@+id/npRectProgressView"
-            android:layout_centerHorizontal="true"
-            android:layout_width="300dp"
-            android:layout_height="10dp" />
-
-
-    </RelativeLayout>
+    <npwidget.nopointer.progress.NpRectWithValueProgressView
+        android:id="@+id/npRectWithValueProgressView"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp" />
 
 
 </LinearLayout>

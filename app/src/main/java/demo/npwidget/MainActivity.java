@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import npwidget.nopointer.progress.NpCircleProgressView;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
 import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
 import npwidget.nopointer.progress.npColorBars.cursorTop.NpColorBarProgressView;
@@ -45,7 +44,7 @@ public class MainActivity extends Activity {
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
 //        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
-//        startActivity(new Intent(this, NpRectViewActivity.class));
+        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
 
 //        startActivity(new Intent(this, NpDateTypeActivity.class));
