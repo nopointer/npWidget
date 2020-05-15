@@ -28,11 +28,10 @@
         android:paddingRight="10dp" />
 
     <npwidget.nopointer.progress.battery.NpBatteryView
-        android:layout_width="18dp"
+        android:layout_width="15dp"
         android:id="@+id/npBatteryView"
-        android:rotation="360"
-        android:padding="2dp"
-        android:layout_height="30dp"
+        android:rotation="90"
+        android:layout_height="28dp"
         android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

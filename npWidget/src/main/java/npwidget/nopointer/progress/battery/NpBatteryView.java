@@ -254,7 +254,7 @@ public class NpBatteryView extends BaseView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        viewRectF = new RectF(getPaddingLeft(), getPaddingTop() + topRectHeight, getMeasuredWidth() - getPaddingRight(), getMeasuredHeight() - getPaddingBottom());
+        viewRectF = new RectF(getPaddingLeft()+borderWidth/2, getPaddingTop() + topRectHeight+borderWidth/2, getMeasuredWidth() - getPaddingRight()-borderWidth/2, getMeasuredHeight() - getPaddingBottom()-borderWidth/2);
 
         bitmap = Bitmap.createBitmap(getMeasuredWidth(), getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);

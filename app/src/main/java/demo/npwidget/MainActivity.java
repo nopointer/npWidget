@@ -63,9 +63,12 @@ public class MainActivity extends Activity {
 
     private void loadBattery() {
         npBatteryView.setBatteryColor(0xFF009900);
+        npBatteryView.setBorderColor(0xFF000000);
+        npBatteryView.setBatteryBorderRadius(5);
+        npBatteryView.setBorderWidth(4);
 //        npBatteryView.setInnerPadding(10);
-        npBatteryView.setTopRectHeight(10);
-        npBatteryView.setTopRectWidth(20);
+        npBatteryView.setTopRectHeight(8);
+        npBatteryView.setTopRectWidth(16);
         npBatteryView.setBatteryValue(90);
         npBatteryView.setShowType(NpBatteryView.TYPE_CONTINUOUS);
 //        npBatteryView.invalidate();
