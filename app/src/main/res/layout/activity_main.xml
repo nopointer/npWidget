@@ -18,14 +18,21 @@
         android:paddingBottom="15dp" />
 
 
-
     <npwidget.nopointer.progress.npColorBars.cursorTop.NpColorBarProgressView
         android:id="@+id/npCircleProgressView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:paddingRight="10dp" />
+
+    <npwidget.nopointer.progress.battery.NpBatteryView
+        android:layout_width="18dp"
+        android:id="@+id/npBatteryView"
+        android:rotation="360"
+        android:padding="2dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal" />
 
 </LinearLayout>

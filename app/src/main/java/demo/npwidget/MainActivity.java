@@ -1,7 +1,6 @@
 package demo.npwidget;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.progress.battery.NpBatteryView;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
 import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
 import npwidget.nopointer.progress.npColorBars.cursorTop.NpColorBarProgressView;
@@ -26,12 +26,15 @@ public class MainActivity extends Activity {
 
     NpColorBarProgressView npCircleProgressView;
 
+    private NpBatteryView npBatteryView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         npStateLineView = findViewById(R.id.NpChartLineView);
         npCircleProgressView = findViewById(R.id.npCircleProgressView);
+        npBatteryView = findViewById(R.id.npBatteryView);
 
 //        loadDebug();
 
@@ -44,7 +47,7 @@ public class MainActivity extends Activity {
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
 //        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
-        startActivity(new Intent(this, NpRectViewActivity.class));
+//        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
 
 //        startActivity(new Intent(this, NpDateTypeActivity.class));
@@ -52,12 +55,21 @@ public class MainActivity extends Activity {
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
 //        startActivity(new Intent(this, NpPolylineViewActivity.class));
 
-        loadDebug();
+//        loadDebug();
 
-        loadColorBar();
-
+//        loadColorBar();
+        loadBattery();
     }
 
+    private void loadBattery() {
+        npBatteryView.setBatteryColor(0xFF009900);
+//        npBatteryView.setInnerPadding(10);
+        npBatteryView.setTopRectHeight(10);
+        npBatteryView.setTopRectWidth(20);
+        npBatteryView.setBatteryValue(90);
+        npBatteryView.setShowType(NpBatteryView.TYPE_CONTINUOUS);
+//        npBatteryView.invalidate();
+    }
 
     private void loadColorBar() {
 //        NpColorBarBean localNpColorBarBean = new NpColorBarBean();
@@ -82,7 +94,7 @@ public class MainActivity extends Activity {
         localNpColorBarBean.setMinValue(35.0F);
         localNpColorBarBean.setCursorColor(0xFFFF3500);
         localNpColorBarBean.setValueColor(0xFFFF0000);
-        localNpColorBarBean.setTextSize(SizeUtils.sp2px(this,14));
+        localNpColorBarBean.setTextSize(SizeUtils.sp2px(this, 14));
         localNpColorBarBean.setValuePosition(NpColorBarBean.positionCenter);
         localNpColorBarBean.setCursorPosition(NpColorBarBean.PositionTop);
         localNpColorBarBean.setCursorEquilateral(true);
