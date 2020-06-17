@@ -235,6 +235,7 @@ public abstract class BaseDialog {
 
     public void doDismiss() {
         dismissedFlag = true;
+        isAlreadyShown =false;
         if (dialog != null && dialog.get() != null) {
             dialog.get().dismiss();
         }
