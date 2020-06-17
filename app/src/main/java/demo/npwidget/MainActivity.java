@@ -3,12 +3,20 @@ package demo.npwidget;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.extra.kongzue.dialog.interfaces.OnDismissListener;
+import npwidget.extra.kongzue.dialog.v3.CustomDialog;
+import npwidget.extra.kongzue.dialog.v3.TipDialog;
+import npwidget.extra.kongzue.dialog.v3.WaitDialog;
 import npwidget.nopointer.progress.battery.NpBatteryView;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
 import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
@@ -19,7 +27,7 @@ import npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaView;
 import npwidget.nopointer.utils.SizeUtils;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
 
     private NpSleepStateAreaView npStateLineView;
@@ -59,6 +67,41 @@ public class MainActivity extends Activity {
 
 //        loadColorBar();
         loadBattery();
+
+        WaitDialog.show(this, "");
+        WaitDialog.dismiss(2000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        TipDialog.show(MainActivity.this, "成功！", TipDialog.TYPE.SUCCESS).setOnDismissListener(new OnDismissListener() {
+//                            @Override
+//                            public void onDismiss() {
+//
+//                            }
+//                        }) ;
+//                    }
+//                });
+//            }
+//        }, 1000);
+
+
+
+        CustomDialog.build(this, R.layout.layout_custom_dialog, new CustomDialog.OnBindView() {
+            @Override
+            public void onBind(final CustomDialog dialog, View v) {
+                ImageView btnOk = v.findViewById(R.id.btn_ok);
+
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.doDismiss();
+                    }
+                });
+            }
+        }).setAlign(CustomDialog.ALIGN.TOP).setCancelable(true).show();
     }
 
     private void loadBattery() {
