@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -100,7 +99,7 @@ public class BottomMenu extends BaseDialog {
         }
     }
     
-    public static BottomMenu show(@NonNull AppCompatActivity context, List<String> menuTextList, OnMenuItemClickListener onMenuItemClickListener) {
+    public static BottomMenu show(@NonNull FragmentActivity context, List<String> menuTextList, OnMenuItemClickListener onMenuItemClickListener) {
         BottomMenu bottomMenu = build(context);
         bottomMenu.menuTextList = menuTextList;
         bottomMenu.onMenuItemClickListener = onMenuItemClickListener;
@@ -108,7 +107,7 @@ public class BottomMenu extends BaseDialog {
         return bottomMenu;
     }
     
-    public static BottomMenu show(@NonNull AppCompatActivity context, BaseAdapter customAdapter, OnMenuItemClickListener onMenuItemClickListener) {
+    public static BottomMenu show(@NonNull FragmentActivity context, BaseAdapter customAdapter, OnMenuItemClickListener onMenuItemClickListener) {
         BottomMenu bottomMenu = build(context);
         bottomMenu.customAdapter = customAdapter;
         bottomMenu.onMenuItemClickListener = onMenuItemClickListener;
@@ -116,7 +115,7 @@ public class BottomMenu extends BaseDialog {
         return bottomMenu;
     }
     
-    public static BottomMenu show(@NonNull AppCompatActivity context, String title, List<String> menuTextList, OnMenuItemClickListener onMenuItemClickListener) {
+    public static BottomMenu show(@NonNull FragmentActivity context, String title, List<String> menuTextList, OnMenuItemClickListener onMenuItemClickListener) {
         BottomMenu bottomMenu = build(context);
         bottomMenu.menuTextList = menuTextList;
         bottomMenu.title = title;
@@ -125,7 +124,7 @@ public class BottomMenu extends BaseDialog {
         return bottomMenu;
     }
     
-    public static BottomMenu show(@NonNull AppCompatActivity context, String title, BaseAdapter customAdapter, OnMenuItemClickListener onMenuItemClickListener) {
+    public static BottomMenu show(@NonNull FragmentActivity context, String title, BaseAdapter customAdapter, OnMenuItemClickListener onMenuItemClickListener) {
         BottomMenu bottomMenu = build(context);
         bottomMenu.customAdapter = customAdapter;
         bottomMenu.title = title;
@@ -134,7 +133,7 @@ public class BottomMenu extends BaseDialog {
         return bottomMenu;
     }
     
-    public static BottomMenu show(@NonNull AppCompatActivity context, String[] menuTexts, OnMenuItemClickListener onMenuItemClickListener) {
+    public static BottomMenu show(@NonNull FragmentActivity context, String[] menuTexts, OnMenuItemClickListener onMenuItemClickListener) {
         BottomMenu bottomMenu = build(context);
         List<String> list = new ArrayList<>();
         for (String s : menuTexts) {
@@ -146,7 +145,7 @@ public class BottomMenu extends BaseDialog {
         return bottomMenu;
     }
     
-    public static BottomMenu show(@NonNull AppCompatActivity context, String title, String[] menuTexts, OnMenuItemClickListener onMenuItemClickListener) {
+    public static BottomMenu show(@NonNull FragmentActivity context, String title, String[] menuTexts, OnMenuItemClickListener onMenuItemClickListener) {
         BottomMenu bottomMenu = build(context);
         List<String> list = new ArrayList<>();
         for (String s : menuTexts) {
