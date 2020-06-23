@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
+
 import npwidget.nopointer.combinationControl.date.NpDateType;
+import npwidget.nopointer.combinationControl.date.dateChoose.NpDateBean;
 import npwidget.nopointer.combinationControl.date.dateChoose.NpDateChooseView;
 import npwidget.nopointer.combinationControl.date.dateType.NpDateTypeSelectCallback;
 import npwidget.nopointer.combinationControl.date.dateType.NpDateTypeSelectView;
@@ -39,6 +42,9 @@ public class NpDateTypeActivity extends Activity {
         npDateChooseView.setDateType(NpDateType.DAY);
         dateTypeSelectView.setTextSize(14);
         npDateChooseView.setTextSize(10);
+
+
+        npDateChooseView.setDayIndex(-10);
     }
 
 

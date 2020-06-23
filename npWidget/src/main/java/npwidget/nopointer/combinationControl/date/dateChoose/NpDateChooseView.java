@@ -51,8 +51,11 @@ public class NpDateChooseView extends RelativeLayout {
         return npDateBean;
     }
 
-    public void setNpDateBean(NpDateBean npDateBean) {
-        this.npDateBean = npDateBean;
+    public void setDayIndex(int dayIndex) {
+        if (dayIndex > 0) {
+            dayIndex = 0;
+        }
+        this.dayIndex = dayIndex;
         loadDateToView();
     }
 
@@ -189,14 +192,9 @@ public class NpDateChooseView extends RelativeLayout {
      * 加载数据
      */
     private void loadDateToView() {
-        if (npDateBean == null) {
-            npDateBean = new NpDateBean();
-            npDateBean.setStartDate(new Date(System.currentTimeMillis()));
-            npDateBean.setEndDate(new Date(System.currentTimeMillis()));
-        }
         switch (dateType) {
             case DAY:
-                npDateBean = NpDateBean.getDayDateBean(npDateBean.getStartDate(), dayIndex);
+                npDateBean = NpDateBean.getDayDateBean(new Date(System.currentTimeMillis()), dayIndex);
                 break;
             case WEEK:
                 npDateBean = NpDateBean.getWeekDateBean(new Date(System.currentTimeMillis()), weekIndex);
