@@ -47,6 +47,15 @@ public class NpDateChooseView extends RelativeLayout {
 
     private NpDateBean npDateBean;
 
+    public NpDateBean getNpDateBean() {
+        return npDateBean;
+    }
+
+    public void setNpDateBean(NpDateBean npDateBean) {
+        this.npDateBean = npDateBean;
+        updateDateShow();
+    }
+
     private NpDataChooseCallback npDataChooseCallback;
 
 

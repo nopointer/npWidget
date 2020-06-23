@@ -8,13 +8,19 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.extra.kongzue.dialog.interfaces.OnDialogButtonClickListener;
 import npwidget.extra.kongzue.dialog.interfaces.OnDismissListener;
+import npwidget.extra.kongzue.dialog.interfaces.OnInputDialogButtonClickListener;
+import npwidget.extra.kongzue.dialog.util.BaseDialog;
+import npwidget.extra.kongzue.dialog.util.DialogSettings;
 import npwidget.extra.kongzue.dialog.v3.CustomDialog;
+import npwidget.extra.kongzue.dialog.v3.InputDialog;
 import npwidget.extra.kongzue.dialog.v3.TipDialog;
 import npwidget.extra.kongzue.dialog.v3.WaitDialog;
 import npwidget.nopointer.progress.battery.NpBatteryView;
@@ -44,6 +50,7 @@ public class MainActivity extends FragmentActivity {
         npCircleProgressView = findViewById(R.id.npCircleProgressView);
         npBatteryView = findViewById(R.id.npBatteryView);
 
+//        DialogSettings.style = DialogSettings.STYLE;
 //        loadDebug();
 
 //        startService(new Intent(this, KeepService.class));
@@ -88,20 +95,54 @@ public class MainActivity extends FragmentActivity {
 //        }, 1000);
 
 
+//        CustomDialog.build(this, R.layout.layout_custom_dialog, new CustomDialog.OnBindView() {
+//            @Override
+//            public void onBind(final CustomDialog dialog, View v) {
+//                ImageView btnOk = v.findViewById(R.id.btn_ok);
+//
+//                btnOk.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        dialog.doDismiss();
+//                    }
+//                });
+//            }
+//        }).setAlign(CustomDialog.ALIGN.TOP).setCancelable(true).show();
 
-        CustomDialog.build(this, R.layout.layout_custom_dialog, new CustomDialog.OnBindView() {
-            @Override
-            public void onBind(final CustomDialog dialog, View v) {
-                ImageView btnOk = v.findViewById(R.id.btn_ok);
 
-                btnOk.setOnClickListener(new View.OnClickListener() {
+        InputDialog.show(this, "title", "message", "确定", "取消")
+                .setOnOkButtonClickListener(new OnInputDialogButtonClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        dialog.doDismiss();
+                    public boolean onClick(BaseDialog baseDialog, View v, String inputStr) {
+                        return false;
                     }
-                });
+                })
+                .setOnOkButtonClickListener(new OnDialogButtonClickListener() {
+                    @Override
+                    public boolean onClick(BaseDialog baseDialog, View v) {
+                        InputDialog dialog = (InputDialog) baseDialog;
+                        String nickName = dialog.getInputText();
+                        Toast.makeText(getApplicationContext(), nickName, 0).show();
+                        return true;
+                    }
+                })
+                .setOnCancelButtonClickListener(new OnDialogButtonClickListener() {
+                    @Override
+                    public boolean onClick(BaseDialog baseDialog, View v) {
+                        InputDialog dialog = (InputDialog) baseDialog;
+                        String nickName = dialog.getInputText();
+                        Toast.makeText(getApplicationContext(), nickName, 0).show();
+                        return true;
+                    }
+                }).setOnOtherButtonClickListener(new OnDialogButtonClickListener() {
+            @Override
+            public boolean onClick(BaseDialog baseDialog, View v) {
+                InputDialog dialog = (InputDialog) baseDialog;
+                String nickName = dialog.getInputText();
+                Toast.makeText(getApplicationContext(), nickName, 0).show();
+                return false;
             }
-        }).setAlign(CustomDialog.ALIGN.TOP).setCancelable(true).show();
+        }).setMessage("sssss");
     }
 
     private void loadBattery() {

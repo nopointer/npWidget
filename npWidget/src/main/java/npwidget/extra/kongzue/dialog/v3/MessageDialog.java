@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -223,6 +224,7 @@ public class MessageDialog extends BaseDialog {
                 btnSelectOther = rootView.findViewById(R.id.btn_selectOther);
                 splitVertical2 = rootView.findViewById(R.id.split_vertical2);
                 btnSelectPositive = rootView.findViewById(R.id.btn_selectPositive);
+                Log.e("fuck","启动对话框");
                 boxInput = rootView.findViewById(R.id.box_input);
             }
         }
