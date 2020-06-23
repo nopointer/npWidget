@@ -53,7 +53,7 @@ public class NpDateChooseView extends RelativeLayout {
 
     public void setNpDateBean(NpDateBean npDateBean) {
         this.npDateBean = npDateBean;
-        updateDateShow();
+        loadDateToView();
     }
 
     private NpDataChooseCallback npDataChooseCallback;
@@ -175,8 +175,6 @@ public class NpDateChooseView extends RelativeLayout {
                 }
             }
         });
-
-
         init();
     }
 
@@ -191,9 +189,14 @@ public class NpDateChooseView extends RelativeLayout {
      * 加载数据
      */
     private void loadDateToView() {
+        if (npDateBean == null) {
+            npDateBean = new NpDateBean();
+            npDateBean.setStartDate(new Date(System.currentTimeMillis()));
+            npDateBean.setEndDate(new Date(System.currentTimeMillis()));
+        }
         switch (dateType) {
             case DAY:
-                npDateBean = NpDateBean.getDayDateBean(new Date(System.currentTimeMillis()), dayIndex);
+                npDateBean = NpDateBean.getDayDateBean(npDateBean.getStartDate(), dayIndex);
                 break;
             case WEEK:
                 npDateBean = NpDateBean.getWeekDateBean(new Date(System.currentTimeMillis()), weekIndex);
