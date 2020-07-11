@@ -7,6 +7,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnDataBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnView;
@@ -34,9 +35,9 @@ public class NpColumnViewActivity extends Activity {
 
     private void debug() {
         NpChartColumnBean chartBean = new NpChartColumnBean();
-        chartBean.setAutoSelectMaxData(false);
         chartBean.setShowXAxis(true);
         chartBean.setShowYAxis(false);
+        chartBean.setNpSelectMode(NpSelectMode.SELECT_MIN);
 
         chartBean.setMinY(0);
 

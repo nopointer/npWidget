@@ -3,6 +3,7 @@ package npwidget.nopointer.chart.npChartColumnView;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 
 public class NpChartColumnBean {
@@ -83,10 +84,7 @@ public class NpChartColumnBean {
     private int labelTextColor = 0xFF000000;
 
 
-    /**
-     * 是否是自动选中最高的数据
-     */
-    private boolean isAutoSelectMaxData = false;
+    private NpSelectMode npSelectMode = NpSelectMode.NONE;
 
 
     /**
@@ -249,12 +247,12 @@ public class NpChartColumnBean {
         this.selectColumenColor = selectColumenColor;
     }
 
-    public boolean isAutoSelectMaxData() {
-        return isAutoSelectMaxData;
+    public NpSelectMode getNpSelectMode() {
+        return npSelectMode;
     }
 
-    public void setAutoSelectMaxData(boolean autoSelectMaxData) {
-        isAutoSelectMaxData = autoSelectMaxData;
+    public void setNpSelectMode(NpSelectMode npSelectMode) {
+        this.npSelectMode = npSelectMode;
     }
 
     @Override
@@ -275,7 +273,7 @@ public class NpChartColumnBean {
                 ", labelTextSize=" + labelTextSize +
                 ", bottomHeight=" + bottomHeight +
                 ", labelTextColor=" + labelTextColor +
-                ", isAutoSelectMaxData=" + isAutoSelectMaxData +
+                ", npSelectMode=" + npSelectMode +
                 ", npChartColumnDataBeans=" + npChartColumnDataBeans +
                 ", selectColumenColor=" + selectColumenColor +
                 ", npLabelList=" + npLabelList +

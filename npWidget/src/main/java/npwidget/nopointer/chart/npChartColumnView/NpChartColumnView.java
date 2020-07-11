@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 import npwidget.nopointer.base.BaseView;
+import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.log.ViewLog;
 import npwidget.nopointer.utils.SizeUtils;
@@ -114,7 +115,7 @@ public class NpChartColumnView extends BaseView {
 
     public void setChartColumnBean(NpChartColumnBean chartColumnBean) {
         this.chartColumnBean = chartColumnBean;
-        lastSelectIndex=-1;
+        lastSelectIndex = -1;
         hasClick = false;
     }
 
@@ -154,13 +155,27 @@ public class NpChartColumnView extends BaseView {
                         drawNoData();
                     } else {
                         drawDataColumns();
-                        if (!hasClick && chartColumnBean.isAutoSelectMaxData()) {
-                            for (int i = 0; i < allColumnDataSum.size(); i++) {
-                                if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
-                                    lastSelectIndex = i;
-                                    break;
+                        if (!hasClick) {
+                            if (chartColumnBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST) {
+                                lastSelectIndex = 0;
+                            } else if (chartColumnBean.getNpSelectMode() == NpSelectMode.SELECT_LAST) {
+                                lastSelectIndex = chartColumnBean.getNpChartColumnDataBeans().size() - 1;
+                            } else if (chartColumnBean.getNpSelectMode() == NpSelectMode.SELECT_MIN) {
+                                for (int i = 0; i < allColumnDataSum.size(); i++) {
+                                    if (allColumnDataSum.get(i) == Collections.min(allColumnDataSum)) {
+                                        lastSelectIndex = i;
+                                        break;
+                                    }
+                                }
+                            } else if (chartColumnBean.getNpSelectMode() == NpSelectMode.SELECT_MAX) {
+                                for (int i = 0; i < allColumnDataSum.size(); i++) {
+                                    if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
+                                        lastSelectIndex = i;
+                                        break;
+                                    }
                                 }
                             }
+
                         }
                         drawSelectColumn();
                     }
