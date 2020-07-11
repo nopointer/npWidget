@@ -114,6 +114,7 @@ public class NpChartColumnView extends BaseView {
 
     public void setChartColumnBean(NpChartColumnBean chartColumnBean) {
         this.chartColumnBean = chartColumnBean;
+        lastSelectIndex=-1;
         hasClick = false;
     }
 

@@ -34,7 +34,7 @@ public class NpColumnViewActivity extends Activity {
 
     private void debug() {
         NpChartColumnBean chartBean = new NpChartColumnBean();
-        chartBean.setAutoSelectMaxData(true);
+        chartBean.setAutoSelectMaxData(false);
         chartBean.setShowXAxis(true);
         chartBean.setShowYAxis(false);
 
@@ -72,7 +72,7 @@ public class NpColumnViewActivity extends Activity {
         chartBean.setMarginRight(40);
         chartBean.setNpChartColumnDataBeans(npChartColumnDataBeans);
         chartBean.setShowLabels(true);
-        chartBean.setMaxY(220);
+        chartBean.setMaxY(120);
         chartBean.setColumnWidth(50);
         chartBean.setLabelTextColor(0xFF660000);
         chartBean.setLabelTextSize(40);
