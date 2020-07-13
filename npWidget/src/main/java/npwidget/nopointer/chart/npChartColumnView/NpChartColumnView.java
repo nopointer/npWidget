@@ -174,6 +174,20 @@ public class NpChartColumnView extends BaseView {
                                         break;
                                     }
                                 }
+                            } else if (chartColumnBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST_NOT_NULL) {
+                                for (int i = 0; i < allColumnDataSum.size(); i++) {
+                                    if (allColumnDataSum.get(i) > chartColumnBean.getMinY()) {
+                                        lastSelectIndex = i;
+                                        break;
+                                    }
+                                }
+                            } else if (chartColumnBean.getNpSelectMode() == NpSelectMode.SELECT_LAST_NOT_NULL) {
+                                for (int i = allColumnDataSum.size() - 1; i >= 0; i--) {
+                                    if (allColumnDataSum.get(i) > chartColumnBean.getMinY()) {
+                                        lastSelectIndex = i;
+                                        break;
+                                    }
+                                }
                             }
 
                         }

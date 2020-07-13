@@ -12,6 +12,7 @@ import npwidget.nopointer.chart.npChartColumnView.NpChartColumnBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnDataBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnView;
 import npwidget.nopointer.chart.npChartColumnView.NpColumnEntry;
+import npwidget.nopointer.log.ViewLog;
 
 public class NpColumnViewActivity extends Activity {
 
@@ -34,10 +35,15 @@ public class NpColumnViewActivity extends Activity {
     }
 
     private void debug() {
+
+        for (int i=4;i>=0;i--){
+            ViewLog.e("index i:"+i);
+        }
+
         NpChartColumnBean chartBean = new NpChartColumnBean();
         chartBean.setShowXAxis(true);
         chartBean.setShowYAxis(false);
-        chartBean.setNpSelectMode(NpSelectMode.SELECT_MIN);
+        chartBean.setNpSelectMode(NpSelectMode.SELECT_FIRST_NOT_NULL);
 
         chartBean.setMinY(0);
 
@@ -50,12 +56,12 @@ public class NpColumnViewActivity extends Activity {
         List<Integer> colorList = new ArrayList<>();
         colorList.add(0xFF00FF99);
         colorList.add(0xFFFF0099);
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 0; i <= 6; i++) {
             NpChartColumnDataBean npChartColumnDataBean = new NpChartColumnDataBean();
             npChartColumnDataBean.setColorList(colorList);
 
             List<NpColumnEntry> npColumnEntries = new ArrayList<>();
-            npColumnEntries.add(new NpColumnEntry((i * 13)%30));
+            npColumnEntries.add(new NpColumnEntry((i * 15)%30));
             if (i % 7 == 0) {
                 stringList.add(i + "");
             } else {

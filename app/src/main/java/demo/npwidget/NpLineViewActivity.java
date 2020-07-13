@@ -8,6 +8,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineBean;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineDataBean;
@@ -44,7 +45,7 @@ public class NpLineViewActivity extends Activity {
 
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
-        for (int i = 1; i <= 1; i++) {
+        for (int i = 1; i <= 10; i++) {
             npLineEntries1.add(new NpLineEntry((i * 6) % 100));
             npLineEntries2.add(new NpLineEntry((i * 5) % 100));
             stringList.add(i + "");
@@ -75,8 +76,9 @@ public class NpLineViewActivity extends Activity {
         chartBean.setShowDataType(NpShowDataType.Slide);
         chartBean.setLabelSpaceWidth(200);
         chartBean.setMinY(0);
-        chartBean.setMaxY(100);
+        chartBean.setMaxY(80);
         chartBean.setShowLabels(true);
+        chartBean.setNpSelectMode(NpSelectMode.SELECT_MIN);
         chartBean.setLabelTextSize(40);
         npChartLineView.setChartBean(chartBean);
         npChartLineView.invalidate();

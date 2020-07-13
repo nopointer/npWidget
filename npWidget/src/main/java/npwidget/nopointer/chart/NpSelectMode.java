@@ -24,6 +24,16 @@ public enum NpSelectMode {
     SELECT_MAX,
 
     /**
+     * 选择第一个有效数据
+     */
+    SELECT_FIRST_NOT_NULL,
+
+    /**
+     * 选择最后一个有效数据
+     */
+    SELECT_LAST_NOT_NULL,
+
+    /**
      * 不选中
      */
     NONE

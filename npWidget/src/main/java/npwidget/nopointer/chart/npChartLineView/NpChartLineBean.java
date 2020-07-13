@@ -3,6 +3,7 @@ package npwidget.nopointer.chart.npChartLineView;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 
 public class NpChartLineBean {
@@ -84,6 +85,18 @@ public class NpChartLineBean {
      * 横向的lable集合
      */
     private List<String> npLabelList = new ArrayList<>();
+
+    private NpSelectMode npSelectMode = NpSelectMode.NONE;
+
+
+    public NpSelectMode getNpSelectMode() {
+        return npSelectMode;
+    }
+
+    public void setNpSelectMode(NpSelectMode npSelectMode) {
+        this.npSelectMode = npSelectMode;
+    }
+
 
 
     public float getMaxY() {

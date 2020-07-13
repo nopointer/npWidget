@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 import npwidget.nopointer.base.BaseView;
+import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.log.ViewLog;
 import npwidget.nopointer.utils.SizeUtils;
@@ -50,9 +51,14 @@ public class NpChartLineView extends BaseView {
     //底部文字的大小
     private float labelTextSize = 0;
 
+
+    //是否是已经点击过了
+    private boolean hasClick = false;
+
     public void setChartBean(NpChartLineBean chartBean) {
         this.chartBean = chartBean;
         lastSelectIndex = -1;
+        hasClick = false;
     }
 
     public NpChartLineView(Context context) {
@@ -138,10 +144,6 @@ public class NpChartLineView extends BaseView {
 
     private float unitDp = 1;
 
-    /**
-     * 是否是自动选中最后一个数据
-     */
-    private boolean isAutoSelectLastData = false;
 
     //上次选择的索引
     private int lastSelectIndex = -1;
@@ -376,6 +378,43 @@ public class NpChartLineView extends BaseView {
                 for (int i = 0; i < lineDataBeanList.size(); i++) {
                     List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
                     if (npLineEntries != null && npLineEntries.size() > 0) {
+
+                        if (!hasClick) {
+                            if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST) {
+                                lastSelectIndex = 0;
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST) {
+                                lastSelectIndex = npLineEntries.size() - 1;
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MIN) {
+//                                for (int t = 0; t < allColumnDataSum.size(); t++) {
+//                                    if (allColumnDataSum.get(t) == Collections.min(allColumnDataSum)) {
+//                                        lastSelectIndex = t;
+//                                        break;
+//                                    }
+//                                }
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MAX) {
+//                                for (int t = 0; i < allColumnDataSum.size(); i++) {
+//                                    if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
+//                                        lastSelectIndex = i;
+//                                        break;
+//                                    }
+//                                }
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST_NOT_NULL) {
+                                for (int t = 0; t < npLineEntries.size(); t++) {
+                                    if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
+                                        lastSelectIndex = t;
+                                        break;
+                                    }
+                                }
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST_NOT_NULL) {
+                                for (int t = npLineEntries.size() - 1; t >= 0; t--) {
+                                    if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
+                                        lastSelectIndex = t;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
                         if (lastSelectIndex != -1) {
                             Paint paint = new Paint();
                             paint.setAntiAlias(true);
@@ -627,6 +666,7 @@ public class NpChartLineView extends BaseView {
                 for (int i = 0; i < allTmpRectList.size(); i++) {
                     if (allTmpRectList.get(i).contains(event.getX() - moveX, event.getY())) {
                         lastSelectIndex = i;
+                        hasClick = true;
                         postInvalidateDelayed(20);
                         ViewLog.e("lastSelectIndex===>" + lastSelectIndex);
                         break;
