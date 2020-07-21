@@ -174,9 +174,11 @@ public class NpChartLineView extends BaseView {
         viewRectF.top = getPaddingTop();
         viewRectF.right = getMeasuredWidth() - getPaddingRight();
         viewRectF.bottom = getMeasuredHeight() - getPaddingBottom();
-        bitmap = Bitmap.createBitmap(viewRectF.width(), viewRectF.height(), Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        draw();
+        if (viewRectF.width() > 0 && viewRectF.height() > 0) {
+            bitmap = Bitmap.createBitmap(viewRectF.width(), viewRectF.height(), Bitmap.Config.ARGB_8888);
+            canvas = new Canvas(bitmap);
+            draw();
+        }
     }
 
 
