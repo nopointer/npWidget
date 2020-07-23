@@ -322,7 +322,7 @@ public class NpChartLineView extends BaseView {
                     String text = chartLabels.get(i);
                     if (i == 0) {
                         paint.setTextAlign(Paint.Align.LEFT);
-                    } else if (i == maxLabel - 1) {
+                    } else if (i == maxLabel - 1 && maxLabel > 2) {
                         paint.setTextAlign(Paint.Align.RIGHT);
                     } else {
                         paint.setTextAlign(Paint.Align.CENTER);
@@ -636,9 +636,9 @@ public class NpChartLineView extends BaseView {
         }
 
         if (isClosed) {
-            path.lineTo((dataLen - 1) * xDisAdd + leftMargin , (thisTotalHeight * (1.0f - precent2)));
-            path.lineTo((dataLen - 1) * xDisAdd + leftMargin , thisTotalHeight);
-            path.lineTo(leftMargin , thisTotalHeight);
+            path.lineTo((dataLen - 1) * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent2)));
+            path.lineTo((dataLen - 1) * xDisAdd + leftMargin, thisTotalHeight);
+            path.lineTo(leftMargin, thisTotalHeight);
         }
 
         pathData.setPath(path);
