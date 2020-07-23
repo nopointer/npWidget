@@ -106,7 +106,6 @@ public class NpChartLineView extends BaseView {
             canvasBg = typedArray.getResourceId(R.styleable.NpChartLineView_canvasBg, 0xFFFFFFFF);
             typedArray.recycle();
         }
-
     }
 
     //绘制没有数据的时候的文字大小
@@ -239,11 +238,11 @@ public class NpChartLineView extends BaseView {
             paint.setColor(canvasBg);
 
             //左边mask
-            RectF maskRectF = new RectF(0, 0, dataMarginLeft - 1, viewRectF.bottom);
+            RectF maskRectF = new RectF(0, 0, dataMarginLeft - 1 - pointRadius, viewRectF.bottom);
             canvas.drawRect(maskRectF, paint);
 
             //右边mask
-            maskRectF.left = viewRectF.width() - dataMarginRight;
+            maskRectF.left = viewRectF.width() - dataMarginRight + pointRadius;
             maskRectF.right = viewRectF.width();
             canvas.drawRect(maskRectF, paint);
         }
@@ -263,13 +262,13 @@ public class NpChartLineView extends BaseView {
             //绘制X轴 纵向高度一致，统一一个变量记录高度
             float lineBottom = viewRectF.bottom - bottomLabelRangeHeight;
             ViewLog.e("xy矩形:" + viewRectF.toString());
-            canvas.drawLine(dataMarginLeft, lineBottom, viewRectF.width() - dataMarginRight, lineBottom, paint);
+            canvas.drawLine(dataMarginLeft - pointRadius, lineBottom, viewRectF.width() - dataMarginRight, lineBottom, paint);
         }
 
         if (chartBean.isShowYAxis()) {
             //绘制Y轴 横向宽度一致，统一一个变量记录宽度
             float lineLeft = dataMarginLeft;
-            canvas.drawLine(lineLeft, viewRectF.top, lineLeft, viewRectF.bottom - bottomLabelRangeHeight, paint);
+            canvas.drawLine(lineLeft - pointRadius, viewRectF.top, lineLeft - pointRadius, viewRectF.bottom - bottomLabelRangeHeight, paint);
         }
 
     }
