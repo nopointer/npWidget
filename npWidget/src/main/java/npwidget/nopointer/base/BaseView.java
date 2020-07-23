@@ -49,8 +49,7 @@ public class BaseView extends View {
     protected void clearBitmap() {
         if (canvas == null)
             return;
-//        canvas.drawColor(Color.GREEN, PorterDuff.Mode.CLEAR);
-        canvas.drawColor(Color.GREEN);
+        canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
     }
 
 
