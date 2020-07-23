@@ -28,13 +28,17 @@ public class BaseView extends View {
     //画布
     protected Canvas canvas;
     protected Bitmap bitmap;
+    private int canvasBg =0xFFFFFFFF;
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (canvas != null && bitmap != null) {
-            canvas.drawBitmap(bitmap, 0,0, null);
+            ViewLog.e("canvas.width()" + canvas.getWidth());
+            ViewLog.e("bitmap.width()" + bitmap.getWidth());
+            canvas.drawColor(canvasBg);
+            canvas.drawBitmap(bitmap, (canvas.getWidth() - bitmap.getWidth()) / 2, 0, null);
         }
     }
 
@@ -45,8 +49,8 @@ public class BaseView extends View {
     protected void clearBitmap() {
         if (canvas == null)
             return;
-        canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
-
+//        canvas.drawColor(Color.GREEN, PorterDuff.Mode.CLEAR);
+        canvas.drawColor(Color.GREEN);
     }
 
 
@@ -58,6 +62,7 @@ public class BaseView extends View {
     protected void clearBitmap(int color) {
         if (canvas == null)
             return;
+        this.canvasBg =color;
         canvas.drawColor(color, PorterDuff.Mode.CLEAR);
     }
 

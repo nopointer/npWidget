@@ -20,9 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="@color/gray" />
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
 
 
     </RelativeLayout>

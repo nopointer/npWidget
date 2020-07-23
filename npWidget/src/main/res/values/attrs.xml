@@ -74,10 +74,16 @@
     </declare-styleable>
 
 
+    <declare-styleable name="NpChartLineView">
+
+        <!--数据距离左边的位置-->
+        <attr name="dataMarginLeft" format="dimension" />
+        <attr name="dataMarginRight" format="dimension" />
+        <!--底层画布的底色-->
+        <attr name="canvasBg" format="color" />
 
 
-
-
+    </declare-styleable>
 
 
 </resources>

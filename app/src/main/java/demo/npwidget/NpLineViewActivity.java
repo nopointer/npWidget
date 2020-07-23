@@ -51,7 +51,7 @@ public class NpLineViewActivity extends Activity {
             stringList.add(i + "");
         }
         npChartLineDataBean1.setLineThickness(3);
-        npChartLineDataBean1.setShowGradient(false);
+        npChartLineDataBean1.setShowGradient(true);
         npChartLineDataBean1.setShowShadow(false);
 
         npChartLineDataBean1.setColor(0xFFFF00FF);
