@@ -262,7 +262,7 @@ public class NpChartLineView extends BaseView {
             //绘制X轴 纵向高度一致，统一一个变量记录高度
             float lineBottom = viewRectF.bottom - bottomLabelRangeHeight;
             ViewLog.e("xy矩形:" + viewRectF.toString());
-            canvas.drawLine(dataMarginLeft - pointRadius, lineBottom, viewRectF.width() - dataMarginRight, lineBottom, paint);
+            canvas.drawLine(dataMarginLeft - pointRadius, lineBottom, viewRectF.width() - dataMarginRight+pointRadius, lineBottom, paint);
         }
 
         if (chartBean.isShowYAxis()) {
