@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="SelectCharHeaderView" tools:ignore="ResourceName">
+        <!--cell圆角大小-->
+        <attr name="cell_radius" format="dimension"/>
+        <!--cell高度-->
+        <attr name="cell_height" format="dimension"/>
+        <!--cell上下边距-->
+        <attr name="cell_padding_vertical" format="dimension"/>
+        <!--cell左右边距-->
+        <attr name="cell_padding_horizontal" format="dimension"/>
+        <!--cell背景色-->
+        <attr name="cell_background" format="color"/>
+        <!--cell文本大小-->
+        <attr name="cell_text_size" format="dimension"/>
+        <!--cell文本颜色-->
+        <attr name="cell_text_color" format="color"/>
+        <!--收缩按钮背景-->
+        <attr name="shrink_background" format="color"/>
+        <!--每行item个数-->
+        <attr name="column_num" format="integer"/>
+        <!--待选文本列表，以“,”隔开-->
+        <attr name="src_text" format="string"/>
+    </declare-styleable>
+</resources>

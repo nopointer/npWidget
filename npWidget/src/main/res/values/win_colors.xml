@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="selectcarlib_colorPrimary">#3F51B5</color>
+    <color name="selectcarlib_colorPrimaryDark">#303F9F</color>
+    <color name="selectcarlib_colorAccent">#FF4081</color>
+    <color name="selectcarlib_transparent">#00000000</color>
+</resources>

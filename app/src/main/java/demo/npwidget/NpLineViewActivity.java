@@ -2,7 +2,6 @@ package demo.npwidget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -45,11 +44,17 @@ public class NpLineViewActivity extends Activity {
 
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            npLineEntries1.add(new NpLineEntry((i * 6) % 100));
-            npLineEntries2.add(new NpLineEntry((i * 5) % 100));
+
+        for (int i = 1; i <= 7; i++) {
+            npLineEntries1.add(new NpLineEntry((i * 6) % 10));
+            npLineEntries2.add(new NpLineEntry((i * 12) % 20));
             stringList.add(i + "");
         }
+//        for (int i = 1; i <= 10; i++) {
+//            npLineEntries1.add(new NpLineEntry(0));
+//            npLineEntries2.add(new NpLineEntry(0));
+//            stringList.add(i + "D");
+//        }
         npChartLineDataBean1.setLineThickness(3);
         npChartLineDataBean1.setShowGradient(true);
         npChartLineDataBean1.setShowShadow(false);
@@ -74,11 +79,11 @@ public class NpLineViewActivity extends Activity {
         chartBean.setNpLabelList(stringList);
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
         chartBean.setShowDataType(NpShowDataType.Slide);
-        chartBean.setLabelSpaceWidth(200);
+        chartBean.setLabelSpaceWidth(120);
         chartBean.setMinY(0);
-        chartBean.setMaxY(80);
+        chartBean.setMaxY(20);
         chartBean.setShowLabels(true);
-        chartBean.setNpSelectMode(NpSelectMode.SELECT_MIN);
+        chartBean.setNpSelectMode(NpSelectMode.SELECT_LAST_NOT_NULL);
         chartBean.setLabelTextSize(40);
         npChartLineView.setChartBean(chartBean);
         npChartLineView.invalidate();

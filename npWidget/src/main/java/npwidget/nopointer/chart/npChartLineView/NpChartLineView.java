@@ -19,7 +19,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
-import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
@@ -56,10 +55,14 @@ public class NpChartLineView extends BaseView {
     //是否是已经点击过了
     private boolean hasClick = false;
 
+    //是否已经触摸过了
+    private boolean hasTouch = false;
+
     public void setChartBean(NpChartLineBean chartBean) {
         this.chartBean = chartBean;
         lastSelectIndex = -1;
         hasClick = false;
+        hasTouch = false;
     }
 
     public NpChartLineView(Context context) {
@@ -210,7 +213,7 @@ public class NpChartLineView extends BaseView {
 //                paint.setStyle(Paint.Style.STROKE);
 //                canvas.drawRect(viewRectF, paint);
                 canvas.save();
-                canvas.translate(lastMoveX, 0);
+                canvas.translate(tranlateX, 0);
                 drawLabels();
                 if (chartBean.getNpChartLineDataBeans() != null && chartBean.getNpChartLineDataBeans().size() > 0) {
                     int dataSum = 0;
@@ -238,11 +241,11 @@ public class NpChartLineView extends BaseView {
             paint.setColor(canvasBg);
 
             //左边mask
-            RectF maskRectF = new RectF(0, 0, dataMarginLeft - 1 - pointRadius, viewRectF.bottom);
+            RectF maskRectF = new RectF(0, 0, dataMarginLeft - 1 - pointRadius - unitDp, viewRectF.bottom);
             canvas.drawRect(maskRectF, paint);
 
             //右边mask
-            maskRectF.left = viewRectF.width() - dataMarginRight + pointRadius;
+            maskRectF.left = viewRectF.width() - dataMarginRight + pointRadius + unitDp;
             maskRectF.right = viewRectF.width();
             canvas.drawRect(maskRectF, paint);
         }
@@ -262,7 +265,7 @@ public class NpChartLineView extends BaseView {
             //绘制X轴 纵向高度一致，统一一个变量记录高度
             float lineBottom = viewRectF.bottom - bottomLabelRangeHeight;
             ViewLog.e("xy矩形:" + viewRectF.toString());
-            canvas.drawLine(dataMarginLeft - pointRadius, lineBottom, viewRectF.width() - dataMarginRight+pointRadius, lineBottom, paint);
+            canvas.drawLine(dataMarginLeft - pointRadius, lineBottom, viewRectF.width() - dataMarginRight + pointRadius, lineBottom, paint);
         }
 
         if (chartBean.isShowYAxis()) {
@@ -424,6 +427,12 @@ public class NpChartLineView extends BaseView {
                                 lastSelectIndex = 0;
                             } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST) {
                                 lastSelectIndex = npLineEntries.size() - 1;
+                                if (!hasTouch) {
+                                    if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
+                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
+                                        lastX = tranlateX;
+                                    }
+                                }
                             } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MIN) {
 //                                for (int t = 0; t < allColumnDataSum.size(); t++) {
 //                                    if (allColumnDataSum.get(t) == Collections.min(allColumnDataSum)) {
@@ -445,6 +454,12 @@ public class NpChartLineView extends BaseView {
                                         break;
                                     }
                                 }
+                                if (!hasTouch) {
+                                    if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
+                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
+                                        lastX = tranlateX;
+                                    }
+                                }
                             } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST_NOT_NULL) {
                                 for (int t = npLineEntries.size() - 1; t >= 0; t--) {
                                     if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
@@ -452,9 +467,15 @@ public class NpChartLineView extends BaseView {
                                         break;
                                     }
                                 }
+                                if (!hasTouch) {
+                                    if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
+                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
+                                        lastX = tranlateX;
+                                    }
+                                }
                             }
                         }
-
+                        ViewLog.e("lastSelectIndex:" + lastSelectIndex);
                         if (lastSelectIndex != -1) {
                             Paint paint = new Paint();
                             paint.setAntiAlias(true);
@@ -682,16 +703,16 @@ public class NpChartLineView extends BaseView {
 
 
     private float downX;
-    private float moveX = 0;
     private float currentX;
-    private float lastMoveX = 0;
+    private float tranlateX = 0;
+    private float lastX = 0;
 
     private int xVelocity;
 
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        currentX = event.getX();
+        hasTouch = true;
         velocityTracker.computeCurrentVelocity(1500);
         velocityTracker.addMovement(event);
         switch (event.getAction()) {
@@ -704,7 +725,7 @@ public class NpChartLineView extends BaseView {
                 downX = event.getX();
                 ViewLog.e("fuck" + downX + "///");
                 for (int i = 0; i < allTmpRectList.size(); i++) {
-                    if (allTmpRectList.get(i).contains(event.getX() - moveX, event.getY())) {
+                    if (allTmpRectList.get(i).contains(event.getX() - tranlateX, event.getY())) {
                         lastSelectIndex = i;
                         hasClick = true;
                         postInvalidateDelayed(20);
@@ -715,54 +736,59 @@ public class NpChartLineView extends BaseView {
 
                 break;
             case MotionEvent.ACTION_MOVE:
+                currentX = event.getX();
                 //滑动时候,通过假设的滑动距离,做超出左边界以及右边界的限制。
-                moveX = currentX - downX + lastMoveX;
-                if (moveX >= 0) {
-                    moveX = 0;
-                } else {
-                    if (maxLabel * labelWidthSpace <= viewRectF.width() + dataMarginLeft + dataMarginRight) {
-                        moveX = 0;
-                    } else if (moveX <= getWhichScaleMovex()) {
-                        moveX = getWhichScaleMovex();
+                if (Math.abs(currentX - downX) > SizeUtils.dp2px(getContext(), 20)) {
+                    tranlateX = currentX - downX + lastX;
+                    if (tranlateX >= 0) {
+                        tranlateX = 0;
+                    } else {
+                        if ((maxLabel - 1) * labelWidthSpace <= viewRectF.width() - dataMarginLeft - dataMarginRight) {
+                            ViewLog.e("不能左滑动？");
+                            tranlateX = 0;
+                        } else if (tranlateX <= getWhichScaleMovex()) {
+                            tranlateX = getWhichScaleMovex();
+                        }
                     }
                 }
                 break;
             case MotionEvent.ACTION_UP:
                 //手指抬起时候制造惯性滑动
-                lastMoveX = moveX;
+                lastX = tranlateX;
                 xVelocity = (int) velocityTracker.getXVelocity();
                 autoVelocityScroll(xVelocity);
                 velocityTracker.clear();
                 break;
         }
-        invalidate();
+        postInvalidateDelayed(20);
         return true;
     }
 
     private void autoVelocityScroll(int xVelocity) {
+        ViewLog.e("xVelocity:" + xVelocity);
         //惯性滑动的代码,速率和滑动距离,以及滑动时间需要控制的很好,应该网上已经有关于这方面的算法了吧。。这里是经过N次测试调节出来的惯性滑动
-        if (Math.abs(xVelocity) < 50) {
+        if (Math.abs(xVelocity) < 2000) {
             return;
         }
         if (valueAnimator.isRunning()) {
             return;
         }
-        valueAnimator = ValueAnimator.ofInt(0, xVelocity / 20).setDuration(Math.abs(xVelocity / 10));
+        valueAnimator = ValueAnimator.ofFloat(0, xVelocity / 220).setDuration(Math.abs(xVelocity) / 12);
         valueAnimator.setInterpolator(new DecelerateInterpolator());
         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                moveX += (int) animation.getAnimatedValue();
-                if (moveX >= 0) {
-                    moveX = 0;
+                tranlateX += (float) animation.getAnimatedValue();
+                if (tranlateX >= 0) {
+                    tranlateX = 0;
                 } else {
-                    if (maxLabel * labelWidthSpace <= viewRectF.width() + dataMarginLeft * 2 + getPaddingLeft() + getPaddingRight()) {
-                        moveX = 0;
-                    } else if (moveX <= getWhichScaleMovex()) {
-                        moveX = getWhichScaleMovex();
+                    if ((maxLabel - 1) * labelWidthSpace <= viewRectF.width() - dataMarginLeft - dataMarginRight) {
+                        tranlateX = 0;
+                    } else if (tranlateX <= getWhichScaleMovex()) {
+                        tranlateX = getWhichScaleMovex();
                     }
                 }
-                lastMoveX = moveX;
+                lastX = tranlateX;
                 invalidate();
             }
 
@@ -784,7 +810,9 @@ public class NpChartLineView extends BaseView {
 
 
     private float getWhichScaleMovex() {
-        return viewRectF.width() / 2 - labelWidthSpace * (maxLabel - 1) + viewRectF.width() / 2 - dataMarginLeft - dataMarginRight;
+        float result = viewRectF.width() - labelWidthSpace * (maxLabel - 1) - dataMarginLeft - dataMarginRight;
+        ViewLog.e("result:" + result);
+        return result;
     }
 
 

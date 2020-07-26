@@ -7,11 +7,6 @@ public class ViewLog {
 
     static String logMac = "";
 
-    public static void initLogDirName(String appBleLogDirName) {
-    }
-
-
- 
 
 
     private ViewLog() {

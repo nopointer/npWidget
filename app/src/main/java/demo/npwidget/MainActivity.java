@@ -1,29 +1,20 @@
 package demo.npwidget;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import npwidget.extra.kongzue.dialog.interfaces.OnDialogButtonClickListener;
-import npwidget.extra.kongzue.dialog.interfaces.OnDismissListener;
-import npwidget.extra.kongzue.dialog.interfaces.OnInputDialogButtonClickListener;
-import npwidget.extra.kongzue.dialog.util.BaseDialog;
-import npwidget.extra.kongzue.dialog.util.DialogSettings;
-import npwidget.extra.kongzue.dialog.v3.CustomDialog;
-import npwidget.extra.kongzue.dialog.v3.InputDialog;
-import npwidget.extra.kongzue.dialog.v3.TipDialog;
-import npwidget.extra.kongzue.dialog.v3.WaitDialog;
+import npwidget.extra.win.swt6.selectcarlib.OnItemClickListener;
+import npwidget.extra.win.swt6.selectcarlib.OnShrinkButtonClickListener;
+import npwidget.extra.win.swt6.selectcarlib.SelectCarPopWindow;
 import npwidget.nopointer.progress.battery.NpBatteryView;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
 import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
@@ -74,10 +65,10 @@ public class MainActivity extends FragmentActivity {
 //        loadDebug();
 
 //        loadColorBar();
-        loadBattery();
+//        loadBattery();
 
-        WaitDialog.show(this, "");
-        WaitDialog.dismiss(2000);
+//        WaitDialog.show(this, "");
+//        WaitDialog.dismiss(2000);
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -111,39 +102,61 @@ public class MainActivity extends FragmentActivity {
 //        }).setAlign(CustomDialog.ALIGN.TOP).setCancelable(true).show();
 
 
-        InputDialog.show(this, "title", "message", "确定", "取消")
-                .setOnOkButtonClickListener(new OnInputDialogButtonClickListener() {
-                    @Override
-                    public boolean onClick(BaseDialog baseDialog, View v, String inputStr) {
-                        return false;
-                    }
-                })
-                .setOnOkButtonClickListener(new OnDialogButtonClickListener() {
-                    @Override
-                    public boolean onClick(BaseDialog baseDialog, View v) {
-                        InputDialog dialog = (InputDialog) baseDialog;
-                        String nickName = dialog.getInputText();
-                        Toast.makeText(getApplicationContext(), nickName, 0).show();
-                        return true;
-                    }
-                })
-                .setOnCancelButtonClickListener(new OnDialogButtonClickListener() {
-                    @Override
-                    public boolean onClick(BaseDialog baseDialog, View v) {
-                        InputDialog dialog = (InputDialog) baseDialog;
-                        String nickName = dialog.getInputText();
-                        Toast.makeText(getApplicationContext(), nickName, 0).show();
-                        return true;
-                    }
-                }).setOnOtherButtonClickListener(new OnDialogButtonClickListener() {
-            @Override
-            public boolean onClick(BaseDialog baseDialog, View v) {
-                InputDialog dialog = (InputDialog) baseDialog;
-                String nickName = dialog.getInputText();
-                Toast.makeText(getApplicationContext(), nickName, 0).show();
-                return false;
-            }
-        }).setMessage("sssss");
+//        InputDialog.show(this, "title", "message", "确定", "取消")
+//                .setOnOkButtonClickListener(new OnInputDialogButtonClickListener() {
+//                    @Override
+//                    public boolean onClick(BaseDialog baseDialog, View v, String inputStr) {
+//                        return false;
+//                    }
+//                })
+//                .setOnOkButtonClickListener(new OnDialogButtonClickListener() {
+//                    @Override
+//                    public boolean onClick(BaseDialog baseDialog, View v) {
+//                        InputDialog dialog = (InputDialog) baseDialog;
+//                        String nickName = dialog.getInputText();
+//                        Toast.makeText(getApplicationContext(), nickName, 0).show();
+//                        return true;
+//                    }
+//                })
+//                .setOnCancelButtonClickListener(new OnDialogButtonClickListener() {
+//                    @Override
+//                    public boolean onClick(BaseDialog baseDialog, View v) {
+//                        InputDialog dialog = (InputDialog) baseDialog;
+//                        String nickName = dialog.getInputText();
+//                        Toast.makeText(getApplicationContext(), nickName, 0).show();
+//                        return true;
+//                    }
+//                }).setOnOtherButtonClickListener(new OnDialogButtonClickListener() {
+//            @Override
+//            public boolean onClick(BaseDialog baseDialog, View v) {
+//                InputDialog dialog = (InputDialog) baseDialog;
+//                String nickName = dialog.getInputText();
+//                Toast.makeText(getApplicationContext(), nickName, 0).show();
+//                return false;
+//            }
+//        }).setMessage("sssss");
+
+       final LinearLayout mLayout =findViewById(R.id.rlayout);
+
+       new Handler().postDelayed(new Runnable() {
+           @Override
+           public void run() {
+               SelectCarPopWindow.getInstance().showSelectCarPopWindow(MainActivity.this, new OnItemClickListener() {
+                   @Override
+                   public void selectString(String select) {
+//                mTextView.setText(select);
+                       SelectCarPopWindow.getInstance().dismissSelectCarPopWindow();
+                   }
+               }, new OnShrinkButtonClickListener() {
+                   @Override
+                   public void click() {
+                       SelectCarPopWindow.getInstance().dismissSelectCarPopWindow();
+                   }
+               },mLayout);
+           }
+       },1000);
+
+
     }
 
     private void loadBattery() {
