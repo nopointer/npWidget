@@ -284,7 +284,7 @@ public class NpChartColumnView extends BaseView {
         paint.setTextSize(getNoDataTextSize);
         String text = TextUtils.isEmpty(noDataText) ? "no Data" : noDataText;
         paint.setColor(noDataTextColor);
-        canvas.drawText(text, viewRectF.centerX(), viewRectF.centerY(), paint);
+        canvas.drawText(text, viewRectF.centerX(), viewRectF.centerY() - bottomLabelRangeHeight / 2, paint);
     }
 
 

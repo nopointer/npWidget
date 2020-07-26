@@ -468,9 +468,10 @@ public class NpChartLineView extends BaseView {
                                     }
                                 }
                                 if (!hasTouch) {
-                                    if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
-                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
+                                    if ((lastSelectIndex + 1) * labelWidthSpace >= viewRectF.width()-dataMarginLeft-dataMarginRight) {
+                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() - dataMarginLeft-dataMarginRight;
                                         lastX = tranlateX;
+
                                     }
                                 }
                             }

@@ -3,6 +3,9 @@ package demo.npwidget;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +26,17 @@ public class NpLineViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_view);
         npChartLineView = findViewById(R.id.npChartLineView);
-        debug();
+        debug(true);
+
+        findViewById(R.id.debugBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                debug(false);
+            }
+        });
     }
 
-    private void debug() {
+    private void debug(boolean isEmpty) {
         NpChartLineBean chartBean = new NpChartLineBean();
         chartBean.setShowXAxis(true);
         chartBean.setShowYAxis(true);
@@ -45,10 +55,10 @@ public class NpLineViewActivity extends Activity {
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
 
-        for (int i = 1; i <= 7; i++) {
+        for (int i = 1; i <= 6; i++) {
             npLineEntries1.add(new NpLineEntry((i * 6) % 10));
             npLineEntries2.add(new NpLineEntry((i * 12) % 20));
-            stringList.add(i + "");
+            stringList.add(i + "000000000");
         }
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpLineEntry(0));
@@ -79,20 +89,24 @@ public class NpLineViewActivity extends Activity {
         chartBean.setNpLabelList(stringList);
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
         chartBean.setShowDataType(NpShowDataType.Slide);
-        chartBean.setLabelSpaceWidth(120);
+        chartBean.setLabelSpaceWidth(QMUIDisplayHelper.dp2px(this, 70));
         chartBean.setMinY(0);
         chartBean.setMaxY(20);
         chartBean.setShowLabels(true);
         chartBean.setNpSelectMode(NpSelectMode.SELECT_LAST_NOT_NULL);
-        chartBean.setLabelTextSize(40);
-        npChartLineView.setChartBean(chartBean);
+//        chartBean.setLabelTextSize(40);
+        if (isEmpty) {
+            npChartLineView.setChartBean(null);
+        } else {
+            npChartLineView.setChartBean(chartBean);
+        }
         npChartLineView.invalidate();
 
         npChartLineView.setOnLineSelectListener(new NpChartLineView.OnLineSelectListener() {
             @Override
             public void onSelectLine(List<NpChartLineDataBean> lineDataBeans, int index) {
                 Log.e("fuck,onSelectLine", lineDataBeans.size() + "///" + index);
-               Log.e("fuck,tag",lineDataBeans.get(0).getNpLineEntryList().get(index).getValue()+"");
+                Log.e("fuck,tag", lineDataBeans.get(0).getNpLineEntryList().get(index).getValue() + "");
             }
         });
     }
