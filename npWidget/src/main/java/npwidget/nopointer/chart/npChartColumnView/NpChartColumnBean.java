@@ -95,7 +95,7 @@ public class NpChartColumnBean {
     /**
      * 选择中的柱子的颜色
      */
-    private int selectColumenColor = 0xA0333333;
+    private int selectColumnColor = 0xA0333333;
 
     /**
      * 横向的lable集合
@@ -239,12 +239,13 @@ public class NpChartColumnBean {
         this.YAxisLineColor = yAxisLineColor;
     }
 
-    public int getSelectColumenColor() {
-        return selectColumenColor;
+
+    public int getSelectColumnColor() {
+        return selectColumnColor;
     }
 
-    public void setSelectColumenColor(int selectColumenColor) {
-        this.selectColumenColor = selectColumenColor;
+    public void setSelectColumnColor(int selectColumnColor) {
+        this.selectColumnColor = selectColumnColor;
     }
 
     public NpSelectMode getNpSelectMode() {
@@ -254,6 +255,7 @@ public class NpChartColumnBean {
     public void setNpSelectMode(NpSelectMode npSelectMode) {
         this.npSelectMode = npSelectMode;
     }
+
 
     @Override
     public String toString() {
@@ -275,7 +277,7 @@ public class NpChartColumnBean {
                 ", labelTextColor=" + labelTextColor +
                 ", npSelectMode=" + npSelectMode +
                 ", npChartColumnDataBeans=" + npChartColumnDataBeans +
-                ", selectColumenColor=" + selectColumenColor +
+                ", selectColumnColor=" + selectColumnColor +
                 ", npLabelList=" + npLabelList +
                 '}';
     }

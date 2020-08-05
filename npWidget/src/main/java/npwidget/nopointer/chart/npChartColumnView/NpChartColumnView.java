@@ -230,8 +230,8 @@ public class NpChartColumnView extends BaseView {
 
             String label = "";
 
+            paint.setColor(chartColumnBean.getLabelTextColor());
             for (int i = 0; i < labelCount; i++) {
-                paint.setColor(chartColumnBean.getLabelTextColor());
                 paint.setTextSize(labelTextSize);
                 label = chartColumnBean.getNpLabelList().get(i);
                 paint.setTextAlign(Paint.Align.CENTER);
@@ -296,7 +296,7 @@ public class NpChartColumnView extends BaseView {
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
 
-        paint.setColor(chartColumnBean.getSelectColumenColor());
+        paint.setColor(chartColumnBean.getSelectColumnColor());
         ColumnData pathData = columnDataList.get(lastSelectIndex);
         pathData.clickRange.left = pathData.clickRange.centerX() - chartColumnBean.getColumnWidth() / 2;
         pathData.clickRange.right = pathData.clickRange.left + chartColumnBean.getColumnWidth();

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.View;
@@ -37,7 +36,7 @@ public class BaseView extends View {
         if (canvas != null && bitmap != null) {
             ViewLog.e("canvas.width()" + canvas.getWidth());
             ViewLog.e("bitmap.width()" + bitmap.getWidth());
-            canvas.drawColor(canvasBg);
+//            canvas.drawColor(canvasBg);
             canvas.drawBitmap(bitmap, (canvas.getWidth() - bitmap.getWidth()) / 2, 0, null);
         }
     }

@@ -73,7 +73,7 @@ public class NpColumnViewActivity extends Activity {
 
         chartBean.setXAxisLineColor(0xFF000000);
         chartBean.setYAxisLineColor(0xFF000000);
-        chartBean.setSelectColumenColor(0xFF000000);
+        chartBean.setSelectColumnColor(0xFF000000);
         chartBean.setNpLabelList(stringList);
         chartBean.setMarginLeft(40);
         chartBean.setMarginRight(40);

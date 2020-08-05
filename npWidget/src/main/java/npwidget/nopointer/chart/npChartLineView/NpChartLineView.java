@@ -264,6 +264,7 @@ public class NpChartLineView extends BaseView {
         if (chartBean.isShowXAxis()) {
             //绘制X轴 纵向高度一致，统一一个变量记录高度
             float lineBottom = viewRectF.bottom - bottomLabelRangeHeight;
+            paint.setColor(chartBean.getXAxisLineColor());
             ViewLog.e("xy矩形:" + viewRectF.toString());
             canvas.drawLine(dataMarginLeft - pointRadius, lineBottom, viewRectF.width() - dataMarginRight + pointRadius, lineBottom, paint);
         }
@@ -271,6 +272,7 @@ public class NpChartLineView extends BaseView {
         if (chartBean.isShowYAxis()) {
             //绘制Y轴 横向宽度一致，统一一个变量记录宽度
             float lineLeft = dataMarginLeft;
+            paint.setColor(chartBean.getYAxisLineColor());
             canvas.drawLine(lineLeft - pointRadius, viewRectF.top, lineLeft - pointRadius, viewRectF.bottom - bottomLabelRangeHeight, paint);
         }
 
@@ -319,9 +321,11 @@ public class NpChartLineView extends BaseView {
                 ViewLog.e("满足平分的场景？" + maxLabel + "///" + labelWidthSpace);
             }
             if (chartBean.isShowLabels()) {
+                String labelText = "";
+                paint.setColor(chartBean.getLabelTextColor());
                 for (int i = 0; i < maxLabel; i++) {
                     float xPosition = labelWidthSpace * i + dataMarginLeft;
-                    String text = chartLabels.get(i);
+                    labelText = chartLabels.get(i);
                     if (i == 0) {
                         paint.setTextAlign(Paint.Align.LEFT);
                     } else if (i == maxLabel - 1 && maxLabel > 2) {
@@ -333,7 +337,7 @@ public class NpChartLineView extends BaseView {
                     Paint.FontMetrics fontMetrics = paint.getFontMetrics();
                     float distance = (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
                     float baseline = rectF.centerY() + distance;
-                    canvas.drawText(text, rectF.centerX(), baseline, paint);
+                    canvas.drawText(labelText, rectF.centerX(), baseline, paint);
                 }
             }
         }
@@ -468,8 +472,8 @@ public class NpChartLineView extends BaseView {
                                     }
                                 }
                                 if (!hasTouch) {
-                                    if ((lastSelectIndex + 1) * labelWidthSpace >= viewRectF.width()-dataMarginLeft-dataMarginRight) {
-                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() - dataMarginLeft-dataMarginRight;
+                                    if ((lastSelectIndex + 1) * labelWidthSpace >= viewRectF.width() - dataMarginLeft - dataMarginRight) {
+                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() - dataMarginLeft - dataMarginRight;
                                         lastX = tranlateX;
 
                                     }

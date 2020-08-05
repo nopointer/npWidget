@@ -23,9 +23,20 @@ public class NpChartLineBean {
     private boolean showXAxis;
 
     /**
+     * x轴的颜色
+     */
+    private int XAxisLineColor = 0xFFFFFFFF;
+
+    /**
      * 是否显示Y轴
      */
     private boolean showYAxis;
+
+    /**
+     * y轴的颜色
+     */
+    private int YAxisLineColor = 0xFFFFFF;
+
 
     /**
      * 数据展示方式，有两种 一种是可滑动 一种是平分宽度，默认是平分给定的宽度
@@ -57,6 +68,11 @@ public class NpChartLineBean {
      */
     private float bottomHeight = 20;
 
+
+    /**
+     * 标签的颜色
+     */
+    private int labelTextColor = 0xFF000000;
 
 
     public NpShowDataType getShowDataType() {
@@ -169,5 +185,52 @@ public class NpChartLineBean {
 
     public void setBottomHeight(float bottomHeight) {
         this.bottomHeight = bottomHeight;
+    }
+
+
+    public int getXAxisLineColor() {
+        return XAxisLineColor;
+    }
+
+    public void setXAxisLineColor(int XAxisLineColor) {
+        this.XAxisLineColor = XAxisLineColor;
+    }
+
+    public int getYAxisLineColor() {
+        return YAxisLineColor;
+    }
+
+    public void setYAxisLineColor(int YAxisLineColor) {
+        this.YAxisLineColor = YAxisLineColor;
+    }
+
+    public int getLabelTextColor() {
+        return labelTextColor;
+    }
+
+    public void setLabelTextColor(int labelTextColor) {
+        this.labelTextColor = labelTextColor;
+    }
+
+
+    @Override
+    public String toString() {
+        return "NpChartLineBean{" +
+                "maxY=" + maxY +
+                ", minY=" + minY +
+                ", showXAxis=" + showXAxis +
+                ", XAxisLineColor=" + XAxisLineColor +
+                ", showYAxis=" + showYAxis +
+                ", YAxisLineColor=" + YAxisLineColor +
+                ", showDataType=" + showDataType +
+                ", labelSpaceWidth=" + labelSpaceWidth +
+                ", showLabels=" + showLabels +
+                ", labelTextSize=" + labelTextSize +
+                ", bottomHeight=" + bottomHeight +
+                ", labelTextColor=" + labelTextColor +
+                ", npChartLineDataBeans=" + npChartLineDataBeans +
+                ", npLabelList=" + npLabelList +
+                ", npSelectMode=" + npSelectMode +
+                '}';
     }
 }
