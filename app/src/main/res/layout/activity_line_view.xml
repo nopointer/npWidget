@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
+    android:background="@mipmap/bg"
     android:orientation="vertical">
 
 
@@ -17,7 +19,11 @@
 
         <npwidget.nopointer.chart.npChartLineView.NpChartLineView
             android:id="@+id/npChartLineView"
+            android:layout_marginLeft="20dp"
+            app:dataMarginRight="4dp"
+            android:paddingLeft="5dp"
             android:layout_width="match_parent"
+            app:dataMarginLeft="4dp"
             android:layout_height="300dp"
             android:layout_centerHorizontal="true" />
 

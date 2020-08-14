@@ -58,7 +58,7 @@ public class NpLineViewActivity extends Activity {
         for (int i = 1; i <= 6; i++) {
             npLineEntries1.add(new NpLineEntry((i * 6) % 10));
             npLineEntries2.add(new NpLineEntry((i * 12) % 20));
-            stringList.add(i + "000000000");
+            stringList.add(i +"");
         }
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpLineEntry(0));

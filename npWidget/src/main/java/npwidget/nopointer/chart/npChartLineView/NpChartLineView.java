@@ -104,11 +104,14 @@ public class NpChartLineView extends BaseView {
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NpChartLineView);
-            dataMarginLeft = typedArray.getResourceId(R.styleable.NpChartLineView_dataMarginLeft, SizeUtils.sp2px(context, 20));
-            dataMarginRight = typedArray.getResourceId(R.styleable.NpChartLineView_dataMarginRight, SizeUtils.sp2px(context, 20));
+            dataMarginLeft = typedArray.getDimension(R.styleable.NpChartLineView_dataMarginLeft, SizeUtils.dp2px(context, 20));
+            dataMarginRight = typedArray.getDimension(R.styleable.NpChartLineView_dataMarginRight, SizeUtils.dp2px(context, 20));
             canvasBg = typedArray.getResourceId(R.styleable.NpChartLineView_canvasBg, 0xFFFFFFFF);
             typedArray.recycle();
+            ViewLog.e("attrs!=null:" + (attrs!=null));
         }
+
+        ViewLog.e("dataMarginLeft:" + dataMarginLeft);
     }
 
     //绘制没有数据的时候的文字大小
