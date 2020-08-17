@@ -1,20 +1,15 @@
 package demo.npwidget;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.LinearLayout;
+import android.view.View;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import npwidget.extra.win.swt6.selectcarlib.OnItemClickListener;
-import npwidget.extra.win.swt6.selectcarlib.OnShrinkButtonClickListener;
-import npwidget.extra.win.swt6.selectcarlib.SelectCarPopWindow;
 import npwidget.nopointer.progress.battery.NpBatteryView;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
 import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
@@ -42,6 +37,14 @@ public class MainActivity extends FragmentActivity {
         npCircleProgressView = findViewById(R.id.npCircleProgressView);
         npBatteryView = findViewById(R.id.npBatteryView);
 
+        findViewById(R.id.debug_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtil.show(MainActivity.this, "我就是来搞笑的");
+            }
+        });
+
+
 //        DialogSettings.style = DialogSettings.STYLE;
 //        loadDebug();
 
@@ -52,7 +55,7 @@ public class MainActivity extends FragmentActivity {
 
 //        startActivity(new Intent(this, NpTimeCirclePickerViewActivity.class));
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
-        startActivity(new Intent(this, NpLineViewActivity.class));
+//        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
 //        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
@@ -136,25 +139,25 @@ public class MainActivity extends FragmentActivity {
 //            }
 //        }).setMessage("sssss");
 
-       final LinearLayout mLayout =findViewById(R.id.rlayout);
-
-       new Handler().postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               SelectCarPopWindow.getInstance().showSelectCarPopWindow(MainActivity.this, new OnItemClickListener() {
-                   @Override
-                   public void selectString(String select) {
-//                mTextView.setText(select);
-                       SelectCarPopWindow.getInstance().dismissSelectCarPopWindow();
-                   }
-               }, new OnShrinkButtonClickListener() {
-                   @Override
-                   public void click() {
-                       SelectCarPopWindow.getInstance().dismissSelectCarPopWindow();
-                   }
-               },mLayout);
-           }
-       },1000);
+//       final LinearLayout mLayout =findViewById(R.id.rlayout);
+//
+//       new Handler().postDelayed(new Runnable() {
+//           @Override
+//           public void run() {
+//               SelectCarPopWindow.getInstance().showSelectCarPopWindow(MainActivity.this, new OnItemClickListener() {
+//                   @Override
+//                   public void selectString(String select) {
+////                mTextView.setText(select);
+//                       SelectCarPopWindow.getInstance().dismissSelectCarPopWindow();
+//                   }
+//               }, new OnShrinkButtonClickListener() {
+//                   @Override
+//                   public void click() {
+//                       SelectCarPopWindow.getInstance().dismissSelectCarPopWindow();
+//                   }
+//               },mLayout);
+//           }
+//       },1000);
 
 
     }

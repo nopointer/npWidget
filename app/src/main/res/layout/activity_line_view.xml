@@ -21,9 +21,9 @@
             android:id="@+id/npChartLineView"
             android:layout_marginLeft="20dp"
             app:dataMarginRight="4dp"
+            app:dataMarginLeft="4dp"
             android:paddingLeft="5dp"
             android:layout_width="match_parent"
-            app:dataMarginLeft="4dp"
             android:layout_height="300dp"
             android:layout_centerHorizontal="true" />
 

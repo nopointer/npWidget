@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/rlayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
@@ -29,10 +29,16 @@
         android:paddingRight="10dp" />
 
     <npwidget.nopointer.progress.battery.NpBatteryView
-        android:layout_width="15dp"
         android:id="@+id/npBatteryView"
-        android:rotation="90"
+        android:layout_width="15dp"
         android:layout_height="28dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal"
+        android:rotation="90" />
+
+    <Button
+        android:id="@+id/debug_btn"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="debug" />
 
 </LinearLayout>
