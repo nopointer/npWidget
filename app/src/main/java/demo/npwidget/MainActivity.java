@@ -1,5 +1,6 @@
 package demo.npwidget;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -44,6 +45,7 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+        startActivity(new Intent(this,NpCountDwonViewActivity.class));
 
 //        DialogSettings.style = DialogSettings.STYLE;
 //        loadDebug();

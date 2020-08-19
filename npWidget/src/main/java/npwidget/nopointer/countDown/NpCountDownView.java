@@ -397,7 +397,7 @@ public class NpCountDownView extends BaseView {
             public void onAnimationEnd(Animator animation) {
                 //倒计时结束的时候，需要通过自定义接口通知UI去处理其他业务逻辑
                 if (npCountDownListener != null) {
-                    npCountDownListener.onCountdownFinished();
+                    npCountDownListener.onCountdownFinished(1);
                 }
             }
 
@@ -467,13 +467,32 @@ public class NpCountDownView extends BaseView {
         mProgress = 1f;
         invalidate();
         if (npCountDownListener != null) {
-            npCountDownListener.onCountdownFinished();
+            npCountDownListener.onCountdownFinished(1);
+        }
+    }
+
+    public void finish(float progress) {
+        if (startAnimator != null) {
+            startAnimator.removeAllUpdateListeners();
+            startAnimator.cancel();
+        }
+        isStarting = false;
+        if (progress < 0) {
+            progress = 0;
+        }
+        if (progress > 1) {
+            progress = 1;
+        }
+        mProgress = progress;
+        invalidate();
+        if (npCountDownListener != null) {
+            npCountDownListener.onCountdownFinished(mProgress);
         }
     }
 
 
     public interface NpCountDownListener {
-        void onCountdownFinished();
+        void onCountdownFinished(float progess);
 
         void onCountdownStop();
     }

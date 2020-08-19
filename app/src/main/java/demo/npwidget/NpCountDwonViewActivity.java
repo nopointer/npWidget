@@ -17,12 +17,12 @@ public class NpCountDwonViewActivity extends Activity {
         setContentView(R.layout.activity_countdown_view);
         npCountDownView = findViewById(R.id.npCountDownView);
 
-        npCountDownView.startCountDown(20);
+//        npCountDownView.startCountDown(100);
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                npCountDownView.finish();
+                npCountDownView.finish(0.5f);
             }
         },3000);
     }
