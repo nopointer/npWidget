@@ -11,4 +11,14 @@
     <color name="time">#66ffff</color>
 
     <color name="gray">#999</color>
+
+
+
+
+    <color name="normal_line_color">#DEDEDE</color>
+    <color name="normal_white_color">#ffffff</color>
+    <color name="normal_tip_text_color">#383838</color>
+    <color name="normal_cancel_color">#5A5A5A</color>
+    <color name="normal_sure_color">#33AAFF</color>
+    <color name="tip_black_color">#FF000000</color>
 </resources>

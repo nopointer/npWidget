@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion var.minSdkVersion
         targetSdkVersion var.targetSdkVersion
-        versionCode 56
-        versionName "beta_0.0.56_01"
+        versionCode 57
+        versionName "beta_0.0.57"
     }
 
     buildTypes {
@@ -33,4 +33,7 @@ android {
 dependencies {
     testImplementation "junit:junit:4.12"
     implementation 'com.android.support:appcompat-v7:25.3.1'
+
+    //富文本
+    implementation 'com.github.limedroid:XRichText:v1.0.0'
 }

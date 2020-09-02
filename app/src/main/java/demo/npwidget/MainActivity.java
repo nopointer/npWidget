@@ -1,6 +1,5 @@
 package demo.npwidget;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -11,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.dialog.UseProtocolAuthDialog;
 import npwidget.nopointer.progress.battery.NpBatteryView;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
 import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
@@ -24,11 +24,17 @@ import npwidget.nopointer.utils.SizeUtils;
 public class MainActivity extends FragmentActivity {
 
 
+    public static final String URL1 = "http://mlb2.app168.com/index.php/home/common/serviceAgree.html";
+    public static final String URL2 = "http://mlb2.app168.com/index.php/home/common/privacy.html";
+
+
     private NpSleepStateAreaView npStateLineView;
 
     NpColorBarProgressView npCircleProgressView;
 
     private NpBatteryView npBatteryView;
+
+    private UseProtocolAuthDialog useProtocolAuthDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,46 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
-        startActivity(new Intent(this,NpCountDwonViewActivity.class));
+
+        if (useProtocolAuthDialog == null) {
+            useProtocolAuthDialog = new UseProtocolAuthDialog(this) {
+                @Override
+                public void onAction(boolean isAgree) {
+                    super.onAction(isAgree);
+
+                }
+
+                @Override
+                public void onUrlClick(String url) {
+                    super.onUrlClick(url);
+                    Log.e("url", url);
+//                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                    switch (url) {
+//                        case NetCfg.URL1:
+//                            intent.putExtra("title", getResources().getString(R.string.use_protocol_auth_message0));
+//                            break;
+//                        case NetCfg.URL2:
+//                            intent.putExtra("title", getResources().getString(R.string.use_protocol_auth_message1));
+//                            break;
+                    }
+//                    intent.putExtra("url", url);
+//                    startActivity(intent);
+                }
+            };
+        }
+        String title = getResources().getString(R.string.use_protocol_auth_title);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getResources().getString(R.string.i_have_read_and_agreed));
+        stringBuilder.append("<a href='" + URL1 + "'>《").append(getResources().getString(R.string.use_protocol_auth_message0)).append("》</a>");
+        stringBuilder.append(getResources().getString(R.string.and));
+        stringBuilder.append("<a href='" + URL2 + "'>").append(getResources().getString(R.string.use_protocol_auth_message1)).append("</a>");
+
+        useProtocolAuthDialog.setTextShow(title, stringBuilder.toString());
+
+        useProtocolAuthDialog.setBottomLeftRightText(R.string.disagree_text, R.string.agree_text);
+
+//        startActivity(new Intent(this,NpCountDwonViewActivity.class));
 
 //        DialogSettings.style = DialogSettings.STYLE;
 //        loadDebug();

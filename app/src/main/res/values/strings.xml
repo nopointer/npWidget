@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">npWidgetDemo</string>
+
+    <string name="agree_text">同意</string>
+    <string name="disagree_text">不同意</string>
+
+    <string name="use_protocol_auth_title">软件使用相关协议与政策</string>
+    <string name="i_have_read_and_agreed">我已阅读并同意</string>
+    <string name="and">和</string>
+    <string name="use_protocol_auth_message0">软件许可及服务协议</string>
+    <string name="use_protocol_auth_message1">隐私政策</string>
 </resources>
