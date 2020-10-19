@@ -55,9 +55,9 @@ public class NpLineViewActivity extends Activity {
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
 
-        for (int i = 1; i <= 6; i++) {
-            npLineEntries1.add(new NpLineEntry((i * 6) % 10));
-            npLineEntries2.add(new NpLineEntry((i * 12) % 20));
+        for (int i = 1; i <= 60; i++) {
+            npLineEntries1.add(new NpLineEntry((i * 6) % 11));
+            npLineEntries2.add(new NpLineEntry((i * 12) % 23));
             stringList.add(i +"");
         }
 //        for (int i = 1; i <= 10; i++) {
@@ -84,7 +84,7 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBean2.setStartColor(0xFF000000);
         npChartLineDataBean2.setEndColor(0xFFFFFFFF);
         npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
-        npChartLineDataBeans.add(npChartLineDataBean2);
+//        npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpLabelList(stringList);
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
@@ -93,7 +93,7 @@ public class NpLineViewActivity extends Activity {
         chartBean.setMinY(0);
         chartBean.setMaxY(20);
         chartBean.setShowLabels(true);
-        chartBean.setNpSelectMode(NpSelectMode.SELECT_LAST_NOT_NULL);
+        chartBean.setNpSelectMode(NpSelectMode.SELECT_LAST);
 //        chartBean.setLabelTextSize(40);
         if (isEmpty) {
             npChartLineView.setChartBean(null);

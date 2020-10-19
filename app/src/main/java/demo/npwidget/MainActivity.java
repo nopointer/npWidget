@@ -1,10 +1,13 @@
 package demo.npwidget;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,44 +54,47 @@ public class MainActivity extends FragmentActivity {
             }
         });
 
+//
+//        if (useProtocolAuthDialog == null) {
+//            useProtocolAuthDialog = new UseProtocolAuthDialog(this) {
+//                @Override
+//                public void onAction(boolean isAgree) {
+//                    super.onAction(isAgree);
+//
+//                }
+//
+//                @Override
+//                public void onUrlClick(String url) {
+//                    super.onUrlClick(url);
+//                    Log.e("url", url);
+////                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
+//                    switch (url) {
+////                        case NetCfg.URL1:
+////                            intent.putExtra("title", getResources().getString(R.string.use_protocol_auth_message0));
+////                            break;
+////                        case NetCfg.URL2:
+////                            intent.putExtra("title", getResources().getString(R.string.use_protocol_auth_message1));
+////                            break;
+//                    }
+////                    intent.putExtra("url", url);
+////                    startActivity(intent);
+//                }
+//            };
+//        }
+//        String title = getResources().getString(R.string.use_protocol_auth_title);
+//
+//        StringBuilder stringBuilder = new StringBuilder();
+//        stringBuilder.append(getResources().getString(R.string.i_have_read_and_agreed));
+//        stringBuilder.append("<a href='" + URL1 + "'>《").append(getResources().getString(R.string.use_protocol_auth_message0)).append("》</a>");
+//        stringBuilder.append(getResources().getString(R.string.and));
+//        stringBuilder.append("<a href='" + URL2 + "'>").append(getResources().getString(R.string.use_protocol_auth_message1)).append("</a>");
+//
+//        useProtocolAuthDialog.setTextShow(title, stringBuilder.toString());
+//
+//        useProtocolAuthDialog.setBottomLeftRightText(R.string.disagree_text, R.string.agree_text);
 
-        if (useProtocolAuthDialog == null) {
-            useProtocolAuthDialog = new UseProtocolAuthDialog(this) {
-                @Override
-                public void onAction(boolean isAgree) {
-                    super.onAction(isAgree);
 
-                }
-
-                @Override
-                public void onUrlClick(String url) {
-                    super.onUrlClick(url);
-                    Log.e("url", url);
-//                    Intent intent = new Intent(MainActivity.this, WebActivity.class);
-                    switch (url) {
-//                        case NetCfg.URL1:
-//                            intent.putExtra("title", getResources().getString(R.string.use_protocol_auth_message0));
-//                            break;
-//                        case NetCfg.URL2:
-//                            intent.putExtra("title", getResources().getString(R.string.use_protocol_auth_message1));
-//                            break;
-                    }
-//                    intent.putExtra("url", url);
-//                    startActivity(intent);
-                }
-            };
-        }
-        String title = getResources().getString(R.string.use_protocol_auth_title);
-
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getResources().getString(R.string.i_have_read_and_agreed));
-        stringBuilder.append("<a href='" + URL1 + "'>《").append(getResources().getString(R.string.use_protocol_auth_message0)).append("》</a>");
-        stringBuilder.append(getResources().getString(R.string.and));
-        stringBuilder.append("<a href='" + URL2 + "'>").append(getResources().getString(R.string.use_protocol_auth_message1)).append("</a>");
-
-        useProtocolAuthDialog.setTextShow(title, stringBuilder.toString());
-
-        useProtocolAuthDialog.setBottomLeftRightText(R.string.disagree_text, R.string.agree_text);
+//        loadDebug();
 
 //        startActivity(new Intent(this,NpCountDwonViewActivity.class));
 
@@ -102,7 +108,7 @@ public class MainActivity extends FragmentActivity {
 
 //        startActivity(new Intent(this, NpTimeCirclePickerViewActivity.class));
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
-//        startActivity(new Intent(this, NpLineViewActivity.class));
+        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
 //        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
@@ -293,6 +299,7 @@ public class MainActivity extends FragmentActivity {
                 npSleepEntry.setPosition(2);
                 npSleepEntry.setColor(0xFFFF59B3);
             }
+//            npSleepEntry.setStartTime(devMinuteSleepBean.getDate());
             npSleepEntry.setDuration(Integer.parseInt(string.substring(12 * i + 8, 12 * i + 10), 16));
             dataList.add(npSleepEntry);
         }
@@ -302,6 +309,7 @@ public class MainActivity extends FragmentActivity {
         npStateBean.setLeftTextColor(0xFF000000);
         npStateBean.setRightText("23:59");
         npStateBean.setRightTextColor(0xFF000000);
+        npStateBean.setClipLineWidth(QMUIDisplayHelper.dp2px(MainApplication.getMainApplication(), 1));
         npStateBean.setEnableClickPart(true);
 
         npStateLineView.setPartSelectCallback(new NpSleepStateAreaView.PartSelectCallback() {

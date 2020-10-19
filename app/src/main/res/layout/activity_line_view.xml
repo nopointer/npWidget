@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:background="@mipmap/bg"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -19,10 +19,6 @@
 
         <npwidget.nopointer.chart.npChartLineView.NpChartLineView
             android:id="@+id/npChartLineView"
-            android:layout_marginLeft="20dp"
-            app:dataMarginRight="4dp"
-            app:dataMarginLeft="4dp"
-            android:paddingLeft="5dp"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_centerHorizontal="true" />

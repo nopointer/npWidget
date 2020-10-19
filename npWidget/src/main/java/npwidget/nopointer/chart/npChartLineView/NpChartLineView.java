@@ -108,7 +108,7 @@ public class NpChartLineView extends BaseView {
             dataMarginRight = typedArray.getDimension(R.styleable.NpChartLineView_dataMarginRight, SizeUtils.dp2px(context, 20));
             canvasBg = typedArray.getResourceId(R.styleable.NpChartLineView_canvasBg, 0xFFFFFFFF);
             typedArray.recycle();
-            ViewLog.e("attrs!=null:" + (attrs!=null));
+            ViewLog.e("attrs!=null:" + (attrs != null));
         }
 
         ViewLog.e("dataMarginLeft:" + dataMarginLeft);
@@ -216,6 +216,7 @@ public class NpChartLineView extends BaseView {
 //                paint.setStyle(Paint.Style.STROKE);
 //                canvas.drawRect(viewRectF, paint);
                 canvas.save();
+                ViewLog.e("此时的位移是:" + tranlateX);
                 canvas.translate(tranlateX, 0);
                 drawLabels();
                 if (chartBean.getNpChartLineDataBeans() != null && chartBean.getNpChartLineDataBeans().size() > 0) {
@@ -311,18 +312,13 @@ public class NpChartLineView extends BaseView {
         paint.setColor(Color.BLACK);
         paint.setTextSize(labelTextSize);
         List<String> chartLabels = chartBean.getNpLabelList();
-        //最多要显示的label个数
-        maxLabel = getMaxLabelCount(chartLabels);
+
         if (maxLabel < 0) {
             ViewLog.e("没有Label 不绘制");
             return;
         } else {
             //如果是多个标签的话
-            labelWidthSpace = chartBean.getLabelSpaceWidth();
-            if (chartBean.getShowDataType() == NpShowDataType.Equal && maxLabel > 1) {
-                labelWidthSpace = (viewRectF.width() - dataMarginLeft - dataMarginRight) / (maxLabel - 1.0f);
-                ViewLog.e("满足平分的场景？" + maxLabel + "///" + labelWidthSpace);
-            }
+
             if (chartBean.isShowLabels()) {
                 String labelText = "";
                 paint.setColor(chartBean.getLabelTextColor());
@@ -391,7 +387,7 @@ public class NpChartLineView extends BaseView {
                     }
                 }
             } else {
-                ViewLog.e("多个数据点，可以绘制数据曲线");
+                ViewLog.e("多个数据点，可以绘制数据曲线 hasTouch:" + hasTouch);
 
                 allTmpRectList.clear();
 
@@ -429,60 +425,59 @@ public class NpChartLineView extends BaseView {
                     List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
                     if (npLineEntries != null && npLineEntries.size() > 0) {
 
-                        if (!hasClick) {
-                            if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST) {
-                                lastSelectIndex = 0;
-                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST) {
-                                lastSelectIndex = npLineEntries.size() - 1;
-                                if (!hasTouch) {
-                                    if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
-                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
-                                        lastX = tranlateX;
-                                    }
-                                }
-                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MIN) {
-//                                for (int t = 0; t < allColumnDataSum.size(); t++) {
-//                                    if (allColumnDataSum.get(t) == Collections.min(allColumnDataSum)) {
+//                        if (!hasTouch) {
+//                            if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST) {
+//                                lastSelectIndex = 0;
+//                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST) {
+//                                lastSelectIndex = npLineEntries.size() - 1;
+//                                if (!hasTouch) {
+//                                    if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
+//                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
+//                                        lastX = tranlateX;
+//                                    }
+//                                }
+//                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MIN) {
+////                                for (int t = 0; t < allColumnDataSum.size(); t++) {
+////                                    if (allColumnDataSum.get(t) == Collections.min(allColumnDataSum)) {
+////                                        lastSelectIndex = t;
+////                                        break;
+////                                    }
+////                                }
+//                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MAX) {
+////                                for (int t = 0; i < allColumnDataSum.size(); i++) {
+////                                    if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
+////                                        lastSelectIndex = i;
+////                                        break;
+////                                    }
+////                                }
+//                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST_NOT_NULL) {
+//                                for (int t = 0; t < npLineEntries.size(); t++) {
+//                                    if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
 //                                        lastSelectIndex = t;
 //                                        break;
 //                                    }
 //                                }
-                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MAX) {
-//                                for (int t = 0; i < allColumnDataSum.size(); i++) {
-//                                    if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
-//                                        lastSelectIndex = i;
+//                                if (!hasTouch) {
+//                                    if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
+//                                        tranlateX = -((lastSelectIndex) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
+//                                        lastX = tranlateX;
+//                                    }
+//                                }
+//                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST_NOT_NULL) {
+//                                for (int t = npLineEntries.size() - 1; t >= 0; t--) {
+//                                    if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
+//                                        lastSelectIndex = t;
 //                                        break;
 //                                    }
 //                                }
-                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST_NOT_NULL) {
-                                for (int t = 0; t < npLineEntries.size(); t++) {
-                                    if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
-                                        lastSelectIndex = t;
-                                        break;
-                                    }
-                                }
-                                if (!hasTouch) {
-                                    if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
-                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
-                                        lastX = tranlateX;
-                                    }
-                                }
-                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST_NOT_NULL) {
-                                for (int t = npLineEntries.size() - 1; t >= 0; t--) {
-                                    if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
-                                        lastSelectIndex = t;
-                                        break;
-                                    }
-                                }
-                                if (!hasTouch) {
-                                    if ((lastSelectIndex + 1) * labelWidthSpace >= viewRectF.width() - dataMarginLeft - dataMarginRight) {
-                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() - dataMarginLeft - dataMarginRight;
-                                        lastX = tranlateX;
-
-                                    }
-                                }
-                            }
-                        }
+//                                if (!hasTouch) {
+//                                    if ((lastSelectIndex + 1) * labelWidthSpace >= viewRectF.width() - dataMarginLeft - dataMarginRight) {
+//                                        tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() - dataMarginLeft - dataMarginRight;
+//                                        lastX = tranlateX;
+//                                    }
+//                                }
+//                            }
+//                        }
                         ViewLog.e("lastSelectIndex:" + lastSelectIndex);
                         if (lastSelectIndex != -1) {
                             Paint paint = new Paint();
@@ -814,6 +809,91 @@ public class NpChartLineView extends BaseView {
     private void loadCfg() {
         labelTextSize = chartBean.getLabelTextSize();
         bottomLabelRangeHeight = chartBean.getBottomHeight();
+        //最多要显示的label个数
+        maxLabel = getMaxLabelCount(chartBean.getNpLabelList());
+        labelWidthSpace = chartBean.getLabelSpaceWidth();
+        if (chartBean.getShowDataType() == NpShowDataType.Equal && maxLabel > 1) {
+            labelWidthSpace = (viewRectF.width() - dataMarginLeft - dataMarginRight) / (maxLabel - 1.0f);
+            ViewLog.e("满足平分的场景？" + maxLabel + "///" + labelWidthSpace);
+        }
+        calculationScroll();
+    }
+
+
+    /**
+     * 计算要滚动的距离
+     */
+    private void calculationScroll() {
+        if (hasTouch) return;
+        List<NpChartLineDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
+        if (lineDataBeanList != null && lineDataBeanList.size() > 0) {
+            if (maxLabel > 2) {
+                ViewLog.e("多个数据点");
+                for (int i = 0; i < lineDataBeanList.size(); i++) {
+                    List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
+                    if (npLineEntries != null && npLineEntries.size() > 0) {
+                        ViewLog.e("hasClick:" + hasClick);
+                        ViewLog.e("getNpSelectMode:" + chartBean.getNpSelectMode());
+                        if (!hasClick) {
+                            if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST) {
+                                lastSelectIndex = 0;
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST) {
+                                lastSelectIndex = npLineEntries.size() - 1;
+                                if ((lastSelectIndex + 1) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
+                                    tranlateX = -((lastSelectIndex + 1) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
+                                    lastX = tranlateX;
+                                }
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MIN) {
+//                                for (int t = 0; t < allColumnDataSum.size(); t++) {
+//                                    if (allColumnDataSum.get(t) == Collections.min(allColumnDataSum)) {
+//                                        lastSelectIndex = t;
+//                                        break;
+//                                    }
+//                                }
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_MAX) {
+//                                for (int t = 0; i < allColumnDataSum.size(); i++) {
+//                                    if (allColumnDataSum.get(i) == Collections.max(allColumnDataSum)) {
+//                                        lastSelectIndex = i;
+//                                        break;
+//                                    }
+//                                }
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST_NOT_NULL) {
+                                for (int t = 0; t < npLineEntries.size(); t++) {
+                                    if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
+                                        lastSelectIndex = t;
+                                        break;
+                                    }
+                                }
+                                if (!hasTouch) {
+                                    if ((lastSelectIndex) * labelWidthSpace > viewRectF.width() + dataMarginLeft) {
+                                        tranlateX = -((lastSelectIndex) * labelWidthSpace) + viewRectF.width() + dataMarginLeft;
+                                        lastX = tranlateX;
+                                    }
+                                }
+                            } else if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_LAST_NOT_NULL) {
+                                for (int t = npLineEntries.size() - 1; t >= 0; t--) {
+                                    if (npLineEntries.get(t).getValue() > chartBean.getMinY()) {
+                                        lastSelectIndex = t;
+                                        break;
+                                    }
+                                }
+                                ViewLog.e("SELECT_LAST_NOT_NULL:是到这里吗？//" + hasTouch);
+                                if (!hasTouch) {
+                                    if ((lastSelectIndex) * labelWidthSpace >= viewRectF.width() - dataMarginLeft - dataMarginRight) {
+                                        tranlateX = -((lastSelectIndex) * labelWidthSpace) + viewRectF.width() - dataMarginLeft - dataMarginRight;
+                                        lastX = tranlateX;
+                                        ViewLog.e("lastSelectIndex:是到这里吗？//" + lastSelectIndex);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (onLineSelectListener != null && lastSelectIndex != -1) {
+                    onLineSelectListener.onSelectLine(lineDataBeanList, lastSelectIndex);
+                }
+            }
+        }
     }
 
 
