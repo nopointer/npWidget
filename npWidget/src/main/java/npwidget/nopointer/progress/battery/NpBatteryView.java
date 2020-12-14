@@ -15,15 +15,6 @@ import npwidget.nopointer.log.ViewLog;
  */
 public class NpBatteryView extends BaseView {
 
-    /**
-     * 连续显示
-     */
-    public static final int TYPE_CONTINUOUS = 0;
-    /**
-     * 分段显示
-     */
-    public static final int TYPE_PART = 1;
-
     public NpBatteryView(Context context) {
         super(context);
     }
@@ -36,6 +27,20 @@ public class NpBatteryView extends BaseView {
         super(context, attrs, defStyleAttr);
     }
 
+
+    /**
+     * 常规的连续显示
+     */
+    public static final int TYPE_CONTINUOUS = 0;
+    /**
+     * 常规的分段显示
+     */
+    public static final int TYPE_PART = 1;
+
+    /**
+     * 自定义分段显示【针对不同常规的电量区间分布】
+     */
+    public static final int TYPE_PART_CUSTOM = 2;
     /**
      * 可以绘制的RectF 边界，是一个正方形 会根据小边长适配大小
      */
@@ -120,6 +125,11 @@ public class NpBatteryView extends BaseView {
      * 是否显示低于低电量时候的值，只显示最后一个 ,针对分段显示有用
      */
     private boolean showAtLastOne = false;
+
+    /**
+     * 自定义分段电量的时候的不均分区间数据（必须按从小到大的顺序，且必须包含最大最小值）数组长度最低要求3【因为有最低值和最高值】
+     */
+    private float customBatteryArray[];
 
 
     public int getBorderColor() {
@@ -250,11 +260,19 @@ public class NpBatteryView extends BaseView {
         this.showAtLastOne = showAtLastOne;
     }
 
+    public float[] getCustomBatteryArray() {
+        return customBatteryArray;
+    }
+
+    public void setCustomBatteryArray(float[] customBatteryArray) {
+        this.customBatteryArray = customBatteryArray;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        viewRectF = new RectF(getPaddingLeft()+borderWidth/2, getPaddingTop() + topRectHeight+borderWidth/2, getMeasuredWidth() - getPaddingRight()-borderWidth/2, getMeasuredHeight() - getPaddingBottom()-borderWidth/2);
+        viewRectF = new RectF(getPaddingLeft() + borderWidth / 2, getPaddingTop() + topRectHeight + borderWidth / 2, getMeasuredWidth() - getPaddingRight() - borderWidth / 2, getMeasuredHeight() - getPaddingBottom() - borderWidth / 2);
 
         bitmap = Bitmap.createBitmap(getMeasuredWidth(), getMeasuredHeight(), Bitmap.Config.ARGB_8888);
         canvas = new Canvas(bitmap);
@@ -307,7 +325,7 @@ public class NpBatteryView extends BaseView {
             tmpValue = 100;
         }
         //单个单元格代表的电量值
-        float singleRectBattery = 100 / partCount;
+        float singleRectBattery = 100.0f / partCount;
         //真实显示的个数
         int realShowCount = 0;
         if (useRounding) {
@@ -316,23 +334,45 @@ public class NpBatteryView extends BaseView {
             realShowCount = (int) (tmpValue / singleRectBattery);
         }
 
-
-        if (tmpValue <= lowBattery) {
-            paint.setColor(lowBatteryColor);
-            if (showAtLastOne) {
-                realShowCount = 1;
+        if (showType == TYPE_PART) {
+            if (tmpValue <= lowBattery) {
+                paint.setColor(lowBatteryColor);
+                if (showAtLastOne) {
+                    realShowCount = 1;
+                }
+            } else {
+                paint.setColor(batteryColor);
             }
-        } else {
-            paint.setColor(batteryColor);
+            for (int i = 0; i < realShowCount; i++) {
+                RectF rectF = new RectF(viewRectF.left + innerPadding, 0, viewRectF.right - innerPadding, 0);
+                rectF.bottom = viewRectF.bottom - innerPadding - i * (partMargin + partRectHeight);
+                rectF.top = rectF.bottom - partRectHeight;
+                canvas.drawRect(rectF, paint);
+            }
+        } else if (showType == TYPE_PART_CUSTOM) {
+            //最低要大于等于3的长度
+            if (customBatteryArray != null && customBatteryArray.length >= 3) {
+                for (int i = 1; i < customBatteryArray.length - 1; i++) {
+                    if (tmpValue > customBatteryArray[i] && tmpValue <= customBatteryArray[i + 1]) {
+                        realShowCount =i;
+                    }
+                }
+                if (tmpValue <= customBatteryArray[1]) {
+                    paint.setColor(lowBatteryColor);
+                    if (showAtLastOne) {
+                        realShowCount = 1;
+                    }
+                } else {
+                    paint.setColor(batteryColor);
+                }
+                for (int i = 0; i < realShowCount; i++) {
+                    RectF rectF = new RectF(viewRectF.left + innerPadding, 0, viewRectF.right - innerPadding, 0);
+                    rectF.bottom = viewRectF.bottom - innerPadding - i * (partMargin + partRectHeight);
+                    rectF.top = rectF.bottom - partRectHeight;
+                    canvas.drawRect(rectF, paint);
+                }
+            }
         }
-        for (int i = 0; i < realShowCount; i++) {
-            RectF rectF = new RectF(viewRectF.left + innerPadding, 0, viewRectF.right - innerPadding, 0);
-            rectF.bottom = viewRectF.bottom - innerPadding - i * (partMargin + partRectHeight);
-            rectF.top = rectF.bottom - partRectHeight;
-            canvas.drawRect(rectF, paint);
-        }
-
-
     }
 
     /**

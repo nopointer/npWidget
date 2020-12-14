@@ -1,6 +1,5 @@
 package demo.npwidget;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -108,7 +107,7 @@ public class MainActivity extends FragmentActivity {
 
 //        startActivity(new Intent(this, NpTimeCirclePickerViewActivity.class));
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
-        startActivity(new Intent(this, NpLineViewActivity.class));
+//        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
 //        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
@@ -212,6 +211,7 @@ public class MainActivity extends FragmentActivity {
 //           }
 //       },1000);
 
+        loadBattery();
 
     }
 
@@ -223,9 +223,13 @@ public class MainActivity extends FragmentActivity {
 //        npBatteryView.setInnerPadding(10);
         npBatteryView.setTopRectHeight(8);
         npBatteryView.setTopRectWidth(16);
-        npBatteryView.setBatteryValue(90);
-        npBatteryView.setShowType(NpBatteryView.TYPE_CONTINUOUS);
-//        npBatteryView.invalidate();
+        npBatteryView.setBatteryValue(1000);
+        npBatteryView.setLowBatteryColor(0xFFFF0000);
+        npBatteryView.setShowAtLastOne(true);
+        npBatteryView.setShowType(NpBatteryView.TYPE_PART_CUSTOM);
+        float[] customBatteryArray =new float[]{0,5,20,40,60,80,100};
+        npBatteryView.setCustomBatteryArray(customBatteryArray);
+        npBatteryView.invalidate();
     }
 
     private void loadColorBar() {
