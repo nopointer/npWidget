@@ -8,6 +8,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 
 import npwidget.nopointer.base.BaseView;
+import npwidget.nopointer.log.ViewLog;
 
 /**
  * 常规的条形进度条，支持背景色和进度色的设置
@@ -108,9 +109,48 @@ public class NpRectProgressView extends BaseView {
         RectF rectF = new RectF(viewRectF);
         rectF.right = viewRectF.width() * mProgress + rectF.left;
 
+        ViewLog.e("rectF.right" + rectF.right);
+
+        ViewLog.e("viewRectF.left" + viewRectF.left);
+        ViewLog.e("rectF.left" + rectF.left);
+
+//        canvas.draw
         paint.setColor(progressColor);
         if (useRoundMode) {
-            canvas.drawRoundRect(rectF, rectF.height() / 2, rectF.height() / 2, paint);
+
+            //前面的小圆弧要特殊处理一下
+            if (rectF.width() < viewRectF.height() / 2) {
+                RectF tmpRect = new RectF(rectF);
+                tmpRect.right = tmpRect.left + viewRectF.height();
+                double sinC = ((tmpRect.width() / 2) - rectF.width()) / (tmpRect.width() / 2);
+
+                ViewLog.e("sinC:" + sinC);
+
+
+                double tempValue = Math.asin(sinC) * 57.3;
+
+                ViewLog.e("角度:" + tempValue);
+
+//                ViewLog.e("Math.sin(30):" + Math.sin(30 * (Math.PI / 180)));
+
+//                ViewLog.e("Math.asin(30):" + Math.asin(0.49999999999999994) * 57.3);
+//
+//
+//                ViewLog.e("aCosC:" + Math.asin(sinC));
+//                ViewLog.e("tempValue:" + tempValue);
+
+
+                float startAngle = (float) tempValue;
+                float sweepAngle = 180 - (startAngle * 2);
+
+
+                ViewLog.e("startAngle:" + startAngle);
+                ViewLog.e("sweepAngle:" + sweepAngle);
+
+                canvas.drawArc(tmpRect, (float) -(tempValue) - 90, -(float) (180 - tempValue * 2), false, paint);
+            } else {
+                canvas.drawRoundRect(rectF, viewRectF.height() / 2, viewRectF.height() / 2, paint);
+            }
         } else {
             canvas.drawRect(rectF, paint);
         }

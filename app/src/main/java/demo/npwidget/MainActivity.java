@@ -1,5 +1,6 @@
 package demo.npwidget;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -211,8 +212,10 @@ public class MainActivity extends FragmentActivity {
 //           }
 //       },1000);
 
-        loadBattery();
+//        loadBattery();
 
+
+        startActivity(new Intent(this,NpRectViewActivity.class));
     }
 
     private void loadBattery() {
