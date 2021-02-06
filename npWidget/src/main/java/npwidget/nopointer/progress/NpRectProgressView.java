@@ -126,7 +126,6 @@ public class NpRectProgressView extends BaseView {
 
                 ViewLog.e("sinC:" + sinC);
 
-
                 double tempValue = Math.asin(sinC) * 57.3;
 
                 ViewLog.e("角度:" + tempValue);

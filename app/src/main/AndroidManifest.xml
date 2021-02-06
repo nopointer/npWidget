@@ -35,6 +35,8 @@
         <activity android:name=".NpColumnViewActivity" />
         <activity android:name=".NpCountDwonViewActivity" />
         <activity android:name=".NpPolylineViewActivity" />
+        <activity android:name=".NpCircleProgressViewActivity" />
+        <activity android:name=".NpColorBarProgressViewActivity" />
 
     </application>
 

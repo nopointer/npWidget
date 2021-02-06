@@ -75,7 +75,7 @@ public class NpSleepStateAreaBean {
     /**
      * 分割线的宽度
      */
-    private float clipLineWidth = 5;
+    private float clipLineWidth = 1;
 
     /**
      * 选择的睡眠碎片 点击后显示的详情的文字大小

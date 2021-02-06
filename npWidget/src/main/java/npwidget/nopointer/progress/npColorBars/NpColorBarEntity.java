@@ -21,6 +21,12 @@ public class NpColorBarEntity {
     private int endColor;
 
 
+    /**
+     * 当显示模式为TYPE_DATA，或者数据不是平分的时候，该数据会参加绘制计算
+     */
+    private float dataValue;
+
+
     private Object tag;
     /**
      * 是否是使用渐变模式，根据创建的对象自动判断，如果使用单一颜色，就不使用渐变模式
@@ -32,10 +38,28 @@ public class NpColorBarEntity {
         this.useGradientMode = false;
     }
 
+    /**
+     * 创建渐变的色条
+     *
+     * @param startColor
+     * @param endColor
+     */
     public NpColorBarEntity(int startColor, int endColor) {
         this.endColor = endColor;
         this.startColor = startColor;
         this.useGradientMode = true;
+    }
+
+    /**
+     * 创建单一的色条，并且带有数据
+     *
+     * @param color
+     * @param dataValue
+     */
+    public NpColorBarEntity(int color, float dataValue) {
+        this.color = color;
+        this.dataValue = dataValue;
+        this.useGradientMode = false;
     }
 
     public int getColor() {
@@ -72,6 +96,14 @@ public class NpColorBarEntity {
 
     public boolean isUseGradientMode() {
         return useGradientMode;
+    }
+
+    public float getDataValue() {
+        return dataValue;
+    }
+
+    public void setDataValue(float dataValue) {
+        this.dataValue = dataValue;
     }
 
     @Override

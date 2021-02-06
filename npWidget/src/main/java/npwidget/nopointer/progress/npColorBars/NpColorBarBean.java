@@ -2,25 +2,21 @@ package npwidget.nopointer.progress.npColorBars;
 
 import java.util.List;
 
+import npwidget.nopointer.base.NpPosition;
 import npwidget.nopointer.base.ValueFormatCallback;
+import npwidget.nopointer.progress.npColorBars.cursorTop.NpColorType;
 
 /**
  * 颜色条的数据填充对象
  */
 public class NpColorBarBean {
 
+
     /**
-     * 在上面
+     * 显示类型
      */
-    public static final int PositionTop = 0;
-    /**
-     * 在中间
-     */
-    public static final int positionCenter = 1;
-    /**
-     * 在下面
-     */
-    public static final int PositionBottom = 2;
+    private NpColorType npColorType;
+
     /**
      * 当前的数据
      */
@@ -51,6 +47,10 @@ public class NpColorBarBean {
      */
     private float minValue = 0.0F;
 
+    /**
+     * 是否是自动计算数据,默认是根据最大最小值以及数据段数 去自动计算，实际某些场景可能会要求数据不平分显示
+     */
+    private boolean isAutoCalculationValue = true;
 
     /**
      * 颜色条
@@ -80,14 +80,30 @@ public class NpColorBarBean {
     private boolean isShowStartEndValue = true;
 
     /**
+     * 是否显示文字或者值
+     */
+    private boolean isShowValue = false;
+
+    /**
      * value的位置（目前遇到的场景是中间或者底部）
      */
-    private int valuePosition = PositionBottom;
+    private NpPosition valuePosition = NpPosition.BOTTOM;
 
     /**
      * 游标的位置（目前遇到的场景是在上面）
      */
-    private int cursorPosition = PositionTop;
+    private NpPosition cursorPosition = NpPosition.TOP;
+
+    /**
+     * 是否显示在图层最上面显示当前进度，默认不显示
+     */
+    private boolean showFloatProgress = false;
+
+    /**
+     * 最上层进度的颜色
+     */
+    private int floatProgressColor = 0xFFFFFF;
+
 
 
     private ValueFormatCallback valueFormatCallback = null;
@@ -180,29 +196,21 @@ public class NpColorBarBean {
         isShowStartEndValue = showStartEndValue;
     }
 
-    public int getValuePosition() {
+    public NpPosition getValuePosition() {
         return valuePosition;
     }
 
-    public void setValuePosition(int valuePosition) {
-        if (valuePosition < 0 || valuePosition > 2) {
-            valuePosition = PositionBottom;
-        }
+    public void setValuePosition(NpPosition valuePosition) {
         this.valuePosition = valuePosition;
     }
 
-    public int getCursorPosition() {
+    public NpPosition getCursorPosition() {
         return cursorPosition;
     }
 
-    public void setCursorPosition(int cursorPosition) {
-        if (cursorPosition < 0 || cursorPosition > 2 || cursorPosition == 1) {
-            cursorPosition = PositionTop;
-        }
-
+    public void setCursorPosition(NpPosition cursorPosition) {
         this.cursorPosition = cursorPosition;
     }
-
 
     public float getCursorWidth() {
         return cursorWidth;
@@ -228,24 +236,70 @@ public class NpColorBarBean {
         this.cursorMarginColorBar = cursorMarginColorBar;
     }
 
+    public boolean isAutoCalculationValue() {
+        return isAutoCalculationValue;
+    }
+
+    public void setAutoCalculationValue(boolean autoCalculationValue) {
+        isAutoCalculationValue = autoCalculationValue;
+    }
+
+    public boolean isShowValue() {
+        return isShowValue;
+    }
+
+    public void setShowValue(boolean showValue) {
+        isShowValue = showValue;
+    }
+
+    public NpColorType getNpColorType() {
+        return npColorType;
+    }
+
+    public void setNpColorType(NpColorType npColorType) {
+        this.npColorType = npColorType;
+    }
+
+    public boolean isShowFloatProgress() {
+        return showFloatProgress;
+    }
+
+    public void setShowFloatProgress(boolean showFloatProgress) {
+        this.showFloatProgress = showFloatProgress;
+    }
+
+    public int getFloatProgressColor() {
+        return floatProgressColor;
+    }
+
+    public void setFloatProgressColor(int floatProgressColor) {
+        this.floatProgressColor = floatProgressColor;
+    }
+
+
     @Override
     public String toString() {
         return "NpColorBarBean{" +
-                "currentValue=" + currentValue +
+                "npColorType=" + npColorType +
+                ", currentValue=" + currentValue +
                 ", cursorColor=" + cursorColor +
                 ", cursorWidth=" + cursorWidth +
                 ", cursorEquilateral=" + cursorEquilateral +
                 ", cursorMarginColorBar=" + cursorMarginColorBar +
                 ", maxValue=" + maxValue +
                 ", minValue=" + minValue +
+                ", isAutoCalculationValue=" + isAutoCalculationValue +
                 ", npColorBarEntityList=" + npColorBarEntityList +
                 ", textSize=" + textSize +
                 ", useRoundMode=" + useRoundMode +
                 ", isShowCursor=" + isShowCursor +
                 ", valueColor=" + valueColor +
                 ", isShowStartEndValue=" + isShowStartEndValue +
+                ", isShowValue=" + isShowValue +
                 ", valuePosition=" + valuePosition +
                 ", cursorPosition=" + cursorPosition +
+                ", showFloatProgress=" + showFloatProgress +
+                ", floatProgressColor=" + floatProgressColor +
                 ", valueFormatCallback=" + valueFormatCallback +
                 '}';
     }

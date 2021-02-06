@@ -14,7 +14,7 @@ import npwidget.nopointer.utils.SizeUtils;
 
 
 /**
- * 圆形进度条 view
+ * 圆形进度条（很基础的view）
  */
 public class NpCircleProgressView extends BaseView {
 

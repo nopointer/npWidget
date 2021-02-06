@@ -7,12 +7,11 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.base.NpPosition;
 import npwidget.nopointer.dialog.UseProtocolAuthDialog;
 import npwidget.nopointer.progress.battery.NpBatteryView;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
@@ -38,6 +37,7 @@ public class MainActivity extends FragmentActivity {
     private NpBatteryView npBatteryView;
 
     private UseProtocolAuthDialog useProtocolAuthDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +215,9 @@ public class MainActivity extends FragmentActivity {
 //        loadBattery();
 
 
-        startActivity(new Intent(this,NpRectViewActivity.class));
+//        startActivity(new Intent(this,NpRectViewActivity.class));
+//        startActivity(new Intent(this, NpCountDwonViewActivity.class));
+        startActivity(new Intent(this, NpColorBarProgressViewActivity.class));
     }
 
     private void loadBattery() {
@@ -230,27 +232,13 @@ public class MainActivity extends FragmentActivity {
         npBatteryView.setLowBatteryColor(0xFFFF0000);
         npBatteryView.setShowAtLastOne(true);
         npBatteryView.setShowType(NpBatteryView.TYPE_PART_CUSTOM);
-        float[] customBatteryArray =new float[]{0,5,20,40,60,80,100};
+        float[] customBatteryArray = new float[]{0, 5, 20, 40, 60, 80, 100};
         npBatteryView.setCustomBatteryArray(customBatteryArray);
         npBatteryView.invalidate();
     }
 
     private void loadColorBar() {
-//        NpColorBarBean localNpColorBarBean = new NpColorBarBean();
-//        localNpColorBarBean.setMinValue(35.0F);
-//        localNpColorBarBean.setCursorColor(-65536);
-//        localNpColorBarBean.setValueColor(-16777216);
-//        localNpColorBarBean.setCurrentValue(-38.5F);
-//        localNpColorBarBean.setMaxValue(42.0F);
-//        localNpColorBarBean.setUseRoundMode(true);
-//        ArrayList localArrayList = new ArrayList();
-//        localArrayList.add(new NpColorBarEntity(0xFFFF00FF, 0xFFFF0000));
-//        localArrayList.add(new NpColorBarEntity(0xFFFF0000, 0xFF0000FF));
-//        localArrayList.add(new NpColorBarEntity(-1771130, -6779));
-//        localArrayList.add(new NpColorBarEntity(-6779, -11643));
-//        localNpColorBarBean.setNpColorBarEntityList(localArrayList);
-//        this.npCircleProgressView.setNpColorBarBean(localNpColorBarBean);
-//        this.npCircleProgressView.invalidate();
+//
 
 
         NpColorBarBean localNpColorBarBean = new NpColorBarBean();
@@ -259,8 +247,8 @@ public class MainActivity extends FragmentActivity {
         localNpColorBarBean.setCursorColor(0xFFFF3500);
         localNpColorBarBean.setValueColor(0xFFFF0000);
         localNpColorBarBean.setTextSize(SizeUtils.sp2px(this, 14));
-        localNpColorBarBean.setValuePosition(NpColorBarBean.positionCenter);
-        localNpColorBarBean.setCursorPosition(NpColorBarBean.PositionTop);
+        localNpColorBarBean.setValuePosition(NpPosition.CENTER);
+        localNpColorBarBean.setCursorPosition(NpPosition.TOP);
         localNpColorBarBean.setCursorEquilateral(true);
         localNpColorBarBean.setCursorWidth(34);
         localNpColorBarBean.setCursorMarginColorBar(5);
@@ -284,7 +272,7 @@ public class MainActivity extends FragmentActivity {
     private void loadDebug() {
         NpSleepStateAreaBean npStateBean = new NpSleepStateAreaBean();
         npStateBean.setStateAreaType(NpSleepStateAreaBean.StateAreaType.SPLIT_HEIGHT);
-        npStateBean.setClipLineWidth(2);
+        npStateBean.setClipLineWidth(1);
         npStateBean.setClipLineColor(Color.BLACK);
         npStateBean.setSelectPartRectColor(0xFFE5E5E5);
         List<NpSleepEntry> dataList = new ArrayList<>();
@@ -316,7 +304,6 @@ public class MainActivity extends FragmentActivity {
         npStateBean.setLeftTextColor(0xFF000000);
         npStateBean.setRightText("23:59");
         npStateBean.setRightTextColor(0xFF000000);
-        npStateBean.setClipLineWidth(QMUIDisplayHelper.dp2px(MainApplication.getMainApplication(), 1));
         npStateBean.setEnableClickPart(true);
 
         npStateLineView.setPartSelectCallback(new NpSleepStateAreaView.PartSelectCallback() {

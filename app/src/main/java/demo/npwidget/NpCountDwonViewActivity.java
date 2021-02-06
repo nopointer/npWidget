@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import npwidget.nopointer.countDown.NpCountDownView;
+import npwidget.nopointer.countDown.extra.VBWomanCountDownView;
 
 public class NpCountDwonViewActivity extends Activity {
 
     NpCountDownView npCountDownView;
+
+    VBWomanCountDownView vBWomanCountDownView;
 
     private Handler handler =new Handler();
     @Override
@@ -17,14 +20,19 @@ public class NpCountDwonViewActivity extends Activity {
         setContentView(R.layout.activity_countdown_view);
         npCountDownView = findViewById(R.id.npCountDownView);
 
-//        npCountDownView.startCountDown(100);
+        vBWomanCountDownView = findViewById(R.id.vBWomanCountDownView);
 
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                npCountDownView.finish(0.5f);
-            }
-        },3000);
+        npCountDownView.startCountDown(10);
+        npCountDownView.finish();
+
+
+        vBWomanCountDownView.setCircleProgressBgColor(0xFFE7E7E7);
+        vBWomanCountDownView.setCircleProgressColor(0xFFF86575);
+        vBWomanCountDownView.setOutSideColor(0xFFE7E7E7);
+        vBWomanCountDownView.setProgressBarOutSideColor(0xFFF86575);
+        vBWomanCountDownView.setProgressBarColor(0xFFFFFFFF);
+        vBWomanCountDownView.startCountDown(3,0.5f);
+
     }
 
 
