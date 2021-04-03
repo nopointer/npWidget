@@ -125,17 +125,17 @@ public class NpColorBarProgressView extends BaseView {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         float progress = (mValue - mMinValue) / (mMaxValue - mMinValue * 1.0f);
+        ViewLog.e("progress:" + progress);
         RectF rectF = new RectF(viewRectF);
         float f = viewRectF.height() / 3.0F;
         rectF.top += f;
         rectF.bottom -= f;
-        rectF.right = rectF.width() * progress + rectF.left;
+        rectF.right = viewRectF.width() * progress + rectF.left;
         paint.setColor(npColorBarBean.getFloatProgressColor());
 
         localCanvas.drawRect(rectF, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
         canvas.drawBitmap(localBitmap, new Matrix(), paint);
-
 
     }
 

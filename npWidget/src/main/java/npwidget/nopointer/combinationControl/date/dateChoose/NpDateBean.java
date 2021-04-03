@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import npwidget.nopointer.combinationControl.date.NpDateType;
 
@@ -71,7 +72,7 @@ public class NpDateBean {
             result.setStartDate(getDayStartByIndex(date, index));
             result.setEndDate(getDayEndByIndex(date, index));
         }
-        result.setSimpleTitle(new SimpleDateFormat("yyyy-MM-dd").format(result.getStartDate()));
+        result.setSimpleTitle(new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(result.getStartDate()));
         result.setDateType(NpDateType.DAY);
         return result;
     }
@@ -89,8 +90,8 @@ public class NpDateBean {
         //拼标题
         result.setStartDate(getWeekStartDate(date, index));
         result.setEndDate(getWeekEndDate(date, index));
-        String title = new SimpleDateFormat("yyyy-MM-dd").format(result.getStartDate());
-        title += " ~ " + new SimpleDateFormat("MM-dd").format(result.getEndDate());
+        String title = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(result.getStartDate());
+        title += " ~ " + new SimpleDateFormat("MM-dd", Locale.US).format(result.getEndDate());
         result.setSimpleTitle(title);
         result.setDateType(NpDateType.WEEK);
         return result;
@@ -107,7 +108,7 @@ public class NpDateBean {
         NpDateBean result = new NpDateBean();
         result.setStartDate(getMonthStartDate(date, index));
         result.setEndDate(getMonthEndDate(date, index));
-        result.setSimpleTitle(new SimpleDateFormat("yyyy-MM").format(result.getEndDate()));
+        result.setSimpleTitle(new SimpleDateFormat("yyyy-MM", Locale.US).format(result.getEndDate()));
         result.setDateType(NpDateType.MONTH);
         return result;
     }
@@ -123,7 +124,7 @@ public class NpDateBean {
         NpDateBean result = new NpDateBean();
         result.setStartDate(getYearStartDate(date, index));
         result.setEndDate(getYearEndStartDate(date, index));
-        result.setSimpleTitle(new SimpleDateFormat("yyyy").format(result.getEndDate()));
+        result.setSimpleTitle(new SimpleDateFormat("yyyy", Locale.US).format(result.getEndDate()));
         result.setDateType(NpDateType.YEAR);
         return result;
     }
