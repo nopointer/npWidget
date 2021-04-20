@@ -58,6 +58,8 @@ public class NpChartLineView extends BaseView {
     //是否已经触摸过了
     private boolean hasTouch = false;
 
+
+
     public void setChartBean(NpChartLineBean chartBean) {
         this.chartBean = chartBean;
         lastSelectIndex = -1;
@@ -187,6 +189,8 @@ public class NpChartLineView extends BaseView {
     public void setClickRangeWidth(float clickRangeWidth) {
         this.clickRangeWidth = clickRangeWidth;
     }
+
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -715,6 +719,9 @@ public class NpChartLineView extends BaseView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnableTouch()){
+            return false;
+        }
         hasTouch = true;
         velocityTracker.computeCurrentVelocity(1500);
         velocityTracker.addMovement(event);

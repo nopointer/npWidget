@@ -466,6 +466,9 @@ public class NpChartColumnView extends BaseView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnableTouch()){
+            return false;
+        }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             ViewLog.e("x=>" + event.getX() + " ///y=>" + event.getY());
             for (int i = 0; i < allTmpRectList.size(); i++) {

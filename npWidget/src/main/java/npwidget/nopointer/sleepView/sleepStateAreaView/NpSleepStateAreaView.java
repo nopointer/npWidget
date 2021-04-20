@@ -210,6 +210,9 @@ public class NpSleepStateAreaView extends BaseView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!isEnableTouch()){
+            return false;
+        }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (sleepPartCount != 0 && npStateBean.isEnableClickPart()) {
                 for (int i = 0; i < sleepPartCount; i++) {

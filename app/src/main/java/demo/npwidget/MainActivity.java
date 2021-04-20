@@ -108,12 +108,12 @@ public class MainActivity extends FragmentActivity {
 
 //        startActivity(new Intent(this, NpTimeCirclePickerViewActivity.class));
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
-//        startActivity(new Intent(this, NpLineViewActivity.class));
+        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
 //        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
 
-        startActivity(new Intent(this, NpDateTypeActivity.class));
+//        startActivity(new Intent(this, NpDateTypeActivity.class));
 //        startActivity(new Intent(this, NpColumnViewActivity.class));
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
 //        startActivity(new Intent(this, NpPolylineViewActivity.class));

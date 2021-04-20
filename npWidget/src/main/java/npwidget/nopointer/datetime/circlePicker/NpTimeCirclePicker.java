@@ -202,6 +202,10 @@ public class NpTimeCirclePicker extends BaseView {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
+        if (!isEnableTouch()){
+            return false;
+        }
+
         float btnSize = npTimeBean.getStartAndEndBtnSize();
 
         if (getDistance(event.getX(), event.getY(), mCenterX, mCenterY) > mMinViewSize / 2 + btnSize) {

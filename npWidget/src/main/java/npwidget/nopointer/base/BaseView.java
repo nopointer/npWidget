@@ -30,6 +30,18 @@ public class BaseView extends View {
     private int canvasBg =0xFFFFFFFF;
 
 
+    //是否可以触摸
+    private boolean enableTouch = true;
+
+    public boolean isEnableTouch() {
+        return enableTouch;
+    }
+
+    public void setEnableTouch(boolean enableTouch) {
+        this.enableTouch = enableTouch;
+    }
+
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
