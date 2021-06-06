@@ -834,7 +834,7 @@ public class NpChartLineView extends BaseView {
         if (hasTouch) return;
         List<NpChartLineDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
         if (lineDataBeanList != null && lineDataBeanList.size() > 0) {
-            if (maxLabel > 2) {
+            if (maxLabel >= 2) {
                 ViewLog.e("多个数据点");
                 for (int i = 0; i < lineDataBeanList.size(); i++) {
                     List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();

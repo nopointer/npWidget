@@ -62,7 +62,7 @@ public class NpLineViewActivity extends Activity {
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
 
-        for (int i = 1; i <= 6; i++) {
+        for (int i = 1; i <= 1; i++) {
             npLineEntries1.add(new NpLineEntry((i * 6) % 11));
             npLineEntries2.add(new NpLineEntry((i * 12) % 23));
             stringList.add(i +"");
