@@ -47,6 +47,7 @@ public class MainActivity extends FragmentActivity {
         npCircleProgressView = findViewById(R.id.npCircleProgressView);
         npBatteryView = findViewById(R.id.npBatteryView);
 
+
         findViewById(R.id.debug_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +109,7 @@ public class MainActivity extends FragmentActivity {
 
 //        startActivity(new Intent(this, NpTimeCirclePickerViewActivity.class));
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
-        startActivity(new Intent(this, NpLineViewActivity.class));
+//        startActivity(new Intent(this, NpLineViewActivity.class));
         //进度
 //        startActivity(new Intent(this, NpRectViewActivity.class));
 //        startActivity(new Intent(this, NpOxWaveViewActivity.class));
@@ -212,7 +213,10 @@ public class MainActivity extends FragmentActivity {
 //           }
 //       },1000);
 
-//        loadBattery();
+        loadBattery();
+
+        startActivity(new Intent(this,NpColumnViewActivity.class));
+//        startActivity(new Intent(this, NpCircleProgressViewActivity.class));
 
 
 //        startActivity(new Intent(this,NpRectViewActivity.class));
@@ -228,12 +232,12 @@ public class MainActivity extends FragmentActivity {
 //        npBatteryView.setInnerPadding(10);
         npBatteryView.setTopRectHeight(8);
         npBatteryView.setTopRectWidth(16);
-        npBatteryView.setBatteryValue(1000);
+        npBatteryView.setBatteryValue(100);
         npBatteryView.setLowBatteryColor(0xFFFF0000);
         npBatteryView.setShowAtLastOne(true);
-        npBatteryView.setShowType(NpBatteryView.TYPE_PART_CUSTOM);
-        float[] customBatteryArray = new float[]{0, 5, 20, 40, 60, 80, 100};
-        npBatteryView.setCustomBatteryArray(customBatteryArray);
+        npBatteryView.setShowType(NpBatteryView.TYPE_CONTINUOUS);
+//        float[] customBatteryArray = new float[]{0, 5, 20, 40, 60, 80, 100};
+//        npBatteryView.setCustomBatteryArray(customBatteryArray);
         npBatteryView.invalidate();
     }
 

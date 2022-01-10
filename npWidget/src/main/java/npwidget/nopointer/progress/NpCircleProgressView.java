@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.log.ViewLog;
 import npwidget.nopointer.utils.SizeUtils;
@@ -22,7 +21,7 @@ public class NpCircleProgressView extends BaseView {
      * 可以绘制的RectF 边界，是一个正方形 会根据小边长适配大小
      */
     private RectF viewRectF = new RectF();
-    private float mProgress = 0f;
+    private float mProgress = 0.5f;
 
     /**
      * 开始的角度，默认-90 即12点钟方向
@@ -42,6 +41,9 @@ public class NpCircleProgressView extends BaseView {
      * 进度线的宽度
      */
     private float circleWidth = 2;
+
+    private float dotR = 2;
+    private int dotColor = 0x00FFFFFF;
 
 
     public void setStartAngle(float startAngle) {
@@ -73,6 +75,23 @@ public class NpCircleProgressView extends BaseView {
     public NpCircleProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
+    }
+
+
+    public float getDotR() {
+        return dotR;
+    }
+
+    public void setDotR(float dotR) {
+        this.dotR = dotR;
+    }
+
+    public int getDotColor() {
+        return dotColor;
+    }
+
+    public void setDotColor(int dotColor) {
+        this.dotColor = dotColor;
     }
 
     private void init(Context context) {
@@ -124,10 +143,27 @@ public class NpCircleProgressView extends BaseView {
     private void draw() {
         if (canDraw()) {
             clearBitmap();
+            
             drawProgress();
+
+            canvas.save();
+
+            canvas.rotate(360.0f*mProgress,viewRectF.centerX(),viewRectF.centerY());
+
+            drawDot();
+
+            canvas.restore();
         } else {
             ViewLog.e("不能绘制");
         }
+    }
+
+    private void drawDot() {
+        Paint paint =new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(dotColor);
+        paint.setStyle(Paint.Style.FILL);
+        canvas.drawCircle(viewRectF.centerX(),circleWidth+viewRectF.top,dotR,paint);
     }
 
 

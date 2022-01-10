@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.chart.NpSelectMode;
@@ -288,6 +289,7 @@ public class NpChartColumnView extends BaseView {
     }
 
 
+    //绘制旋转的柱子
     private void drawSelectColumn() {
 
         if (lastSelectIndex == -1) return;
@@ -300,7 +302,28 @@ public class NpChartColumnView extends BaseView {
         ColumnData pathData = columnDataList.get(lastSelectIndex);
         pathData.clickRange.left = pathData.clickRange.centerX() - chartColumnBean.getColumnWidth() / 2;
         pathData.clickRange.right = pathData.clickRange.left + chartColumnBean.getColumnWidth();
-        canvas.drawRect(pathData.clickRange, paint);
+
+        RectF rectF = new RectF(pathData.clickRange);
+
+
+        //先绘制选中的值
+        paint.setTextAlign(Paint.Align.CENTER);
+        paint.setTextSize(chartColumnBean.getSelectValueTextSize());
+        float value = columnDataList.get(lastSelectIndex).cloumnValueSum;
+        String text = String.format(Locale.US, "%d", Float.valueOf(value).intValue());
+        canvas.drawText(text, rectF.centerX(), rectF.top-chartColumnBean.getSelectValueMarginColumn(), paint);
+
+        if (chartColumnBean.isTopRound() && chartColumnBean.isBottomRound()) {
+            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
+        } else if (chartColumnBean.isTopRound()) {
+            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
+            rectF.top = rectF.bottom - rectF.height() / 2;
+            canvas.drawRect(rectF, paint);
+        } else {
+            canvas.drawRect(pathData.clickRange, paint);
+        }
+
+
         if (onColumnSelectListener != null) {
             onColumnSelectListener.onSelectColumn(chartColumnBean.getNpChartColumnDataBeans().get(lastSelectIndex), lastSelectIndex);
         }
@@ -349,13 +372,23 @@ public class NpChartColumnView extends BaseView {
                     ViewLog.e("xColumnCenterX====>" + xColumnCenterX);
 
                     ColumnData pathData = createRect(npColumnEntries, xColumnCenterX);
+
                     allTmpRectList.add(pathData.clickRange);
                     int smallRectCount = pathData.rectFList.size();
 
                     columnDataList.add(pathData);
                     for (int i = 0; i < smallRectCount; i++) {
                         paint.setColor(columnDataBean.getColorList().get(i));
-                        canvas.drawRect(pathData.getRectFList().get(i), paint);
+                        RectF rectF = new RectF(pathData.getRectFList().get(i));
+                        if (chartColumnBean.isTopRound() && chartColumnBean.isBottomRound()) {
+                            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
+                        } else if (chartColumnBean.isTopRound()) {
+                            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
+                            rectF.top = rectF.bottom - rectF.height() / 2;
+                            canvas.drawRect(rectF, paint);
+                        } else {
+                            canvas.drawRect(pathData.getRectFList().get(i), paint);
+                        }
                     }
                 }
                 tmpI++;
@@ -456,6 +489,7 @@ public class NpChartColumnView extends BaseView {
         public void setCloumnValueSum(float cloumnValueSum) {
             this.cloumnValueSum = cloumnValueSum;
         }
+
     }
 
     @Override
@@ -466,7 +500,7 @@ public class NpChartColumnView extends BaseView {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!isEnableTouch()){
+        if (!isEnableTouch()) {
             return false;
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {

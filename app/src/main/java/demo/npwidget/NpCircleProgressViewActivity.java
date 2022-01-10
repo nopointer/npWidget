@@ -16,8 +16,10 @@ public class NpCircleProgressViewActivity extends Activity {
         setContentView(R.layout.activity_circle_progress);
         npCircleProgressView = findViewById(R.id.npCircleProgressView);
 
-        npCircleProgressView.setCircleWidth(50);
+        npCircleProgressView.setCircleWidth(40);
         npCircleProgressView.setCircleProgressBgColor(0xFF000000);
-        npCircleProgressView.updateProgress(0.2f);
+        npCircleProgressView.setDotColor(0xFF0000FF);
+        npCircleProgressView.setDotR(8);
+        npCircleProgressView.updateProgress(0.1f);
     }
 }

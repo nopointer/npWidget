@@ -97,10 +97,32 @@ public class NpChartColumnBean {
      */
     private int selectColumnColor = 0xA0333333;
 
+
+
     /**
      * 横向的lable集合
      */
     private List<String> npLabelList = new ArrayList<>();
+
+    /**
+     * 顶部圆角
+     */
+    private boolean isTopRound;
+
+    /**
+     * 底部圆角
+     */
+    private boolean isBottomRound;
+
+    /**
+     * 是否显示选择的value
+     */
+    private boolean showSelectValue = false;
+
+    private float selectValueMarginColumn =10;
+
+    private float selectValueTextSize = 30;
+
 
 
     public NpShowDataType getShowDataType() {
@@ -257,6 +279,48 @@ public class NpChartColumnBean {
     }
 
 
+    public boolean isTopRound() {
+        return isTopRound;
+    }
+
+    public void setTopRound(boolean topRound) {
+        isTopRound = topRound;
+    }
+
+    public boolean isBottomRound() {
+        return isBottomRound;
+    }
+
+    public void setBottomRound(boolean bottomRound) {
+        isBottomRound = bottomRound;
+    }
+
+    public boolean isShowSelectValue() {
+        return showSelectValue;
+    }
+
+    public void setShowSelectValue(boolean showSelectValue) {
+        this.showSelectValue = showSelectValue;
+    }
+
+    public float getSelectValueMarginColumn() {
+        return selectValueMarginColumn;
+    }
+
+    public void setSelectValueMarginColumn(float selectValueMarginColumn) {
+        this.selectValueMarginColumn = selectValueMarginColumn;
+    }
+
+    public float getSelectValueTextSize() {
+        return selectValueTextSize;
+    }
+
+    public void setSelectValueTextSize(float selectValueTextSize) {
+        this.selectValueTextSize = selectValueTextSize;
+    }
+
+
+
     @Override
     public String toString() {
         return "NpChartColumnBean{" +
@@ -279,6 +343,9 @@ public class NpChartColumnBean {
                 ", npChartColumnDataBeans=" + npChartColumnDataBeans +
                 ", selectColumnColor=" + selectColumnColor +
                 ", npLabelList=" + npLabelList +
+                ", isTopRound=" + isTopRound +
+                ", isBottomRound=" + isBottomRound +
+                ", showSelectValue=" + showSelectValue +
                 '}';
     }
 }
