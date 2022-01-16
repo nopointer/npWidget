@@ -4,13 +4,13 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +43,8 @@ public class NpChartColumnView extends BaseView {
 
     //底部文字的高度
     private float bottomLabelRangeHeight = 0;
+
+    private float topSpaceHeight = 0;
 
     //底部文字的大小
     private float labelTextSize = 0;
@@ -143,6 +145,7 @@ public class NpChartColumnView extends BaseView {
             if (chartColumnBean != null) {
                 loadCfg();
                 drawXYAxis();
+                drawReferenceLine();
                 drawLabels();
                 if (chartColumnBean.getNpChartColumnDataBeans() != null && chartColumnBean.getNpChartColumnDataBeans().size() > 0) {
                     int dataSum = 0;
@@ -260,6 +263,8 @@ public class NpChartColumnView extends BaseView {
         }
         Paint paint = new Paint();
         paint.setAntiAlias(true);
+
+        //绘制X轴
         if (chartColumnBean.isShowXAxis()) {
             //绘制X轴 纵向高度一致，统一一个变量记录底边距
             float lineBottom = viewRectF.bottom - bottomLabelRangeHeight;
@@ -267,11 +272,53 @@ public class NpChartColumnView extends BaseView {
             canvas.drawLine(viewRectF.left, lineBottom, viewRectF.right, lineBottom, paint);
         }
 
+        //绘制Y轴
         if (chartColumnBean.isShowYAxis()) {
             //绘制Y轴 横向宽度一致，统一一个变量记录左边距
             float lineLeft = viewRectF.left;
             paint.setColor(chartColumnBean.getYAxisLineColor());
             canvas.drawLine(lineLeft, viewRectF.top, lineLeft, viewRectF.bottom - bottomLabelRangeHeight, paint);
+        }
+
+    }
+
+    /**
+     * 绘制参考线
+     */
+    private void drawReferenceLine() {
+        if (!chartColumnBean.isShowRefreshLine()) return;
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(0xFFAAAAAA);
+
+        paint.setTextSize(30);
+
+        paint.setPathEffect(new DashPathEffect(new float[]{12, 12}, 0));
+
+        int refLineCount = chartColumnBean.getRefreshLineCount();
+
+        float height = (viewRectF.height() - bottomLabelRangeHeight - topSpaceHeight) / (refLineCount);
+
+        for (int i = 1; i <= refLineCount; i++) {
+            float yPosition = viewRectF.bottom - bottomLabelRangeHeight - height * i;
+            canvas.drawLine(viewRectF.left, yPosition, viewRectF.right, yPosition, paint);
+        }
+
+
+        //绘制参考值
+        int refValueCount = chartColumnBean.getRefreshValueCount();
+
+        float valueAdd = columnMaxValue / refLineCount;
+
+        height = (viewRectF.height() - bottomLabelRangeHeight - topSpaceHeight) / (refValueCount);
+
+        for (int i = 1; i <= refValueCount; i++) {
+            float yPosition = viewRectF.bottom - bottomLabelRangeHeight - height * i;
+
+            String text = String.format(Locale.US, "%d", Float.valueOf((valueAdd * i)).intValue());
+
+            canvas.drawText(text, viewRectF.left + 10, yPosition + 36, paint);
         }
 
     }
@@ -311,7 +358,7 @@ public class NpChartColumnView extends BaseView {
         paint.setTextSize(chartColumnBean.getSelectValueTextSize());
         float value = columnDataList.get(lastSelectIndex).cloumnValueSum;
         String text = String.format(Locale.US, "%d", Float.valueOf(value).intValue());
-        canvas.drawText(text, rectF.centerX(), rectF.top-chartColumnBean.getSelectValueMarginColumn(), paint);
+        canvas.drawText(text, rectF.centerX(), rectF.top - chartColumnBean.getSelectValueMarginColumn(), paint);
 
         if (chartColumnBean.isTopRound() && chartColumnBean.isBottomRound()) {
             canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
@@ -524,6 +571,7 @@ public class NpChartColumnView extends BaseView {
     private void loadCfg() {
         labelTextSize = chartColumnBean.getLabelTextSize();
         bottomLabelRangeHeight = chartColumnBean.getBottomHeight();
+        topSpaceHeight = chartColumnBean.getTopHeight();
         columnMaxValue = chartColumnBean.getMaxY();
         allColumnDataSum.clear();
     }

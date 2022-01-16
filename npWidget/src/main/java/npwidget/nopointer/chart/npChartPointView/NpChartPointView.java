@@ -1,4 +1,4 @@
-package npwidget.nopointer.chart.npChartLineView;
+package npwidget.nopointer.chart.npChartPointView;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -41,12 +41,12 @@ import npwidget.nopointer.utils.SizeUtils;
  * 3.一条数据的绘制
  * 4.阴影的距离
  */
-public class NpChartLineView extends BaseView {
+public class NpChartPointView extends BaseView {
 
     private ValueAnimator valueAnimator;
     private VelocityTracker velocityTracker = VelocityTracker.obtain();
 
-    private NpChartLineBean chartBean;
+    private NpChartPointBean chartBean;
 
     //底部文字的高度
     private float bottomLabelRangeHeight = 0;
@@ -64,24 +64,24 @@ public class NpChartLineView extends BaseView {
     private boolean hasTouch = false;
 
 
-    public void setChartBean(NpChartLineBean chartBean) {
+    public void setChartBean(NpChartPointBean chartBean) {
         this.chartBean = chartBean;
         lastSelectIndex = -1;
         hasClick = false;
         hasTouch = false;
     }
 
-    public NpChartLineView(Context context) {
+    public NpChartPointView(Context context) {
         super(context);
         init(context, null);
     }
 
-    public NpChartLineView(Context context, AttributeSet attrs) {
+    public NpChartPointView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public NpChartLineView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NpChartPointView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -180,10 +180,10 @@ public class NpChartLineView extends BaseView {
 
     private List<RectF> allTmpRectList = new ArrayList<>();
 
-    private OnLineSelectListener onLineSelectListener;
+    private OnPointSelectListener onPointSelectListener;
 
-    public void setOnLineSelectListener(OnLineSelectListener onLineSelectListener) {
-        this.onLineSelectListener = onLineSelectListener;
+    public void setOnPointSelectListener(OnPointSelectListener onPointSelectListener) {
+        this.onPointSelectListener = onPointSelectListener;
     }
 
     public void setPointRadius(float pointRadius) {
@@ -230,8 +230,8 @@ public class NpChartLineView extends BaseView {
                 if (chartBean.getNpChartLineDataBeans() != null && chartBean.getNpChartLineDataBeans().size() > 0) {
                     int dataSum = 0;
 
-                    for (NpChartLineDataBean chartLineDataBean : chartBean.getNpChartLineDataBeans()) {
-                        for (NpLineEntry lineEntry : chartLineDataBean.getNpLineEntryList()) {
+                    for (NpChartPointDataBean chartLineDataBean : chartBean.getNpChartLineDataBeans()) {
+                        for (NpPointEntry lineEntry : chartLineDataBean.getNpLineEntryList()) {
                             dataSum += lineEntry.getValue();
                         }
                     }
@@ -318,7 +318,7 @@ public class NpChartLineView extends BaseView {
         //绘制参考值
         int refValueCount = chartBean.getRefreshValueCount();
 
-        ViewLog.e("refValueCount = "+refValueCount+" , chartBean.getMaxY() = "+chartBean.getMaxY()+" ,chartBean.getMinY() = "+chartBean.getMinY());
+        ViewLog.e("refValueCount = " + refValueCount + " , chartBean.getMaxY() = " + chartBean.getMaxY() + " ,chartBean.getMinY() = " + chartBean.getMinY());
 
         float valueAdd = (chartBean.getMaxY() - chartBean.getMinY()) / refLineCount;
 
@@ -399,14 +399,14 @@ public class NpChartLineView extends BaseView {
      * 绘制数据曲线
      */
     private void drawDataLines() {
-        List<NpChartLineDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
+        List<NpChartPointDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
         if (lineDataBeanList != null && lineDataBeanList.size() > 0) {
             if (maxLabel <= 0) {
                 ViewLog.e("没有数据，不绘制数据曲线");
             } else if (maxLabel == 1) {
                 ViewLog.e("只有一个数据点，不绘制数据曲线");
-                for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
-                    List<NpLineEntry> npLineEntryList = npChartLineDataBean.getNpLineEntryList();
+                for (NpChartPointDataBean npChartLineDataBean : lineDataBeanList) {
+                    List<NpPointEntry> npLineEntryList = npChartLineDataBean.getNpLineEntryList();
                     allTmpRectList.clear();
 
                     if (npLineEntryList.size() != 1) {
@@ -434,8 +434,8 @@ public class NpChartLineView extends BaseView {
                     }
                 }
                 if (chartBean.getNpSelectMode() != NpSelectMode.NONE) {
-                    if (onLineSelectListener != null) {
-                        onLineSelectListener.onSelectLine(lineDataBeanList, 0);
+                    if (onPointSelectListener != null) {
+                        onPointSelectListener.onSelectPoint(lineDataBeanList, 0);
                     }
                 }
             } else {
@@ -443,10 +443,16 @@ public class NpChartLineView extends BaseView {
 
                 allTmpRectList.clear();
 
+                Paint pointPaint = new Paint();
+                pointPaint.setAntiAlias(true);
+
                 int count = 0;
                 int tempIndex = 0;
-                for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
-                    List<NpLineEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
+
+                ViewLog.e("lineDataBeanList.size() = "+lineDataBeanList.size());
+
+                for (NpChartPointDataBean npChartLineDataBean : lineDataBeanList) {
+                    List<NpPointEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
                     if (npLineEntries != null && npLineEntries.size() > 1) {
                         dataLinePaint.setStrokeWidth(npChartLineDataBean.getLineThickness());
                         if (npChartLineDataBean.isShowShadow()) {
@@ -455,12 +461,34 @@ public class NpChartLineView extends BaseView {
                             float shadowY = npChartLineDataBean.getShadowY();
                             dataLinePaint.setShadowLayer(shadowRadius, shadowX, shadowY, npChartLineDataBean.getShadowColor());
                         }
-                        PathData pathData = getPath(npLineEntries, false);
-                        dataLinePaint.setColor(npChartLineDataBean.getColor());
-                        canvas.drawPath(pathData.getPath(), dataLinePaint);
+//                        PathData pathData = getPath(npLineEntries, false);
+//                        dataLinePaint.setColor(npChartLineDataBean.getColor());
+//                        canvas.drawPath(pathData.getPath(), dataLinePaint);
+
+                        float xDisAdd = labelWidthSpace;
+                        for (int i = 0; i < npLineEntries.size(); i++) {
+
+                            float x = dataMarginLeft + xDisAdd * i;
+                            float y = getDataPointYPosition(npLineEntries.get(i));
+
+                            RectF rectF = new RectF();
+                            rectF.left = x - clickRangeWidth;
+                            rectF.right = x + clickRangeWidth;
+                            rectF.top = y - clickRangeWidth;
+                            rectF.bottom = y + clickRangeWidth;
+//                            allTmpRectList.add(rectF);
+
+                            pointPaint.setColor(npChartLineDataBean.getColor());
+                            pointPaint.setStrokeWidth(unitDp);
+                            canvas.drawCircle(x, y, pointRadius, pointPaint);
+//                            pointPaint.setStyle(Paint.Style.STROKE);
+//                            pointPaint.setColor(npChartLineDataBean.getColor());
+//                            canvas.drawCircle(x, y, pointRadius, pointPaint);
+                        }
+
                     }
                     if (count == 0) {
-                        for (NpLineEntry npLineEntry : npLineEntries) {
+                        for (NpPointEntry npLineEntry : npLineEntries) {
                             RectF rectF = new RectF();
                             rectF.left = dataMarginLeft + labelWidthSpace * tempIndex - clickRangeWidth;
                             rectF.right = rectF.left + clickRangeWidth * 2;
@@ -474,7 +502,7 @@ public class NpChartLineView extends BaseView {
                 }
 
                 for (int i = 0; i < lineDataBeanList.size(); i++) {
-                    List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
+                    List<NpPointEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
                     if (npLineEntries != null && npLineEntries.size() > 0) {
 
 //                        if (!hasTouch) {
@@ -536,17 +564,20 @@ public class NpChartLineView extends BaseView {
                             paint.setAntiAlias(true);
                             float x = dataMarginLeft + labelWidthSpace * lastSelectIndex;
                             float y = getDataPointYPosition(npLineEntries.get(lastSelectIndex));
-                            paint.setColor(Color.WHITE);
+//                            paint.setColor(Color.WHITE);
                             paint.setStrokeWidth(unitDp);
-                            canvas.drawCircle(x, y, pointRadius, paint);
-                            paint.setStyle(Paint.Style.STROKE);
                             paint.setColor(lineDataBeanList.get(i).getColor());
                             canvas.drawCircle(x, y, pointRadius, paint);
+
+                            canvas.drawLine(x,viewRectF.top+topSpaceHeight,x,viewRectF.bottom-bottomLabelRangeHeight,paint);
+
+//                            paint.setStyle(Paint.Style.FILL);
+//                            canvas.drawCircle(x, y, pointRadius, paint);
                         }
                     }
                 }
-                if (onLineSelectListener != null && lastSelectIndex != -1) {
-                    onLineSelectListener.onSelectLine(lineDataBeanList, lastSelectIndex);
+                if (onPointSelectListener != null && lastSelectIndex != -1) {
+                    onPointSelectListener.onSelectPoint(lineDataBeanList, lastSelectIndex);
                 }
             }
 
@@ -560,12 +591,12 @@ public class NpChartLineView extends BaseView {
      * 绘制数据的渐变曲线
      */
     private void drawDataLineGradient() {
-        List<NpChartLineDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
+        List<NpChartPointDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
         if (lineDataBeanList != null && lineDataBeanList.size() > 0) {
             if (maxLabel > 1) {
-                for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
+                for (NpChartPointDataBean npChartLineDataBean : lineDataBeanList) {
 
-                    List<NpLineEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
+                    List<NpPointEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
                     if (npChartLineDataBean.isShowGradient() && npLineEntries != null && npLineEntries.size() > 1) {
                         PathData pathData = getPath(npLineEntries, true);
 
@@ -610,7 +641,7 @@ public class NpChartLineView extends BaseView {
      * @param npLineEntry
      * @return
      */
-    private float getDataPointYPosition(NpLineEntry npLineEntry) {
+    private float getDataPointYPosition(NpPointEntry npLineEntry) {
         float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
         float min = chartBean.getMinY();
         float max = chartBean.getMaxY();
@@ -628,7 +659,7 @@ public class NpChartLineView extends BaseView {
 
     }
 
-    private PathData getPath(List<NpLineEntry> lineEntryList, boolean isClosed) {
+    private PathData getPath(List<NpPointEntry> lineEntryList, boolean isClosed) {
         PathData pathData = new PathData();
         Path path = new Path();
         float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
@@ -665,7 +696,7 @@ public class NpChartLineView extends BaseView {
 
 
         List<Float> tmpList = new ArrayList<>();
-        for (NpLineEntry npLineEntry : lineEntryList) {
+        for (NpPointEntry npLineEntry : lineEntryList) {
             tmpList.add(npLineEntry.getValue());
         }
         if (tmpList.size() > 0) {
@@ -881,12 +912,12 @@ public class NpChartLineView extends BaseView {
      */
     private void calculationScroll() {
         if (hasTouch) return;
-        List<NpChartLineDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
+        List<NpChartPointDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
         if (lineDataBeanList != null && lineDataBeanList.size() > 0) {
             if (maxLabel >= 2) {
                 ViewLog.e("多个数据点");
                 for (int i = 0; i < lineDataBeanList.size(); i++) {
-                    List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
+                    List<NpPointEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
                     if (npLineEntries != null && npLineEntries.size() > 0) {
                         ViewLog.e("hasClick:" + hasClick);
                         ViewLog.e("getNpSelectMode:" + chartBean.getNpSelectMode());
@@ -945,8 +976,8 @@ public class NpChartLineView extends BaseView {
                         }
                     }
                 }
-                if (onLineSelectListener != null && lastSelectIndex != -1) {
-                    onLineSelectListener.onSelectLine(lineDataBeanList, lastSelectIndex);
+                if (onPointSelectListener != null && lastSelectIndex != -1) {
+                    onPointSelectListener.onSelectPoint(lineDataBeanList, lastSelectIndex);
                 }
             }
         }
@@ -960,7 +991,7 @@ public class NpChartLineView extends BaseView {
     }
 
 
-    public interface OnLineSelectListener {
-        void onSelectLine(List<NpChartLineDataBean> lineDataBeans, int index);
+    public interface OnPointSelectListener {
+        void onSelectPoint(List<NpChartPointDataBean> lineDataBeans, int index);
     }
 }

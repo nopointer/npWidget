@@ -22,8 +22,8 @@
             android:id="@+id/npChartLineView"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:clickable="false"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:clickable="false" />
 
 
     </RelativeLayout>

@@ -1,4 +1,4 @@
-package npwidget.nopointer.chart.npChartLineView;
+package npwidget.nopointer.chart.npChartPointView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.List;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 
-public class NpChartLineBean {
+public class NpChartPointBean {
 
     /**
      * 最大值 y轴上
@@ -99,18 +99,18 @@ public class NpChartLineBean {
     }
 
 
-    public List<NpChartLineDataBean> getNpChartLineDataBeans() {
+    public List<NpChartPointDataBean> getNpChartLineDataBeans() {
         return npChartLineDataBeans;
     }
 
-    public void setNpChartLineDataBeans(List<NpChartLineDataBean> npChartLineDataBeans) {
+    public void setNpChartLineDataBeans(List<NpChartPointDataBean> npChartLineDataBeans) {
         this.npChartLineDataBeans = npChartLineDataBeans;
     }
 
     /**
      * 数据曲线集合
      */
-    private List<NpChartLineDataBean> npChartLineDataBeans = new ArrayList<>();
+    private List<NpChartPointDataBean> npChartLineDataBeans = new ArrayList<>();
 
     /**
      * 横向的lable集合

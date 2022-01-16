@@ -22,6 +22,16 @@ public class NpChartColumnBean {
      */
     private boolean showXAxis;
 
+    //是否显示参考线
+    private boolean showRefreshLine = false;
+
+    //参考线条数
+    private int refreshLineCount = 4;
+
+
+    //参考值个数
+    private int refreshValueCount = 2;
+
     /**
      * x轴的颜色
      */
@@ -79,6 +89,11 @@ public class NpChartColumnBean {
     private float bottomHeight = 20;
 
     /**
+     * 底部绘制横向标签的高度
+     */
+    private float topHeight = 20;
+
+    /**
      * 标签的颜色
      */
     private int labelTextColor = 0xFF000000;
@@ -96,7 +111,6 @@ public class NpChartColumnBean {
      * 选择中的柱子的颜色
      */
     private int selectColumnColor = 0xA0333333;
-
 
 
     /**
@@ -119,10 +133,9 @@ public class NpChartColumnBean {
      */
     private boolean showSelectValue = false;
 
-    private float selectValueMarginColumn =10;
+    private float selectValueMarginColumn = 10;
 
     private float selectValueTextSize = 30;
-
 
 
     public NpShowDataType getShowDataType() {
@@ -319,7 +332,38 @@ public class NpChartColumnBean {
         this.selectValueTextSize = selectValueTextSize;
     }
 
+    public boolean isShowRefreshLine() {
+        return showRefreshLine;
+    }
 
+    public void setShowRefreshLine(boolean showRefreshLine) {
+        this.showRefreshLine = showRefreshLine;
+    }
+
+    public int getRefreshLineCount() {
+        return refreshLineCount;
+    }
+
+    public void setRefreshLineCount(int refreshLineCount) {
+        this.refreshLineCount = refreshLineCount;
+    }
+
+    public int getRefreshValueCount() {
+        return refreshValueCount;
+    }
+
+    public void setRefreshValueCount(int refreshValueCount) {
+        this.refreshValueCount = refreshValueCount;
+    }
+
+
+    public float getTopHeight() {
+        return topHeight;
+    }
+
+    public void setTopHeight(float topHeight) {
+        this.topHeight = topHeight;
+    }
 
     @Override
     public String toString() {
@@ -327,6 +371,9 @@ public class NpChartColumnBean {
                 "maxY=" + maxY +
                 ", minY=" + minY +
                 ", showXAxis=" + showXAxis +
+                ", showRefreshLine=" + showRefreshLine +
+                ", refreshLineCount=" + refreshLineCount +
+                ", refreshValueCount=" + refreshValueCount +
                 ", XAxisLineColor=" + XAxisLineColor +
                 ", showYAxis=" + showYAxis +
                 ", YAxisLineColor=" + YAxisLineColor +
@@ -338,6 +385,7 @@ public class NpChartColumnBean {
                 ", showLabels=" + showLabels +
                 ", labelTextSize=" + labelTextSize +
                 ", bottomHeight=" + bottomHeight +
+                ", topHeight=" + topHeight +
                 ", labelTextColor=" + labelTextColor +
                 ", npSelectMode=" + npSelectMode +
                 ", npChartColumnDataBeans=" + npChartColumnDataBeans +
@@ -346,6 +394,8 @@ public class NpChartColumnBean {
                 ", isTopRound=" + isTopRound +
                 ", isBottomRound=" + isBottomRound +
                 ", showSelectValue=" + showSelectValue +
+                ", selectValueMarginColumn=" + selectValueMarginColumn +
+                ", selectValueTextSize=" + selectValueTextSize +
                 '}';
     }
 }

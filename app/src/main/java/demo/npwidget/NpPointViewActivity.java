@@ -13,21 +13,21 @@ import java.util.List;
 
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
-import npwidget.nopointer.chart.npChartLineView.NpChartLineBean;
-import npwidget.nopointer.chart.npChartLineView.NpChartLineDataBean;
-import npwidget.nopointer.chart.npChartLineView.NpChartLineView;
-import npwidget.nopointer.chart.npChartLineView.NpLineEntry;
+import npwidget.nopointer.chart.npChartPointView.NpChartPointBean;
+import npwidget.nopointer.chart.npChartPointView.NpChartPointDataBean;
+import npwidget.nopointer.chart.npChartPointView.NpChartPointView;
+import npwidget.nopointer.chart.npChartPointView.NpPointEntry;
 
-public class NpLineViewActivity extends Activity {
+public class NpPointViewActivity extends Activity {
 
-    NpChartLineView npChartLineView;
+    NpChartPointView npChartPointView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_line_view);
-        npChartLineView = findViewById(R.id.npChartLineView);
-        debug(true);
+        setContentView(R.layout.activity_point_view);
+        npChartPointView = findViewById(R.id.npChartPointView);
+//        debug(true);
 
         findViewById(R.id.debugBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,15 +38,17 @@ public class NpLineViewActivity extends Activity {
         findViewById(R.id.click_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NpLineViewActivity.this,MainActivity.class));
+                startActivity(new Intent(NpPointViewActivity.this, MainActivity.class));
             }
         });
     }
 
     private void debug(boolean isEmpty) {
-        NpChartLineBean chartBean = new NpChartLineBean();
+        NpChartPointBean chartBean = new NpChartPointBean();
         chartBean.setShowXAxis(true);
-        chartBean.setShowYAxis(true);
+        chartBean.setXAxisLineColor(0xFF000000);
+        chartBean.setYAxisLineColor(0xFF000000);
+        chartBean.setShowYAxis(false);
         chartBean.setShowRefreshLine(true);
         chartBean.setRefreshLineCount(4);
         chartBean.setRefreshValueCount(2);
@@ -54,21 +56,21 @@ public class NpLineViewActivity extends Activity {
 //        chartBean.setLabelTextSize(100);
 
 
-        List<NpChartLineDataBean> npChartLineDataBeans = new ArrayList<>();
+        List<NpChartPointDataBean> npChartLineDataBeans = new ArrayList<>();
 
 
         List<String> stringList = new ArrayList<>();
 
-        NpChartLineDataBean npChartLineDataBean1 = new NpChartLineDataBean();
-        NpChartLineDataBean npChartLineDataBean2 = new NpChartLineDataBean();
+        NpChartPointDataBean npChartLineDataBean1 = new NpChartPointDataBean();
+        NpChartPointDataBean npChartLineDataBean2 = new NpChartPointDataBean();
 
-        List<NpLineEntry> npLineEntries1 = new ArrayList<>();
-        List<NpLineEntry> npLineEntries2 = new ArrayList<>();
+        List<NpPointEntry> npLineEntries1 = new ArrayList<>();
+        List<NpPointEntry> npLineEntries2 = new ArrayList<>();
 
-        for (int i = 1; i <= 31; i++) {
-            npLineEntries1.add(new NpLineEntry((i * 6) % 11));
-            npLineEntries2.add(new NpLineEntry((i * 12) % 23));
-            stringList.add(i +"");
+        for (int i = 1; i <= 7; i++) {
+            npLineEntries1.add(new NpPointEntry((i * 6) % 11));
+            npLineEntries2.add(new NpPointEntry((i * 12) % 23));
+            stringList.add(i + "");
         }
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpPointEntry(0));
@@ -86,14 +88,14 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBeans.add(npChartLineDataBean1);
 
 
-        npChartLineDataBean2.setLineThickness(3);
-        npChartLineDataBean2.setShowGradient(false);
-        npChartLineDataBean2.setShowShadow(false);
-
-        npChartLineDataBean2.setColor(0xFFFF00FF);
-        npChartLineDataBean2.setStartColor(0xFF000000);
-        npChartLineDataBean2.setEndColor(0xFFFFFFFF);
-        npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
+//        npChartLineDataBean2.setLineThickness(3);
+//        npChartLineDataBean2.setShowGradient(false);
+//        npChartLineDataBean2.setShowShadow(false);
+//
+//        npChartLineDataBean2.setColor(0xFFFF00FF);
+//        npChartLineDataBean2.setStartColor(0xFF000000);
+//        npChartLineDataBean2.setEndColor(0xFFFFFFFF);
+//        npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
 //        npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpLabelList(stringList);
@@ -106,17 +108,18 @@ public class NpLineViewActivity extends Activity {
         chartBean.setNpSelectMode(NpSelectMode.SELECT_LAST);
 //        chartBean.setLabelTextSize(40);
         if (isEmpty) {
-            npChartLineView.setChartBean(null);
+            npChartPointView.setChartBean(null);
         } else {
-            npChartLineView.setChartBean(chartBean);
+            npChartPointView.setChartBean(chartBean);
         }
-        npChartLineView.invalidate();
+        npChartPointView.invalidate();
 
-        npChartLineView.setOnLineSelectListener(new NpChartLineView.OnLineSelectListener() {
+        npChartPointView.setOnPointSelectListener(new NpChartPointView.OnPointSelectListener() {
             @Override
-            public void onSelectLine(List<NpChartLineDataBean> lineDataBeans, int index) {
+            public void onSelectPoint(List<NpChartPointDataBean> lineDataBeans, int index) {
                 Log.e("fuck,onSelectLine", lineDataBeans.size() + "///" + index);
                 Log.e("fuck,tag", lineDataBeans.get(0).getNpLineEntryList().get(index).getValue() + "");
+
             }
         });
     }

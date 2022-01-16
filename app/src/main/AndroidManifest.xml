@@ -37,6 +37,7 @@
         <activity android:name=".NpPolylineViewActivity" />
         <activity android:name=".NpCircleProgressViewActivity" />
         <activity android:name=".NpColorBarProgressViewActivity" />
+        <activity android:name=".NpPointViewActivity" />
 
     </application>
 
