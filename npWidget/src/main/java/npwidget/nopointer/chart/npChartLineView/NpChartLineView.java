@@ -320,7 +320,7 @@ public class NpChartLineView extends BaseView {
 
         ViewLog.e("refValueCount = "+refValueCount+" , chartBean.getMaxY() = "+chartBean.getMaxY()+" ,chartBean.getMinY() = "+chartBean.getMinY());
 
-        float valueAdd = (chartBean.getMaxY() - chartBean.getMinY()) / refLineCount;
+        float valueAdd = (chartBean.getMaxY() - chartBean.getMinY()) / refValueCount;
 
         height = (viewRectF.height() - bottomLabelRangeHeight - topSpaceHeight) / (refValueCount);
 

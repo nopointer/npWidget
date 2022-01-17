@@ -309,7 +309,7 @@ public class NpChartColumnView extends BaseView {
         //绘制参考值
         int refValueCount = chartColumnBean.getRefreshValueCount();
 
-        float valueAdd = columnMaxValue / refLineCount;
+        float valueAdd = columnMaxValue / refValueCount;
 
         height = (viewRectF.height() - bottomLabelRangeHeight - topSpaceHeight) / (refValueCount);
 
