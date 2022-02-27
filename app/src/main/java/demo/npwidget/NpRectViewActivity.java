@@ -25,7 +25,7 @@ public class NpRectViewActivity extends Activity {
         npRectProgressView.setUseRoundMode(true);
         npRectProgressView.setProgressColor(0xFFFF0000);
         npRectProgressView.setBgColor(0xFFFFFFFF);
-        npRectProgressView.setProgress(0.001f);
+        npRectProgressView.setProgress(0.2f);
         npRectProgressView.invalidate();
 
 //        npRectWithValueProgressView.setUseRoundMode(false);

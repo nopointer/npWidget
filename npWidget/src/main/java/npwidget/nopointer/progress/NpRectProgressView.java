@@ -3,12 +3,14 @@ package npwidget.nopointer.progress;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
 import npwidget.nopointer.base.BaseView;
-import npwidget.nopointer.log.ViewLog;
 
 /**
  * 常规的条形进度条，支持背景色和进度色的设置
@@ -33,7 +35,7 @@ public class NpRectProgressView extends BaseView {
      */
     private RectF viewRectF = new RectF();
 
-    private float mProgress = 0;
+    private float mProgress = 0.5f;
     private int bgColor = 0xFFFFFF;
     private int progressColor = 0xFFFFFF;
     /**
@@ -98,60 +100,32 @@ public class NpRectProgressView extends BaseView {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
 
+
+//        //配置背景参数
         paint.setColor(bgColor);
-        if (useRoundMode) {
-            canvas.drawRoundRect(viewRectF, viewRectF.height() / 2, viewRectF.height() / 2, paint);
-        } else {
-            canvas.drawRect(viewRectF, paint);
-        }
-
-
+        canvas.drawRect(viewRectF, paint);
+//
+        //计算实际进度
         RectF rectF = new RectF(viewRectF);
         rectF.right = viewRectF.width() * mProgress + rectF.left;
-
-        ViewLog.e("rectF.right" + rectF.right);
-
-        ViewLog.e("viewRectF.left" + viewRectF.left);
-        ViewLog.e("rectF.left" + rectF.left);
-
-//        canvas.draw
         paint.setColor(progressColor);
+        canvas.drawRect(rectF, paint);
+
+
         if (useRoundMode) {
 
-            //前面的小圆弧要特殊处理一下
-            if (rectF.width() < viewRectF.height() / 2) {
-                RectF tmpRect = new RectF(rectF);
-                tmpRect.right = tmpRect.left + viewRectF.height();
-                double sinC = ((tmpRect.width() / 2) - rectF.width()) / (tmpRect.width() / 2);
+            Bitmap bitmapTop = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas topCan = new Canvas(bitmapTop);
 
-                ViewLog.e("sinC:" + sinC);
+            Paint paintTop = new Paint();
+            paintTop.setStyle(Paint.Style.FILL);
 
-                double tempValue = Math.asin(sinC) * 57.3;
+            topCan.drawRoundRect(viewRectF, viewRectF.height() / 2, viewRectF.height() / 2, paintTop);
 
-                ViewLog.e("角度:" + tempValue);
-
-//                ViewLog.e("Math.sin(30):" + Math.sin(30 * (Math.PI / 180)));
-
-//                ViewLog.e("Math.asin(30):" + Math.asin(0.49999999999999994) * 57.3);
-//
-//
-//                ViewLog.e("aCosC:" + Math.asin(sinC));
-//                ViewLog.e("tempValue:" + tempValue);
+            paintTop.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
 
 
-                float startAngle = (float) tempValue;
-                float sweepAngle = 180 - (startAngle * 2);
-
-
-                ViewLog.e("startAngle:" + startAngle);
-                ViewLog.e("sweepAngle:" + sweepAngle);
-
-                canvas.drawArc(tmpRect, (float) -(tempValue) - 90, -(float) (180 - tempValue * 2), false, paint);
-            } else {
-                canvas.drawRoundRect(rectF, viewRectF.height() / 2, viewRectF.height() / 2, paint);
-            }
-        } else {
-            canvas.drawRect(rectF, paint);
+            canvas.drawBitmap(bitmapTop, new Matrix(), paintTop);
         }
 
 
