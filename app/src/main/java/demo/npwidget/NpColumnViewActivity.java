@@ -44,9 +44,10 @@ public class NpColumnViewActivity extends Activity {
         chartBean.setShowRefreshLine(true);
         chartBean.setRefreshLineCount(4);
         chartBean.setRefreshValueCount(2);
-        chartBean.setBottomRound(false);
-        chartBean.setShowSelectValue(true);
         chartBean.setTopRound(true);
+        chartBean.setBottomRound(true);
+        chartBean.setShowSelectValue(true);
+        chartBean.setSelectValueTextSize(20);
         chartBean.setShowXAxis(true);
         chartBean.setShowYAxis(false);
         chartBean.setMinY(0);
@@ -70,6 +71,7 @@ public class NpColumnViewActivity extends Activity {
 
             List<NpColumnEntry> npColumnEntries = new ArrayList<>();
             npColumnEntries.add(new NpColumnEntry((i * 15)%30));
+            npColumnEntries.add(new NpColumnEntry((i * 18)%25));
             if (i % 7 == 0) {
                 stringList.add(i + "");
             } else {
@@ -81,13 +83,16 @@ public class NpColumnViewActivity extends Activity {
 
         chartBean.setXAxisLineColor(0xFF000000);
         chartBean.setYAxisLineColor(0xFF000000);
-        chartBean.setSelectColumnColor(0xFF3AB8FD);
+
+        List<Integer> selectColumnColorList =new ArrayList<>();
+        selectColumnColorList.add(0xFFFF0000);
+        selectColumnColorList.add(0xFF00FFFF);
+//        chartBean.setSelectColumnColorList(selectColumnColorList);
         chartBean.setNpLabelList(stringList);
         chartBean.setMarginLeft(40);
         chartBean.setMarginRight(40);
         chartBean.setNpChartColumnDataBeans(npChartColumnDataBeans);
         chartBean.setShowLabels(true);
-        chartBean.setShowSelectValue(true);
         chartBean.setMaxY(60);
         chartBean.setColumnWidth(40);
         chartBean.setLabelTextColor(0xFF660000);

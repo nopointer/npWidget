@@ -336,7 +336,7 @@ public class NpChartColumnView extends BaseView {
     }
 
 
-    //绘制旋转的柱子
+    //绘制选择的柱子
     private void drawSelectColumn() {
 
         if (lastSelectIndex == -1) return;
@@ -345,7 +345,6 @@ public class NpChartColumnView extends BaseView {
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);
 
-        paint.setColor(chartColumnBean.getSelectColumnColor());
         ColumnData pathData = columnDataList.get(lastSelectIndex);
         pathData.clickRange.left = pathData.clickRange.centerX() - chartColumnBean.getColumnWidth() / 2;
         pathData.clickRange.right = pathData.clickRange.left + chartColumnBean.getColumnWidth();
@@ -353,21 +352,47 @@ public class NpChartColumnView extends BaseView {
         RectF rectF = new RectF(pathData.clickRange);
 
 
-        //先绘制选中的值
-        paint.setTextAlign(Paint.Align.CENTER);
-        paint.setTextSize(chartColumnBean.getSelectValueTextSize());
-        float value = columnDataList.get(lastSelectIndex).cloumnValueSum;
-        String text = String.format(Locale.US, "%d", Float.valueOf(value).intValue());
-        canvas.drawText(text, rectF.centerX(), rectF.top - chartColumnBean.getSelectValueMarginColumn(), paint);
+        if (chartColumnBean.isShowSelectValue()) {
+            //先绘制选中的值
+            paint.setTextAlign(Paint.Align.CENTER);
+            paint.setTextSize(chartColumnBean.getSelectValueTextSize());
+            paint.setColor(chartColumnBean.getSelectValueTextColor());
+            float value = columnDataList.get(lastSelectIndex).cloumnValueSum;
+            String text = String.format(Locale.US, "%d", Float.valueOf(value).intValue());
+            canvas.drawText(text, rectF.centerX(), rectF.top - chartColumnBean.getSelectValueMarginColumn(), paint);
+        }
+//        if (chartColumnBean.isTopRound() && chartColumnBean.isBottomRound()) {
+//            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
+//        } else if (chartColumnBean.isTopRound()) {
+//            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
+//            rectF.top = rectF.bottom - rectF.height() / 2;
+//            canvas.drawRect(rectF, paint);
+//        } else {
+//            canvas.drawRect(pathData.clickRange, paint);
+//        }
 
-        if (chartColumnBean.isTopRound() && chartColumnBean.isBottomRound()) {
-            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
-        } else if (chartColumnBean.isTopRound()) {
-            canvas.drawRoundRect(rectF, rectF.width() / 2, rectF.width() / 2, paint);
-            rectF.top = rectF.bottom - rectF.height() / 2;
-            canvas.drawRect(rectF, paint);
-        } else {
-            canvas.drawRect(pathData.clickRange, paint);
+        NpChartColumnDataBean chartColumnDataBean = chartColumnBean.getNpChartColumnDataBeans().get(lastSelectIndex);
+
+        List<Integer> colorList = chartColumnBean.getSelectColumnColorList();
+        if (colorList == null) {
+            colorList = chartColumnDataBean.getColorList();
+        }
+
+        int columnCount = colorList.size();
+
+        ViewLog.e("columnCount = " + columnCount);
+        for (int i = 0; i < columnCount; i++) {
+            paint.setColor(colorList.get(i));
+            RectF tmpDrawRectF = new RectF(pathData.getRectFList().get(i));
+            if (chartColumnBean.isTopRound() && chartColumnBean.isBottomRound()) {
+                canvas.drawRoundRect(tmpDrawRectF, tmpDrawRectF.width() / 2, tmpDrawRectF.width() / 2, paint);
+            } else if (chartColumnBean.isTopRound()) {
+                canvas.drawRoundRect(tmpDrawRectF, tmpDrawRectF.width() / 2, tmpDrawRectF.width() / 2, paint);
+                tmpDrawRectF.top = tmpDrawRectF.bottom - tmpDrawRectF.height() / 2;
+                canvas.drawRect(tmpDrawRectF, paint);
+            } else {
+                canvas.drawRect(tmpDrawRectF, paint);
+            }
         }
 
 
@@ -411,6 +436,7 @@ public class NpChartColumnView extends BaseView {
             String label = "";
             allTmpRectList.clear();
             columnDataList.clear();
+            paint.setAlpha(20);
             for (NpChartColumnDataBean columnDataBean : chartColumnDataBeans) {
                 List<NpColumnEntry> npColumnEntries = columnDataBean.getNpColumnEntryList();
                 if (npColumnEntries != null && npColumnEntries.size() > 0) {

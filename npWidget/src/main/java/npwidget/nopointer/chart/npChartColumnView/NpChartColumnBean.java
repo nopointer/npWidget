@@ -110,7 +110,7 @@ public class NpChartColumnBean {
     /**
      * 选择中的柱子的颜色
      */
-    private int selectColumnColor = 0xA0333333;
+    private  List<Integer>  selectColumnColorList =null;
 
 
     /**
@@ -136,6 +136,8 @@ public class NpChartColumnBean {
     private float selectValueMarginColumn = 10;
 
     private float selectValueTextSize = 30;
+
+    private int selectValueTextColor = 0xFF000000;
 
 
     public NpShowDataType getShowDataType() {
@@ -275,12 +277,12 @@ public class NpChartColumnBean {
     }
 
 
-    public int getSelectColumnColor() {
-        return selectColumnColor;
+    public List<Integer> getSelectColumnColorList() {
+        return selectColumnColorList;
     }
 
-    public void setSelectColumnColor(int selectColumnColor) {
-        this.selectColumnColor = selectColumnColor;
+    public void setSelectColumnColorList(List<Integer> selectColumnColorList) {
+        this.selectColumnColorList = selectColumnColorList;
     }
 
     public NpSelectMode getNpSelectMode() {
@@ -365,37 +367,48 @@ public class NpChartColumnBean {
         this.topHeight = topHeight;
     }
 
+
+    public int getSelectValueTextColor() {
+        return selectValueTextColor;
+    }
+
+    public void setSelectValueTextColor(int selectValueTextColor) {
+        this.selectValueTextColor = selectValueTextColor;
+    }
+
     @Override
     public String toString() {
-        return "NpChartColumnBean{" +
-                "maxY=" + maxY +
-                ", minY=" + minY +
-                ", showXAxis=" + showXAxis +
-                ", showRefreshLine=" + showRefreshLine +
-                ", refreshLineCount=" + refreshLineCount +
-                ", refreshValueCount=" + refreshValueCount +
-                ", XAxisLineColor=" + XAxisLineColor +
-                ", showYAxis=" + showYAxis +
-                ", YAxisLineColor=" + YAxisLineColor +
-                ", showDataType=" + showDataType +
-                ", columnWidth=" + columnWidth +
-                ", marginLeft=" + marginLeft +
-                ", marginRight=" + marginRight +
-                ", columnSpaceWidth=" + columnSpaceWidth +
-                ", showLabels=" + showLabels +
-                ", labelTextSize=" + labelTextSize +
-                ", bottomHeight=" + bottomHeight +
-                ", topHeight=" + topHeight +
-                ", labelTextColor=" + labelTextColor +
-                ", npSelectMode=" + npSelectMode +
-                ", npChartColumnDataBeans=" + npChartColumnDataBeans +
-                ", selectColumnColor=" + selectColumnColor +
-                ", npLabelList=" + npLabelList +
-                ", isTopRound=" + isTopRound +
-                ", isBottomRound=" + isBottomRound +
-                ", showSelectValue=" + showSelectValue +
-                ", selectValueMarginColumn=" + selectValueMarginColumn +
-                ", selectValueTextSize=" + selectValueTextSize +
-                '}';
+        final StringBuffer sb = new StringBuffer("NpChartColumnBean{");
+        sb.append("maxY=").append(maxY);
+        sb.append(", minY=").append(minY);
+        sb.append(", showXAxis=").append(showXAxis);
+        sb.append(", showRefreshLine=").append(showRefreshLine);
+        sb.append(", refreshLineCount=").append(refreshLineCount);
+        sb.append(", refreshValueCount=").append(refreshValueCount);
+        sb.append(", XAxisLineColor=").append(XAxisLineColor);
+        sb.append(", showYAxis=").append(showYAxis);
+        sb.append(", YAxisLineColor=").append(YAxisLineColor);
+        sb.append(", showDataType=").append(showDataType);
+        sb.append(", columnWidth=").append(columnWidth);
+        sb.append(", marginLeft=").append(marginLeft);
+        sb.append(", marginRight=").append(marginRight);
+        sb.append(", columnSpaceWidth=").append(columnSpaceWidth);
+        sb.append(", showLabels=").append(showLabels);
+        sb.append(", labelTextSize=").append(labelTextSize);
+        sb.append(", bottomHeight=").append(bottomHeight);
+        sb.append(", topHeight=").append(topHeight);
+        sb.append(", labelTextColor=").append(labelTextColor);
+        sb.append(", npSelectMode=").append(npSelectMode);
+        sb.append(", npChartColumnDataBeans=").append(npChartColumnDataBeans);
+        sb.append(", selectColumnColorList=").append(selectColumnColorList);
+        sb.append(", npLabelList=").append(npLabelList);
+        sb.append(", isTopRound=").append(isTopRound);
+        sb.append(", isBottomRound=").append(isBottomRound);
+        sb.append(", showSelectValue=").append(showSelectValue);
+        sb.append(", selectValueMarginColumn=").append(selectValueMarginColumn);
+        sb.append(", selectValueTextSize=").append(selectValueTextSize);
+        sb.append(", selectValueTextColor=").append(selectValueTextColor);
+        sb.append('}');
+        return sb.toString();
     }
 }
