@@ -67,10 +67,13 @@ public class NpPointViewActivity extends Activity {
         List<NpPointEntry> npLineEntries1 = new ArrayList<>();
         List<NpPointEntry> npLineEntries2 = new ArrayList<>();
 
+        String[]  week =new String[]{"周一","周一","周一","周一","周一","周一","周一"};
+
+
         for (int i = 1; i <= 7; i++) {
             npLineEntries1.add(new NpPointEntry((i * 6) % 11));
             npLineEntries2.add(new NpPointEntry((i * 12) % 23));
-            stringList.add(i + "");
+            stringList.add(week[i-1]);
         }
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpPointEntry(0));

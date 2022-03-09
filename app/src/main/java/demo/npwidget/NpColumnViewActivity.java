@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import npwidget.nopointer.chart.NpSelectMode;
+import npwidget.nopointer.chart.NpValueFormatter;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnDataBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnView;
@@ -36,8 +37,10 @@ public class NpColumnViewActivity extends Activity {
 
     private void debug() {
 
-        for (int i=4;i>=0;i--){
-            ViewLog.e("index i:"+i);
+        String[]  week =new String[]{"周一","周一","周一","周一","周一","周一","周一"};
+
+        for (int i = 0; i <7; i++) {
+            ViewLog.e("index i:" + i);
         }
 
         NpChartColumnBean chartBean = new NpChartColumnBean();
@@ -56,6 +59,20 @@ public class NpColumnViewActivity extends Activity {
 
         chartBean.setMinY(0);
 
+        chartBean.setYAxisFormatter(new NpValueFormatter() {
+            @Override
+            public String format(float value) {
+                return String.format("%.2f", value);
+            }
+        });
+
+        chartBean.setValueFormatter(new NpValueFormatter() {
+            @Override
+            public String format(float value) {
+                return String.format("%.5f", value);
+            }
+        });
+
         List<NpChartColumnDataBean> npChartColumnDataBeans = new ArrayList<>();
 
 
@@ -64,19 +81,22 @@ public class NpColumnViewActivity extends Activity {
         //柱子的颜色
         List<Integer> colorList = new ArrayList<>();
         colorList.add(0xFF00FF99);
-        colorList.add(0xFFFF0099);
-        for (int i = 0; i <= 6; i++) {
+//        colorList.add(0xFFFF0099);
+        for (int i = 0; i < 7; i++) {
             NpChartColumnDataBean npChartColumnDataBean = new NpChartColumnDataBean();
             npChartColumnDataBean.setColorList(colorList);
 
             List<NpColumnEntry> npColumnEntries = new ArrayList<>();
-            npColumnEntries.add(new NpColumnEntry((i * 15)%30));
-            npColumnEntries.add(new NpColumnEntry((i * 18)%25));
-            if (i % 7 == 0) {
-                stringList.add(i + "");
-            } else {
-                stringList.add(i + "");
-            }
+            npColumnEntries.add(new NpColumnEntry((i * 15) % 30));
+//            npColumnEntries.add(new NpColumnEntry((i * 18)%25));
+//            if (i % 7 == 0) {
+//                stringList.add(i + "");
+//            } else {
+//                stringList.add(i + "");
+//            }
+
+            stringList.add(week[i]);
+
             npChartColumnDataBean.setNpColumnEntryList(npColumnEntries);
             npChartColumnDataBeans.add(npChartColumnDataBean);
         }
@@ -84,9 +104,9 @@ public class NpColumnViewActivity extends Activity {
         chartBean.setXAxisLineColor(0xFF000000);
         chartBean.setYAxisLineColor(0xFF000000);
 
-        List<Integer> selectColumnColorList =new ArrayList<>();
+        List<Integer> selectColumnColorList = new ArrayList<>();
         selectColumnColorList.add(0xFFFF0000);
-        selectColumnColorList.add(0xFF00FFFF);
+//        selectColumnColorList.add(0xFF00FFFF);
 //        chartBean.setSelectColumnColorList(selectColumnColorList);
         chartBean.setNpLabelList(stringList);
         chartBean.setMarginLeft(40);

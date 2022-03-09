@@ -5,6 +5,7 @@ import java.util.List;
 
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
+import npwidget.nopointer.chart.NpValueFormatter;
 
 public class NpChartColumnBean {
 
@@ -41,6 +42,10 @@ public class NpChartColumnBean {
      * 是否显示Y轴
      */
     private boolean showYAxis;
+
+    private NpValueFormatter YAxisFormatter;
+
+    private NpValueFormatter valueFormatter;
 
     /**
      * y轴的颜色
@@ -110,7 +115,7 @@ public class NpChartColumnBean {
     /**
      * 选择中的柱子的颜色
      */
-    private  List<Integer>  selectColumnColorList =null;
+    private List<Integer> selectColumnColorList = null;
 
 
     /**
@@ -374,6 +379,22 @@ public class NpChartColumnBean {
 
     public void setSelectValueTextColor(int selectValueTextColor) {
         this.selectValueTextColor = selectValueTextColor;
+    }
+
+    public NpValueFormatter getYAxisFormatter() {
+        return YAxisFormatter;
+    }
+
+    public void setYAxisFormatter(NpValueFormatter YAxisFormatter) {
+        this.YAxisFormatter = YAxisFormatter;
+    }
+
+    public NpValueFormatter getValueFormatter() {
+        return valueFormatter;
+    }
+
+    public void setValueFormatter(NpValueFormatter valueFormatter) {
+        this.valueFormatter = valueFormatter;
     }
 
     @Override

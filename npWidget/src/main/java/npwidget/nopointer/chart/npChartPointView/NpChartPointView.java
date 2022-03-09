@@ -370,20 +370,23 @@ public class NpChartPointView extends BaseView {
             return;
         } else {
             //如果是多个标签的话
+            ViewLog.e("点图的 maxLabel = " + maxLabel);
 
             if (chartBean.isShowLabels()) {
                 String labelText = "";
                 paint.setColor(chartBean.getLabelTextColor());
+
+//                labelWidthSpace = (viewRectF.width()-dataMarginLeft-dataMarginRight)/maxLabel;
+
+
                 for (int i = 0; i < maxLabel; i++) {
-                    float xPosition = labelWidthSpace * i + dataMarginLeft;
+//                    float xPosition = labelWidthSpace * i + dataMarginLeft;
+
+                    //计算柱子的中心点
+                    float xPosition = i * labelWidthSpace + viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f;
+
                     labelText = chartLabels.get(i);
-                    if (i == 0) {
-                        paint.setTextAlign(Paint.Align.LEFT);
-                    } else if (i == maxLabel - 1 && maxLabel > 2) {
-                        paint.setTextAlign(Paint.Align.RIGHT);
-                    } else {
-                        paint.setTextAlign(Paint.Align.CENTER);
-                    }
+                    paint.setTextAlign(Paint.Align.CENTER);
                     RectF rectF = new RectF(xPosition, viewRectF.bottom - bottomLabelRangeHeight, xPosition, viewRectF.bottom);
                     Paint.FontMetrics fontMetrics = paint.getFontMetrics();
                     float distance = (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
@@ -449,7 +452,7 @@ public class NpChartPointView extends BaseView {
                 int count = 0;
                 int tempIndex = 0;
 
-                ViewLog.e("lineDataBeanList.size() = "+lineDataBeanList.size());
+                ViewLog.e("lineDataBeanList.size() = " + lineDataBeanList.size());
 
                 for (NpChartPointDataBean npChartLineDataBean : lineDataBeanList) {
                     List<NpPointEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
@@ -468,7 +471,7 @@ public class NpChartPointView extends BaseView {
                         float xDisAdd = labelWidthSpace;
                         for (int i = 0; i < npLineEntries.size(); i++) {
 
-                            float x = dataMarginLeft + xDisAdd * i;
+                            float x = dataMarginLeft + xDisAdd * i + xDisAdd / 2;
                             float y = getDataPointYPosition(npLineEntries.get(i));
 
                             RectF rectF = new RectF();
@@ -490,7 +493,7 @@ public class NpChartPointView extends BaseView {
                     if (count == 0) {
                         for (NpPointEntry npLineEntry : npLineEntries) {
                             RectF rectF = new RectF();
-                            rectF.left = dataMarginLeft + labelWidthSpace * tempIndex - clickRangeWidth;
+                            rectF.left = dataMarginLeft + labelWidthSpace * tempIndex - clickRangeWidth+labelWidthSpace/2;
                             rectF.right = rectF.left + clickRangeWidth * 2;
                             rectF.top = getDataPointYPosition(npLineEntry);
                             rectF.bottom = viewRectF.bottom;
@@ -562,14 +565,14 @@ public class NpChartPointView extends BaseView {
                         if (lastSelectIndex != -1) {
                             Paint paint = new Paint();
                             paint.setAntiAlias(true);
-                            float x = dataMarginLeft + labelWidthSpace * lastSelectIndex;
+                            float x = dataMarginLeft + labelWidthSpace * lastSelectIndex + labelWidthSpace / 2;
                             float y = getDataPointYPosition(npLineEntries.get(lastSelectIndex));
 //                            paint.setColor(Color.WHITE);
                             paint.setStrokeWidth(unitDp);
                             paint.setColor(lineDataBeanList.get(i).getColor());
                             canvas.drawCircle(x, y, pointRadius, paint);
 
-                            canvas.drawLine(x,viewRectF.top+topSpaceHeight,x,viewRectF.bottom-bottomLabelRangeHeight,paint);
+                            canvas.drawLine(x, viewRectF.top + topSpaceHeight, x, viewRectF.bottom - bottomLabelRangeHeight, paint);
 
 //                            paint.setStyle(Paint.Style.FILL);
 //                            canvas.drawCircle(x, y, pointRadius, paint);
@@ -900,7 +903,7 @@ public class NpChartPointView extends BaseView {
         maxLabel = getMaxLabelCount(chartBean.getNpLabelList());
         labelWidthSpace = chartBean.getLabelSpaceWidth();
         if (chartBean.getShowDataType() == NpShowDataType.Equal && maxLabel > 1) {
-            labelWidthSpace = (viewRectF.width() - dataMarginLeft - dataMarginRight) / (maxLabel - 1.0f);
+            labelWidthSpace = (viewRectF.width() - dataMarginLeft - dataMarginRight) / (maxLabel);
             ViewLog.e("满足平分的场景？" + maxLabel + "///" + labelWidthSpace);
         }
         calculationScroll();

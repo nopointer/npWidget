@@ -20,6 +20,7 @@ import java.util.Locale;
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
+import npwidget.nopointer.chart.NpValueFormatter;
 import npwidget.nopointer.log.ViewLog;
 import npwidget.nopointer.utils.SizeUtils;
 
@@ -316,8 +317,14 @@ public class NpChartColumnView extends BaseView {
         for (int i = 1; i <= refValueCount; i++) {
             float yPosition = viewRectF.bottom - bottomLabelRangeHeight - height * i;
 
-            String text = String.format(Locale.US, "%d", Float.valueOf((valueAdd * i)).intValue());
+            float value = (valueAdd * i);
 
+            String text = String.format(Locale.US, "%d", Float.valueOf(value).intValue());
+
+            NpValueFormatter npValueFormatter = chartColumnBean.getYAxisFormatter();
+            if (npValueFormatter != null) {
+                text = npValueFormatter.format(value);
+            }
             canvas.drawText(text, viewRectF.left + 10, yPosition + 36, paint);
         }
 
@@ -358,7 +365,13 @@ public class NpChartColumnView extends BaseView {
             paint.setTextSize(chartColumnBean.getSelectValueTextSize());
             paint.setColor(chartColumnBean.getSelectValueTextColor());
             float value = columnDataList.get(lastSelectIndex).cloumnValueSum;
+
             String text = String.format(Locale.US, "%d", Float.valueOf(value).intValue());
+
+            NpValueFormatter valueFormatter = chartColumnBean.getValueFormatter();
+            if (valueFormatter != null) {
+                text = valueFormatter.format(value);
+            }
             canvas.drawText(text, rectF.centerX(), rectF.top - chartColumnBean.getSelectValueMarginColumn(), paint);
         }
 //        if (chartColumnBean.isTopRound() && chartColumnBean.isBottomRound()) {
