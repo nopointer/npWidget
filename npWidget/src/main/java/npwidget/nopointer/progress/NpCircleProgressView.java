@@ -45,6 +45,48 @@ public class NpCircleProgressView extends BaseView {
     private float dotR = 2;
     private int dotColor = 0x00FFFFFF;
 
+    /**
+     * 是否显示游标
+     */
+    private boolean showCursor;
+
+    private float cursorR = 30;
+
+    private int cursorColor = 0xFF00FFFF;
+
+    //阴影的范围
+    private float cursorShadowR = 0;
+
+    //阴影的颜色
+    private int cursorShadowColor = 0xFFFFFFFF;
+
+    //是否显示阴影
+    private boolean showCursorShadow = false;
+
+
+    public boolean isShowCursor() {
+        return showCursor;
+    }
+
+    public void setShowCursor(boolean showCursor) {
+        this.showCursor = showCursor;
+    }
+
+    public float getCursorR() {
+        return cursorR;
+    }
+
+    public void setCursorR(float cursorR) {
+        this.cursorR = cursorR;
+    }
+
+    public int getCursorColor() {
+        return cursorColor;
+    }
+
+    public void setCursorColor(int cursorColor) {
+        this.cursorColor = cursorColor;
+    }
 
     public void setStartAngle(float startAngle) {
         this.startAngle = startAngle;
@@ -60,6 +102,31 @@ public class NpCircleProgressView extends BaseView {
 
     public void setCircleWidth(float circleWidth) {
         this.circleWidth = circleWidth;
+    }
+
+
+    public float getCursorShadowR() {
+        return cursorShadowR;
+    }
+
+    public void setCursorShadowR(float cursorShadowR) {
+        this.cursorShadowR = cursorShadowR;
+    }
+
+    public int getCursorShadowColor() {
+        return cursorShadowColor;
+    }
+
+    public void setCursorShadowColor(int cursorShadowColor) {
+        this.cursorShadowColor = cursorShadowColor;
+    }
+
+    public boolean isShowCursorShadow() {
+        return showCursorShadow;
+    }
+
+    public void setShowCursorShadow(boolean showCursorShadow) {
+        this.showCursorShadow = showCursorShadow;
     }
 
     public NpCircleProgressView(Context context) {
@@ -95,10 +162,7 @@ public class NpCircleProgressView extends BaseView {
     }
 
     private void init(Context context) {
-
         circleWidth = SizeUtils.dp2px(context, 6);
-
-
     }
 
 
@@ -143,12 +207,14 @@ public class NpCircleProgressView extends BaseView {
     private void draw() {
         if (canDraw()) {
             clearBitmap();
-            
+
             drawProgress();
 
             canvas.save();
 
-            canvas.rotate(360.0f*mProgress,viewRectF.centerX(),viewRectF.centerY());
+            canvas.rotate(360.0f * mProgress, viewRectF.centerX(), viewRectF.centerY());
+
+            drawCursor();
 
             drawDot();
 
@@ -158,12 +224,28 @@ public class NpCircleProgressView extends BaseView {
         }
     }
 
+
+    private void drawCursor() {
+        if (!isShowCursor()) {
+            return;
+        }
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(cursorColor);
+        paint.setStyle(Paint.Style.FILL);
+
+        if (isShowCursorShadow()) {
+            paint.setShadowLayer(cursorShadowR, 0, 0, cursorShadowColor);
+        }
+        canvas.drawCircle(viewRectF.centerX(), circleWidth + viewRectF.top, cursorR, paint);
+    }
+
     private void drawDot() {
-        Paint paint =new Paint();
+        Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(dotColor);
         paint.setStyle(Paint.Style.FILL);
-        canvas.drawCircle(viewRectF.centerX(),circleWidth+viewRectF.top,dotR,paint);
+        canvas.drawCircle(viewRectF.centerX(), circleWidth + viewRectF.top, dotR, paint);
     }
 
 

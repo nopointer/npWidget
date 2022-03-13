@@ -116,7 +116,7 @@ public class MainActivity extends FragmentActivity {
 
 //        startActivity(new Intent(this, NpDateTypeActivity.class));
 //        startActivity(new Intent(this, NpColumnViewActivity.class));
-        startActivity(new Intent(this, NpPointViewActivity.class));
+//        startActivity(new Intent(this, NpPointViewActivity.class));
 //        startActivity(new Intent(this, NpCountDwonViewActivity.class));
 //        startActivity(new Intent(this, NpPolylineViewActivity.class));
 
@@ -220,7 +220,7 @@ public class MainActivity extends FragmentActivity {
 //        startActivity(new Intent(this,NpLineViewActivity.class));
 //        startActivity(new Intent(this,NpPointViewActivity.class));
 //        startActivity(new Intent(this,NpPointViewActivity.class));
-//        startActivity(new Intent(this, NpCircleProgressViewActivity.class));
+        startActivity(new Intent(this, NpCircleProgressViewActivity.class));
 
 
 //        startActivity(new Intent(this,NpRectViewActivity.class));
