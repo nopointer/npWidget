@@ -8,7 +8,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 
 import npwidget.nopointer.base.BaseView;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.utils.SizeUtils;
 
 
@@ -220,7 +220,7 @@ public class NpCircleProgressView extends BaseView {
 
             canvas.restore();
         } else {
-            ViewLog.e("不能绘制");
+            NpViewLog.log("不能绘制");
         }
     }
 

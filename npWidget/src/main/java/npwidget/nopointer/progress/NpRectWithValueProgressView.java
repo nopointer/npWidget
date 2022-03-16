@@ -4,13 +4,12 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.base.ValueFormatCallback;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 
 /**
  * 常规的条形进度条，支持背景色和进度色的设置
@@ -305,7 +304,7 @@ public class NpRectWithValueProgressView extends BaseView {
         float startProgress = (startV - minValue) / (maxValue - minValue);
         float endProgress = (endV - minValue) / (maxValue - minValue);
 
-        ViewLog.e(startProgress + "///" + endProgress);
+        NpViewLog.log(startProgress + "///" + endProgress);
         float rectWidth = rectF.width();//宽度需要提前取出来 不然改了左右位置 ，宽度也会一起变
         float startLeft = rectF.left;
         rectF.left = startLeft + startProgress * rectWidth;

@@ -13,7 +13,7 @@ import npwidget.nopointer.chart.npChartColumnView.NpChartColumnBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnDataBean;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnView;
 import npwidget.nopointer.chart.npChartColumnView.NpColumnEntry;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 
 public class NpColumnViewActivity extends Activity {
 
@@ -40,7 +40,7 @@ public class NpColumnViewActivity extends Activity {
         String[]  week =new String[]{"周一","周一","周一","周一","周一","周一","周一"};
 
         for (int i = 0; i <7; i++) {
-            ViewLog.e("index i:" + i);
+            NpViewLog.log("index i:" + i);
         }
 
         NpChartColumnBean chartBean = new NpChartColumnBean();
@@ -87,7 +87,11 @@ public class NpColumnViewActivity extends Activity {
             npChartColumnDataBean.setColorList(colorList);
 
             List<NpColumnEntry> npColumnEntries = new ArrayList<>();
-            npColumnEntries.add(new NpColumnEntry((i * 15) % 30));
+            if (i==0){
+                npColumnEntries.add(new NpColumnEntry(0.10f));
+            }else{
+                npColumnEntries.add(new NpColumnEntry(0));
+            }
 //            npColumnEntries.add(new NpColumnEntry((i * 18)%25));
 //            if (i % 7 == 0) {
 //                stringList.add(i + "");

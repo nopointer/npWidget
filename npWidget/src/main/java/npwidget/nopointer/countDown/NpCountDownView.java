@@ -13,7 +13,7 @@ import android.view.animation.DecelerateInterpolator;
 
 
 import npwidget.nopointer.base.BaseView;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.utils.SizeUtils;
 
 
@@ -185,11 +185,11 @@ public class NpCountDownView extends BaseView {
         if (getWidth() < 0 || getHeight() < 0) return;
 
 
-        ViewLog.e("viewRectF,fuck,onMeasure");
+        NpViewLog.log("viewRectF,fuck,onMeasure");
 
         RectF viewRectF = new RectF(getPaddingLeft(), getPaddingTop(), getMeasuredWidth() - getPaddingRight(), getMeasuredHeight() - getPaddingBottom());
 
-        ViewLog.e("viewRectF====>" + viewRectF.toString());
+        NpViewLog.log("viewRectF====>" + viewRectF.toString());
         reSizeRect(viewRectF);
 
         bitmap = Bitmap.createBitmap(getMeasuredWidth(), getMeasuredHeight(), Bitmap.Config.ARGB_8888);
@@ -230,7 +230,7 @@ public class NpCountDownView extends BaseView {
 //            drawBg();
             drawProgress();
         } else {
-            ViewLog.e("不能绘制");
+            NpViewLog.log("不能绘制");
         }
     }
 

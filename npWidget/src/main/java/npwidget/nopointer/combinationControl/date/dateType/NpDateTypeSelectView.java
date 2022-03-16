@@ -16,7 +16,7 @@ import android.widget.RelativeLayout;
 
 import npwidget.nopointer.R;
 import npwidget.nopointer.combinationControl.date.NpDateType;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.utils.SizeUtils;
 
 /**
@@ -61,7 +61,7 @@ public class NpDateTypeSelectView extends RelativeLayout {
     public void setDayWeekMonthYearText(String[] dayWeekMonthYearTexts) {
         int len = dayWeekMonthYearTexts.length;
         if (len != 4) {
-            ViewLog.e("设置日周月年的文本，4个文本都要设置！！");
+            NpViewLog.log("设置日周月年的文本，4个文本都要设置！！");
             return;
         }
         if (dateTypeViews.length != 4 || dateTypeViews[0] == null || dateTypeViews[3] == null)
@@ -217,7 +217,7 @@ public class NpDateTypeSelectView extends RelativeLayout {
         if (textSize <= 0) {
             textSize = 14;
         }
-        ViewLog.e("fuck==Size" + textSize);
+        NpViewLog.log("fuck==Size" + textSize);
         for (RadioButton radioButton : dateTypeViews) {
             radioButton.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
         }

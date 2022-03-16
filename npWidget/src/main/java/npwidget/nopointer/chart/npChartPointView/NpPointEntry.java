@@ -6,6 +6,15 @@ package npwidget.nopointer.chart.npChartPointView;
 public class NpPointEntry {
 
     /**
+     * 这个点是否是要显示
+     */
+    private boolean isDraw = true;
+
+    /**
+     * 是否能点击
+     */
+    private boolean isClick = true;
+    /**
      * 数据
      */
     private float value;
@@ -13,6 +22,14 @@ public class NpPointEntry {
      * 横向的小标签
      */
     private Object tag;
+
+    public boolean isClick() {
+        return isClick;
+    }
+
+    public void setClick(boolean click) {
+        isClick = click;
+    }
 
     public NpPointEntry() {
     }
@@ -40,6 +57,14 @@ public class NpPointEntry {
 
     public void setTag(Object tag) {
         this.tag = tag;
+    }
+
+    public boolean isDraw() {
+        return isDraw;
+    }
+
+    public void setDraw(boolean draw) {
+        isDraw = draw;
     }
 
     @Override

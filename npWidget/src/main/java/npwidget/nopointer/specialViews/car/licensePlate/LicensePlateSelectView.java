@@ -12,7 +12,7 @@
 //import npwidget.nopointer.chart.NpSelectMode;
 //import npwidget.nopointer.chart.npChartColumnView.NpChartColumnDataBean;
 //import npwidget.nopointer.chart.npChartColumnView.NpColumnEntry;
-//import npwidget.nopointer.log.ViewLog;
+//import npwidget.nopointer.log.NpViewLog;
 //
 ///**
 // * 车牌选择View
@@ -51,7 +51,7 @@
 //        viewRectF.top = getPaddingTop();
 //        viewRectF.right = getMeasuredWidth() - getPaddingRight();
 //        viewRectF.bottom = getMeasuredHeight() - getPaddingBottom();
-//        ViewLog.e("矩形：" + viewRectF.toString());
+//        NpViewLog.log("矩形：" + viewRectF.toString());
 //        if (viewRectF.width() > 0 && viewRectF.height() > 0) {
 //            bitmap = Bitmap.createBitmap(viewRectF.width(), viewRectF.height(), Bitmap.Config.ARGB_8888);
 //            canvas = new Canvas(bitmap);

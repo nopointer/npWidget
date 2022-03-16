@@ -8,7 +8,7 @@ import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.View;
 
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 
 public class BaseView extends View {
 
@@ -46,8 +46,8 @@ public class BaseView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (canvas != null && bitmap != null) {
-            ViewLog.e("canvas.width()" + canvas.getWidth());
-            ViewLog.e("bitmap.width()" + bitmap.getWidth());
+            NpViewLog.log("canvas.width()" + canvas.getWidth());
+            NpViewLog.log("bitmap.width()" + bitmap.getWidth());
 //            canvas.drawColor(canvasBg);
             canvas.drawBitmap(bitmap, (canvas.getWidth() - bitmap.getWidth()) / 2, 0, null);
         }

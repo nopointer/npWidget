@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import npwidget.nopointer.base.BaseView;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.sleepView.NpSleepEntry;
 
 /**
@@ -59,7 +59,7 @@ public class NpSleepStateAreaView extends BaseView {
         if (npStateBean != null && npStateBean.getDataList() != null && npStateBean.getDataList().size() > 0) {
             sleepPartCount = npStateBean.getDataList().size();
         }
-        ViewLog.e("碎片个数==>" + sleepPartCount);
+        NpViewLog.log("碎片个数==>" + sleepPartCount);
     }
 
     /**
@@ -189,7 +189,7 @@ public class NpSleepStateAreaView extends BaseView {
                 float rectWidth = precent * viewRectF.width();
                 RectF rectF = new RectF(0, viewRectF.top, 0, viewRectF.bottom);
 
-                ViewLog.e("left====>" + tmpLeft + "///" + rectWidth);
+                NpViewLog.log("left====>" + tmpLeft + "///" + rectWidth);
                 rectF.left = tmpLeft;
                 rectF.right = rectF.left + rectWidth;
                 sleepPartRectList.add(rectF);

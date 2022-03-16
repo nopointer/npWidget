@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import npwidget.nopointer.base.BaseView;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.sleepView.NpSleepEntry;
 
 /**
@@ -80,7 +80,7 @@ public class NpSleepStateLineView extends BaseView {
         if (npStateBean != null && npStateBean.getDataList() != null && npStateBean.getDataList().size() > 0) {
             sleepPartCount = npStateBean.getDataList().size();
         }
-        ViewLog.e("碎片个数==>" + sleepPartCount);
+        NpViewLog.log("碎片个数==>" + sleepPartCount);
     }
 
     /**

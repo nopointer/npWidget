@@ -21,7 +21,7 @@ import java.util.List;
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.base.NpPosition;
 import npwidget.nopointer.base.ValueFormatCallback;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.progress.npColorBars.NpColorBarBean;
 import npwidget.nopointer.progress.npColorBars.NpColorBarEntity;
 import npwidget.nopointer.utils.SizeUtils;
@@ -125,7 +125,7 @@ public class NpColorBarProgressView extends BaseView {
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         float progress = (mValue - mMinValue) / (mMaxValue - mMinValue * 1.0f);
-        ViewLog.e("progress:" + progress);
+        NpViewLog.log("progress:" + progress);
         RectF rectF = new RectF(viewRectF);
         float f = viewRectF.height() / 3.0F;
         rectF.top += f;
@@ -159,7 +159,7 @@ public class NpColorBarProgressView extends BaseView {
         float rectWidth = tempRectF.width() / (colorBarCount * 1.0f);
 
 
-        ViewLog.e("几段数据:" + colorBarCount);
+        NpViewLog.log("几段数据:" + colorBarCount);
         float sumWidth = 0;
         for (int i = 0; i < colorBarCount; i++) {
             NpColorBarEntity npColorBarEntity = npColorBarEntityList.get(i);
@@ -270,7 +270,7 @@ public class NpColorBarProgressView extends BaseView {
             return;
         }
         if (npColorBarBean.getValuePosition() == NpPosition.HIDE) {
-            ViewLog.e("不显示范围界限值");
+            NpViewLog.log("不显示范围界限值");
             return;
         }
         float tempHeight = viewRectF.height() / 3.0F;//总高度的3分之1

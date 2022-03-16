@@ -8,7 +8,7 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 
 import npwidget.nopointer.base.BaseView;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 
 /**
  * 电池View 电池的小圆点默认在顶部
@@ -296,7 +296,7 @@ public class NpBatteryView extends BaseView {
                 drawBatteryByPart();
             }
         } else {
-            ViewLog.e("不能绘制");
+            NpViewLog.log("不能绘制");
         }
     }
 

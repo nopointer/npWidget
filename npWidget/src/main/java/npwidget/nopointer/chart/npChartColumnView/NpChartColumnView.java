@@ -21,7 +21,7 @@ import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.chart.NpValueFormatter;
-import npwidget.nopointer.log.ViewLog;
+import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.utils.SizeUtils;
 
 /**
@@ -149,14 +149,17 @@ public class NpChartColumnView extends BaseView {
                 drawReferenceLine();
                 drawLabels();
                 if (chartColumnBean.getNpChartColumnDataBeans() != null && chartColumnBean.getNpChartColumnDataBeans().size() > 0) {
-                    int dataSum = 0;
+                    float dataSum = 0;
 
                     for (NpChartColumnDataBean chartColumnDataBean : chartColumnBean.getNpChartColumnDataBeans()) {
                         for (NpColumnEntry columnEntry : chartColumnDataBean.getNpColumnEntryList()) {
+                            NpViewLog.log("columnEntry = "+columnEntry.toString());
+
                             dataSum += columnEntry.getValue();
                         }
                     }
                     if (dataSum <= 0) {
+                        NpViewLog.log("drawNoData");
                         drawNoData();
                     } else {
                         drawDataColumns();
@@ -199,9 +202,11 @@ public class NpChartColumnView extends BaseView {
                         drawSelectColumn();
                     }
                 } else {
+                    NpViewLog.log("drawNoData");
                     drawNoData();
                 }
             } else {
+                NpViewLog.log("drawNoData");
                 drawNoData();
             }
         }
@@ -218,20 +223,20 @@ public class NpChartColumnView extends BaseView {
         //最多要显示的label个数
         int labelCount = chartLabels.size();
         if (labelCount < 0) {
-            ViewLog.e("没有Label 不绘制");
+            NpViewLog.log("没有Label 不绘制");
             return;
         } else {
             //横向的柱子之间的间距
             float xDisAdd = chartColumnBean.getColumnSpaceWidth();
 
             if (chartColumnBean.getShowDataType() == NpShowDataType.Equal) {
-                ViewLog.e("平分宽度");
+                NpViewLog.log("平分宽度");
                 //可以被平分的宽度
                 float totalWidth = (viewRectF.width() - chartColumnBean.getMarginLeft() - chartColumnBean.getMarginRight());
                 xDisAdd = (totalWidth - labelCount * columnWidth) / (labelCount - 1);
             }
 
-            ViewLog.e("xDisAdd====>" + xDisAdd);
+            NpViewLog.log("xDisAdd====>" + xDisAdd);
 
             String label = "";
 
@@ -393,7 +398,7 @@ public class NpChartColumnView extends BaseView {
 
         int columnCount = colorList.size();
 
-        ViewLog.e("columnCount = " + columnCount);
+        NpViewLog.log("columnCount = " + columnCount);
         for (int i = 0; i < columnCount; i++) {
             paint.setColor(colorList.get(i));
             RectF tmpDrawRectF = new RectF(pathData.getRectFList().get(i));
@@ -434,7 +439,7 @@ public class NpChartColumnView extends BaseView {
             float xDisAdd = chartColumnBean.getColumnSpaceWidth();
 
             if (chartColumnBean.getShowDataType() == NpShowDataType.Equal) {
-                ViewLog.e("平分宽度");
+                NpViewLog.log("平分宽度");
                 // 如果是平分的话，就需要重新计算间距(公式等于 （总宽度-柱子个数*柱子宽度）/(柱子个数-1))
                 //柱子个数
                 float columnCount = chartColumnDataBeans.size();
@@ -444,7 +449,7 @@ public class NpChartColumnView extends BaseView {
             }
 
             int tmpI = 0;
-            ViewLog.e("xDisAdd====>" + xDisAdd);
+            NpViewLog.log("xDisAdd====>" + xDisAdd);
 
             String label = "";
             allTmpRectList.clear();
@@ -455,7 +460,7 @@ public class NpChartColumnView extends BaseView {
                 if (npColumnEntries != null && npColumnEntries.size() > 0) {
                     //计算柱子的中心点
                     float xColumnCenterX = tmpI * xDisAdd + leftMargin + chartColumnBean.getMarginLeft() + columnWidth * tmpI + columnWidth / 2.0f;
-                    ViewLog.e("xColumnCenterX====>" + xColumnCenterX);
+                    NpViewLog.log("xColumnCenterX====>" + xColumnCenterX);
 
                     ColumnData pathData = createRect(npColumnEntries, xColumnCenterX);
 
@@ -482,7 +487,7 @@ public class NpChartColumnView extends BaseView {
 
 
         } else {
-            ViewLog.e("chartColumnBean.getNpChartColumnDataBeans()=null !!!!");
+            NpViewLog.log("chartColumnBean.getNpChartColumnDataBeans()=null !!!!");
         }
     }
 
@@ -516,7 +521,7 @@ public class NpChartColumnView extends BaseView {
         pathData.setCloumnValueSum(maxValue);
         allColumnDataSum.add(maxValue);
 
-        ViewLog.e("columnMaxValue===>" + columnMaxValue);
+        NpViewLog.log("columnMaxValue===>" + columnMaxValue);
         float thisPercentWithColumnMax = 1.0f;
         if (columnMaxValue > 0) {
             thisPercentWithColumnMax = maxValue / columnMaxValue;
@@ -525,7 +530,7 @@ public class NpChartColumnView extends BaseView {
             thisPercentWithColumnMax = 1;
         }
 
-        ViewLog.e("thisPercentWithColumnMax===>" + thisPercentWithColumnMax);
+        NpViewLog.log("thisPercentWithColumnMax===>" + thisPercentWithColumnMax);
         thisTotalHeight *= thisPercentWithColumnMax;
 
         //累计分段计算小柱子的高度百分比
@@ -590,13 +595,13 @@ public class NpChartColumnView extends BaseView {
             return false;
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            ViewLog.e("x=>" + event.getX() + " ///y=>" + event.getY());
+            NpViewLog.log("x=>" + event.getX() + " ///y=>" + event.getY());
             for (int i = 0; i < allTmpRectList.size(); i++) {
                 if (allTmpRectList.get(i).contains(event.getX(), event.getY())) {
                     lastSelectIndex = i;
                     hasClick = true;
                     postInvalidateDelayed(20);
-                    ViewLog.e("lastSelectIndex===>" + lastSelectIndex);
+                    NpViewLog.log("lastSelectIndex===>" + lastSelectIndex);
                     break;
                 }
             }

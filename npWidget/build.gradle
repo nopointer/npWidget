@@ -11,7 +11,7 @@ android {
         minSdkVersion var.minSdkVersion
         targetSdkVersion var.targetSdkVersion
         versionCode 67
-        versionName "beta_0.0.65"
+        versionName "beta_0.0.66"
     }
 
     buildTypes {
