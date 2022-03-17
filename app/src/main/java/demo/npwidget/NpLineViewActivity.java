@@ -15,8 +15,10 @@ import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineBean;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineDataBean;
+import npwidget.nopointer.chart.npChartLineView.NpChartLineType;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineView;
 import npwidget.nopointer.chart.npChartLineView.NpLineEntry;
+import npwidget.nopointer.chart.npChartLineView.NpSelectStyle;
 
 public class NpLineViewActivity extends Activity {
 
@@ -46,6 +48,7 @@ public class NpLineViewActivity extends Activity {
     private void debug(boolean isEmpty) {
         NpChartLineBean chartBean = new NpChartLineBean();
         chartBean.setShowXAxis(true);
+        chartBean.setXAxisLineColor(0xFFAAAAAA);
         chartBean.setShowYAxis(true);
         chartBean.setShowRefreshLine(true);
         chartBean.setRefreshLineCount(4);
@@ -65,10 +68,12 @@ public class NpLineViewActivity extends Activity {
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
 
-        for (int i = 1; i <= 31; i++) {
+        String[] week = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+
+        for (int i = 0; i < 7; i++) {
             npLineEntries1.add(new NpLineEntry((i * 6) % 11));
             npLineEntries2.add(new NpLineEntry((i * 12) % 23));
-            stringList.add(i +"");
+            stringList.add(week[i ]);
         }
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpPointEntry(0));
@@ -103,7 +108,25 @@ public class NpLineViewActivity extends Activity {
         chartBean.setMinY(0);
         chartBean.setMaxY(20);
         chartBean.setShowLabels(true);
-        chartBean.setNpSelectMode(NpSelectMode.SELECT_LAST);
+        chartBean.setNpSelectMode(NpSelectMode.SELECT_FIRST);
+
+        chartBean.setNpSelectStyle(NpSelectStyle.VERTICAL_LINE);
+
+        chartBean.setSelectHollowCircleR(20);
+        chartBean.setSelectHollowCircleWidth(6);
+        chartBean.setSelectHollowCircleColor(0xFFFF0000);
+
+
+        chartBean.setSelectFilledCircleColor(0xFF00FF00);
+        chartBean.setSelectFilledCircleR(15);
+
+
+        chartBean.setSelectLineColor(0xFFFF00FF);
+        chartBean.setSelectLineWidth(2);
+
+
+
+        chartBean.setNpChartLineType(NpChartLineType.LINE);
 //        chartBean.setLabelTextSize(40);
         if (isEmpty) {
             npChartLineView.setChartBean(null);

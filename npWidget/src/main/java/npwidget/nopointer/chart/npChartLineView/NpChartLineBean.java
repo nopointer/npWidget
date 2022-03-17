@@ -59,9 +59,6 @@ public class NpChartLineBean {
      */
     private float labelSpaceWidth = 100;
 
-
-
-
     /**
      * 是否显示labels
      */
@@ -88,6 +85,52 @@ public class NpChartLineBean {
      * 标签的颜色
      */
     private int labelTextColor = 0xFF000000;
+
+    /**
+     * 选择样式，默认空心圆
+     */
+    private NpSelectStyle npSelectStyle = NpSelectStyle.HOLLOW_CIRCLE;
+
+    /**
+     * 图表类型
+     */
+    private NpChartLineType npChartLineType = NpChartLineType.LINE;
+
+
+    /**
+     * 实心圆半径
+     */
+    private float selectFilledCircleR;
+
+    /**
+     * 实心圆颜色
+     */
+    private int selectFilledCircleColor;
+
+
+    /**
+     * 空心圆半径
+     */
+    private float selectHollowCircleR;
+    /**
+     * 空心圆宽度
+     */
+    private float selectHollowCircleWidth;
+
+    /**
+     * 空心圆颜色
+     */
+    private int selectHollowCircleColor;
+
+
+    /**
+     * 选择线宽度
+     */
+    private int selectLineWidth;
+    /**
+     * 选择线颜色
+     */
+    private int selectLineColor;
 
 
     public NpShowDataType getShowDataType() {
@@ -127,7 +170,6 @@ public class NpChartLineBean {
     public void setNpSelectMode(NpSelectMode npSelectMode) {
         this.npSelectMode = npSelectMode;
     }
-
 
 
     public float getMaxY() {
@@ -260,29 +302,111 @@ public class NpChartLineBean {
         this.topHeight = topHeight;
     }
 
+    public NpSelectStyle getNpSelectStyle() {
+        return npSelectStyle;
+    }
+
+    public void setNpSelectStyle(NpSelectStyle npSelectStyle) {
+        this.npSelectStyle = npSelectStyle;
+    }
+
+
+    public NpChartLineType getNpChartLineType() {
+        return npChartLineType;
+    }
+
+    public void setNpChartLineType(NpChartLineType npChartLineType) {
+        this.npChartLineType = npChartLineType;
+    }
+
+    public float getSelectFilledCircleR() {
+        return selectFilledCircleR;
+    }
+
+    public void setSelectFilledCircleR(float selectFilledCircleR) {
+        this.selectFilledCircleR = selectFilledCircleR;
+    }
+
+    public int getSelectFilledCircleColor() {
+        return selectFilledCircleColor;
+    }
+
+    public void setSelectFilledCircleColor(int selectFilledCircleColor) {
+        this.selectFilledCircleColor = selectFilledCircleColor;
+    }
+
+    public float getSelectHollowCircleR() {
+        return selectHollowCircleR;
+    }
+
+    public void setSelectHollowCircleR(float selectHollowCircleR) {
+        this.selectHollowCircleR = selectHollowCircleR;
+    }
+
+    public float getSelectHollowCircleWidth() {
+        return selectHollowCircleWidth;
+    }
+
+    public void setSelectHollowCircleWidth(float selectHollowCircleWidth) {
+        this.selectHollowCircleWidth = selectHollowCircleWidth;
+    }
+
+    public int getSelectHollowCircleColor() {
+        return selectHollowCircleColor;
+    }
+
+    public void setSelectHollowCircleColor(int selectHollowCircleColor) {
+        this.selectHollowCircleColor = selectHollowCircleColor;
+    }
+
+    public int getSelectLineWidth() {
+        return selectLineWidth;
+    }
+
+    public void setSelectLineWidth(int selectLineWidth) {
+        this.selectLineWidth = selectLineWidth;
+    }
+
+    public int getSelectLineColor() {
+        return selectLineColor;
+    }
+
+    public void setSelectLineColor(int selectLineColor) {
+        this.selectLineColor = selectLineColor;
+    }
 
     @Override
     public String toString() {
-        return "NpChartPointBean{" +
-                "maxY=" + maxY +
-                ", minY=" + minY +
-                ", showXAxis=" + showXAxis +
-                ", XAxisLineColor=" + XAxisLineColor +
-                ", showYAxis=" + showYAxis +
-                ", YAxisLineColor=" + YAxisLineColor +
-                ", showRefreshLine=" + showRefreshLine +
-                ", refreshLineCount=" + refreshLineCount +
-                ", refreshValueCount=" + refreshValueCount +
-                ", showDataType=" + showDataType +
-                ", labelSpaceWidth=" + labelSpaceWidth +
-                ", showLabels=" + showLabels +
-                ", labelTextSize=" + labelTextSize +
-                ", bottomHeight=" + bottomHeight +
-                ", topHeight=" + topHeight +
-                ", labelTextColor=" + labelTextColor +
-                ", npChartLineDataBeans=" + npChartLineDataBeans +
-                ", npLabelList=" + npLabelList +
-                ", npSelectMode=" + npSelectMode +
-                '}';
+        final StringBuffer sb = new StringBuffer("NpChartLineBean{");
+        sb.append("maxY=").append(maxY);
+        sb.append(", minY=").append(minY);
+        sb.append(", showXAxis=").append(showXAxis);
+        sb.append(", XAxisLineColor=").append(XAxisLineColor);
+        sb.append(", showYAxis=").append(showYAxis);
+        sb.append(", YAxisLineColor=").append(YAxisLineColor);
+        sb.append(", showRefreshLine=").append(showRefreshLine);
+        sb.append(", refreshLineCount=").append(refreshLineCount);
+        sb.append(", refreshValueCount=").append(refreshValueCount);
+        sb.append(", showDataType=").append(showDataType);
+        sb.append(", labelSpaceWidth=").append(labelSpaceWidth);
+        sb.append(", showLabels=").append(showLabels);
+        sb.append(", labelTextSize=").append(labelTextSize);
+        sb.append(", bottomHeight=").append(bottomHeight);
+        sb.append(", topHeight=").append(topHeight);
+        sb.append(", labelTextColor=").append(labelTextColor);
+        sb.append(", npSelectStyle=").append(npSelectStyle);
+        sb.append(", npChartLineType=").append(npChartLineType);
+        sb.append(", selectFilledCircleR=").append(selectFilledCircleR);
+        sb.append(", selectFilledCircleColor=").append(selectFilledCircleColor);
+        sb.append(", selectHollowCircleR=").append(selectHollowCircleR);
+        sb.append(", selectHollowCircleWidth=").append(selectHollowCircleWidth);
+        sb.append(", selectHollowCircleColor=").append(selectHollowCircleColor);
+        sb.append(", selectLineWidth=").append(selectLineWidth);
+        sb.append(", selectLineColor=").append(selectLineColor);
+        sb.append(", npChartLineDataBeans=").append(npChartLineDataBeans);
+        sb.append(", npLabelList=").append(npLabelList);
+        sb.append(", npSelectMode=").append(npSelectMode);
+        sb.append('}');
+        return sb.toString();
     }
 }

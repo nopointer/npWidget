@@ -221,8 +221,10 @@ public class NpChartLineView extends BaseView {
                 //绘制可是区域的范围，调试用
 //                Paint paint = new Paint();
 //                paint.setAntiAlias(true);
-//                paint.setStyle(Paint.Style.STROKE);
+//                paint.setStyle(Paint.Style.FILL);
+//                paint.setColor(0x30000000);
 //                canvas.drawRect(viewRectF, paint);
+
                 canvas.save();
                 NpViewLog.log("此时的位移是:" + tranlateX);
                 canvas.translate(tranlateX, 0);
@@ -238,8 +240,14 @@ public class NpChartLineView extends BaseView {
                     if (dataSum <= 0) {
                         drawNoData();
                     } else {
-                        drawDataLineGradient();
-                        drawDataLines();
+
+                        //线图 才会制渐变曲线
+                        if (chartBean.getNpChartLineType() == NpChartLineType.LINE) {
+                            drawDataLineGradient();
+                            drawDataLines();
+                        } else {
+                            drawDataPoints();
+                        }
                     }
                 } else {
                     drawNoData();
@@ -276,7 +284,9 @@ public class NpChartLineView extends BaseView {
         if (chartBean.isShowXAxis()) {
             //绘制X轴 纵向高度一致，统一一个变量记录高度
             float lineBottom = viewRectF.bottom - bottomLabelRangeHeight;
+//            chartBean.setXAxisLineColor(0xFFFF0000);
             paint.setColor(chartBean.getXAxisLineColor());
+
             NpViewLog.log("xy矩形:" + viewRectF.toString());
             canvas.drawLine(dataMarginLeft - pointRadius, lineBottom, viewRectF.width() - dataMarginRight + pointRadius, lineBottom, paint);
         }
@@ -318,7 +328,7 @@ public class NpChartLineView extends BaseView {
         //绘制参考值
         int refValueCount = chartBean.getRefreshValueCount();
 
-        NpViewLog.log("refValueCount = "+refValueCount+" , chartBean.getMaxY() = "+chartBean.getMaxY()+" ,chartBean.getMinY() = "+chartBean.getMinY());
+        NpViewLog.log("refValueCount = " + refValueCount + " , chartBean.getMaxY() = " + chartBean.getMaxY() + " ,chartBean.getMinY() = " + chartBean.getMinY());
 
         float valueAdd = (chartBean.getMaxY() - chartBean.getMinY()) / refValueCount;
 
@@ -375,15 +385,10 @@ public class NpChartLineView extends BaseView {
                 String labelText = "";
                 paint.setColor(chartBean.getLabelTextColor());
                 for (int i = 0; i < maxLabel; i++) {
-                    float xPosition = labelWidthSpace * i + dataMarginLeft;
+                    //计算柱子的中心点
+                    float xPosition = i * labelWidthSpace + viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f;
                     labelText = chartLabels.get(i);
-                    if (i == 0) {
-                        paint.setTextAlign(Paint.Align.LEFT);
-                    } else if (i == maxLabel - 1 && maxLabel > 2) {
-                        paint.setTextAlign(Paint.Align.RIGHT);
-                    } else {
-                        paint.setTextAlign(Paint.Align.CENTER);
-                    }
+                    paint.setTextAlign(Paint.Align.CENTER);
                     RectF rectF = new RectF(xPosition, viewRectF.bottom - bottomLabelRangeHeight, xPosition, viewRectF.bottom);
                     Paint.FontMetrics fontMetrics = paint.getFontMetrics();
                     float distance = (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
@@ -419,7 +424,7 @@ public class NpChartLineView extends BaseView {
                         float y = getDataPointYPosition(npLineEntryList.get(0));
 
                         RectF rectF = new RectF();
-                        rectF.left = x - clickRangeWidth;
+                        rectF.left = x - clickRangeWidth + labelWidthSpace / 2;
                         rectF.right = x + clickRangeWidth;
                         rectF.top = y - clickRangeWidth;
                         rectF.bottom = y + clickRangeWidth;
@@ -462,7 +467,7 @@ public class NpChartLineView extends BaseView {
                     if (count == 0) {
                         for (NpLineEntry npLineEntry : npLineEntries) {
                             RectF rectF = new RectF();
-                            rectF.left = dataMarginLeft + labelWidthSpace * tempIndex - clickRangeWidth;
+                            rectF.left = dataMarginLeft + labelWidthSpace * tempIndex - clickRangeWidth + labelWidthSpace / 2;
                             rectF.right = rectF.left + clickRangeWidth * 2;
                             rectF.top = getDataPointYPosition(npLineEntry);
                             rectF.bottom = viewRectF.bottom;
@@ -472,10 +477,20 @@ public class NpChartLineView extends BaseView {
                     }
                     count++;
                 }
+                drawSelect(lineDataBeanList);
+            }
 
-                for (int i = 0; i < lineDataBeanList.size(); i++) {
-                    List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
-                    if (npLineEntries != null && npLineEntries.size() > 0) {
+
+        } else {
+            NpViewLog.log("chartBean.getNpChartLineDataBeans()=null !!!!");
+        }
+    }
+
+
+    private void drawSelect(List<NpChartLineDataBean> lineDataBeanList) {
+        for (int i = 0; i < lineDataBeanList.size(); i++) {
+            List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
+            if (npLineEntries != null && npLineEntries.size() > 0) {
 
 //                        if (!hasTouch) {
 //                            if (chartBean.getNpSelectMode() == NpSelectMode.SELECT_FIRST) {
@@ -530,24 +545,173 @@ public class NpChartLineView extends BaseView {
 //                                }
 //                            }
 //                        }
-                        NpViewLog.log("lastSelectIndex:" + lastSelectIndex);
-                        if (lastSelectIndex != -1) {
-                            Paint paint = new Paint();
-                            paint.setAntiAlias(true);
-                            float x = dataMarginLeft + labelWidthSpace * lastSelectIndex;
-                            float y = getDataPointYPosition(npLineEntries.get(lastSelectIndex));
-                            paint.setColor(Color.WHITE);
-                            paint.setStrokeWidth(unitDp);
-                            canvas.drawCircle(x, y, pointRadius, paint);
+                NpViewLog.log("lastSelectIndex:" + lastSelectIndex);
+                if (lastSelectIndex != -1) {
+                    Paint paint = new Paint();
+                    paint.setAntiAlias(true);
+//                            float x = dataMarginLeft + labelWidthSpace * lastSelectIndex;
+
+                    float x = dataMarginLeft + labelWidthSpace * lastSelectIndex + labelWidthSpace / 2;
+                    float y = getDataPointYPosition(npLineEntries.get(lastSelectIndex));
+
+                    switch (chartBean.getNpSelectStyle()) {
+                        //空心圆
+                        case HOLLOW_CIRCLE:
+                        default: {
                             paint.setStyle(Paint.Style.STROKE);
-                            paint.setColor(lineDataBeanList.get(i).getColor());
-                            canvas.drawCircle(x, y, pointRadius, paint);
+                            paint.setColor(chartBean.getSelectHollowCircleColor());
+                            paint.setStrokeWidth(chartBean.getSelectHollowCircleWidth());
+                            canvas.drawCircle(x, y, chartBean.getSelectHollowCircleR(), paint);
+                        }
+                        break;
+
+                        //实心圆
+                        case FILLED_CIRCLE: {
+                            paint.setStyle(Paint.Style.FILL);
+                            paint.setColor(chartBean.getSelectFilledCircleColor());
+                            canvas.drawCircle(x, y, chartBean.getSelectFilledCircleR(), paint);
+                        }
+                        break;
+
+
+                        //竖线
+                        case VERTICAL_LINE: {
+                            NpLineEntry npPointEntry = npLineEntries.get(lastSelectIndex);
+                            if (npPointEntry.isClick()) {
+                                paint.setColor(chartBean.getSelectLineColor());
+                                paint.setStrokeWidth(chartBean.getSelectLineWidth());
+                                canvas.drawLine(x, viewRectF.top + topSpaceHeight, x, viewRectF.bottom - bottomLabelRangeHeight, paint);
+                            }
+                        }
+                        break;
+
+                        //竖线+空心圆
+                        case VERTICAL_LINE_AND_HOLLOW_CIRCLE: {
+                            NpLineEntry npPointEntry = npLineEntries.get(lastSelectIndex);
+
+                            if (npPointEntry.isClick()) {
+                                paint.setColor(chartBean.getSelectLineColor());
+                                paint.setStrokeWidth(chartBean.getSelectLineWidth());
+                                canvas.drawLine(x, viewRectF.top + topSpaceHeight, x, viewRectF.bottom - bottomLabelRangeHeight, paint);
+                            }
+
+                            if (npPointEntry.isDraw()) {
+                                paint.setStyle(Paint.Style.STROKE);
+                                paint.setColor(chartBean.getSelectHollowCircleColor());
+                                paint.setStrokeWidth(chartBean.getSelectHollowCircleWidth());
+                                canvas.drawCircle(x, y, chartBean.getSelectHollowCircleR(), paint);
+                            }
+
+                        }
+                        break;
+
+                        //竖线+实心圆
+                        case VERTICAL_LINE_AND_FILLED_CIRCLE: {
+                            NpLineEntry npPointEntry = npLineEntries.get(lastSelectIndex);
+
+                            if (npPointEntry.isClick()) {
+                                paint.setColor(chartBean.getSelectLineColor());
+                                paint.setStrokeWidth(chartBean.getSelectLineWidth());
+                                canvas.drawLine(x, viewRectF.top + topSpaceHeight, x, viewRectF.bottom - bottomLabelRangeHeight, paint);
+                            }
+
+                            if (npPointEntry.isDraw()) {
+                                paint.setStyle(Paint.Style.FILL);
+                                paint.setColor(chartBean.getSelectFilledCircleColor());
+                                canvas.drawCircle(x, y, chartBean.getSelectFilledCircleR(), paint);
+                            }
+                        }
+                        break;
+
+
+                    }
+
+
+                }
+            }
+        }
+        if (onLineSelectListener != null && lastSelectIndex != -1) {
+            onLineSelectListener.onSelectLine(lineDataBeanList, lastSelectIndex);
+        }
+    }
+
+
+    /**
+     * 绘制数据曲线
+     */
+    private void drawDataPoints() {
+        List<NpChartLineDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
+        if (lineDataBeanList != null && lineDataBeanList.size() > 0) {
+            if (maxLabel <= 0) {
+                NpViewLog.log("没有数据，不绘制数据曲线");
+            } else {
+                NpViewLog.log("多个数据点，可以绘制数据曲线 hasTouch:" + hasTouch);
+
+                allTmpRectList.clear();
+
+                Paint pointPaint = new Paint();
+                pointPaint.setAntiAlias(true);
+
+                int count = 0;
+                int tempIndex = 0;
+
+                NpViewLog.log("lineDataBeanList.size() = " + lineDataBeanList.size());
+
+                for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
+                    List<NpLineEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
+                    if (npLineEntries != null && npLineEntries.size() > 1) {
+                        dataLinePaint.setStrokeWidth(npChartLineDataBean.getLineThickness());
+                        if (npChartLineDataBean.isShowShadow()) {
+                            float shadowRadius = npChartLineDataBean.getShadowRadius();
+                            float shadowX = npChartLineDataBean.getShadowX();
+                            float shadowY = npChartLineDataBean.getShadowY();
+                            dataLinePaint.setShadowLayer(shadowRadius, shadowX, shadowY, npChartLineDataBean.getShadowColor());
+                        }
+//                        PathData pathData = getPath(npLineEntries, false);
+//                        dataLinePaint.setColor(npChartLineDataBean.getColor());
+//                        canvas.drawPath(pathData.getPath(), dataLinePaint);
+
+                        float xDisAdd = labelWidthSpace;
+                        for (int i = 0; i < npLineEntries.size(); i++) {
+                            NpLineEntry npPointEntry = npLineEntries.get(i);
+
+                            if (!npPointEntry.isDraw()) {
+                                continue;
+                            }
+
+                            float x = dataMarginLeft + xDisAdd * i + xDisAdd / 2;
+                            float y = getDataPointYPosition(npLineEntries.get(i));
+
+                            RectF rectF = new RectF();
+                            rectF.left = x - clickRangeWidth;
+                            rectF.right = x + clickRangeWidth;
+                            rectF.top = y - clickRangeWidth;
+                            rectF.bottom = y + clickRangeWidth;
+//                            allTmpRectList.add(rectF);
+
+                            pointPaint.setColor(npChartLineDataBean.getColor());
+                            pointPaint.setStrokeWidth(unitDp);
+                            canvas.drawCircle(x, y, pointRadius, pointPaint);
+//                            pointPaint.setStyle(Paint.Style.STROKE);
+//                            pointPaint.setColor(npChartLineDataBean.getColor());
+//                            canvas.drawCircle(x, y, pointRadius, pointPaint);
+                        }
+
+                    }
+                    if (count == 0) {
+                        for (NpLineEntry npLineEntry : npLineEntries) {
+                            RectF rectF = new RectF();
+                            rectF.left = dataMarginLeft + labelWidthSpace * tempIndex - clickRangeWidth + labelWidthSpace / 2;
+                            rectF.right = rectF.left + clickRangeWidth * 2;
+                            rectF.top = getDataPointYPosition(npLineEntry);
+                            rectF.bottom = viewRectF.bottom;
+                            allTmpRectList.add(rectF);
+                            tempIndex++;
                         }
                     }
+                    count++;
                 }
-                if (onLineSelectListener != null && lastSelectIndex != -1) {
-                    onLineSelectListener.onSelectLine(lineDataBeanList, lastSelectIndex);
-                }
+                drawSelect(lineDataBeanList);
             }
 
 
@@ -560,6 +724,7 @@ public class NpChartLineView extends BaseView {
      * 绘制数据的渐变曲线
      */
     private void drawDataLineGradient() {
+
         List<NpChartLineDataBean> lineDataBeanList = chartBean.getNpChartLineDataBeans();
         if (lineDataBeanList != null && lineDataBeanList.size() > 0) {
             if (maxLabel > 1) {
@@ -634,6 +799,8 @@ public class NpChartLineView extends BaseView {
         float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
         float leftMargin = dataMarginLeft;
         float xDisAdd = labelWidthSpace;
+
+
         float min = chartBean.getMinY();
         float max = chartBean.getMaxY();
         int dataLen = lineEntryList.size();
@@ -652,7 +819,7 @@ public class NpChartLineView extends BaseView {
         }
 
         precent1 = (tmpValue1 - min) / (max - min);
-        path.moveTo(leftMargin, (thisTotalHeight * (1.0f - precent1)));
+        path.moveTo(leftMargin + labelWidthSpace / 2, (thisTotalHeight * (1.0f - precent1)));
 //        if (isClosed) {
 //            precent1 = (tmpValue1 - min) / (max - min);
 //            //先把点移动到最开始的位置
@@ -683,7 +850,7 @@ public class NpChartLineView extends BaseView {
 
             precent1 = (tmpValue1 - min) / (max - min);
 
-            float x1 = i * xDisAdd + leftMargin;
+            float x1 = i * xDisAdd + leftMargin + labelWidthSpace / 2;
             float y1 = (thisTotalHeight * (1.0f - precent1)) + getPaddingTop() + viewRectF.top;
 
 
@@ -697,7 +864,7 @@ public class NpChartLineView extends BaseView {
 
             precent2 = (tmpValue2 - min) / (max - min);
 
-            float x2 = (i + 1) * xDisAdd + leftMargin;
+            float x2 = (i + 1) * xDisAdd + leftMargin + labelWidthSpace / 2;
             float y2 = (thisTotalHeight * (1.0f - precent2)) + getPaddingTop() + viewRectF.top;
 
             PointF startp = new PointF(x1, y1);
@@ -711,8 +878,8 @@ public class NpChartLineView extends BaseView {
         }
 
         if (isClosed) {
-            path.lineTo((dataLen - 1) * xDisAdd + leftMargin, (thisTotalHeight * (1.0f - precent2)));
-            path.lineTo((dataLen - 1) * xDisAdd + leftMargin, thisTotalHeight);
+            path.lineTo((dataLen - 1) * xDisAdd + leftMargin + labelWidthSpace / 2, (thisTotalHeight * (1.0f - precent2)));
+            path.lineTo((dataLen - 1) * xDisAdd + leftMargin + labelWidthSpace / 2, thisTotalHeight);
             path.lineTo(leftMargin, thisTotalHeight);
         }
 
@@ -783,7 +950,10 @@ public class NpChartLineView extends BaseView {
                 downX = event.getX();
                 NpViewLog.log("fuck" + downX + "///");
                 for (int i = 0; i < allTmpRectList.size(); i++) {
-                    if (allTmpRectList.get(i).contains(event.getX() - tranlateX, event.getY())) {
+                    RectF rangeRect = allTmpRectList.get(i);
+                    float xPosition = event.getX() - tranlateX;
+
+                    if (rangeRect.left <= xPosition && rangeRect.right >= xPosition) {
                         lastSelectIndex = i;
                         hasClick = true;
                         postInvalidateDelayed(20);
@@ -869,7 +1039,7 @@ public class NpChartLineView extends BaseView {
         maxLabel = getMaxLabelCount(chartBean.getNpLabelList());
         labelWidthSpace = chartBean.getLabelSpaceWidth();
         if (chartBean.getShowDataType() == NpShowDataType.Equal && maxLabel > 1) {
-            labelWidthSpace = (viewRectF.width() - dataMarginLeft - dataMarginRight) / (maxLabel - 1.0f);
+            labelWidthSpace = (viewRectF.width() - dataMarginLeft - dataMarginRight) / (maxLabel);
             NpViewLog.log("满足平分的场景？" + maxLabel + "///" + labelWidthSpace);
         }
         calculationScroll();

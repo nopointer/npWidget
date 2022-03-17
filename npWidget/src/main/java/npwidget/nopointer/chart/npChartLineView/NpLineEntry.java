@@ -14,6 +14,18 @@ public class NpLineEntry {
      */
     private Object tag;
 
+
+    /**
+     * 这个点是否是要显示
+     */
+    private boolean isDraw = true;
+
+    /**
+     * 是否能点击
+     */
+    private boolean isClick = true;
+
+
     public NpLineEntry() {
     }
 
@@ -42,11 +54,30 @@ public class NpLineEntry {
         this.tag = tag;
     }
 
+    public boolean isDraw() {
+        return isDraw;
+    }
+
+    public void setDraw(boolean draw) {
+        isDraw = draw;
+    }
+
+    public boolean isClick() {
+        return isClick;
+    }
+
+    public void setClick(boolean click) {
+        isClick = click;
+    }
+
     @Override
     public String toString() {
-        return "NpColumnEntry{" +
-                "value=" + value +
-                ", tag='" + tag + '\'' +
-                '}';
+        final StringBuffer sb = new StringBuffer("NpLineEntry{");
+        sb.append("value=").append(value);
+        sb.append(", tag=").append(tag);
+        sb.append(", isDraw=").append(isDraw);
+        sb.append(", isClick=").append(isClick);
+        sb.append('}');
+        return sb.toString();
     }
 }

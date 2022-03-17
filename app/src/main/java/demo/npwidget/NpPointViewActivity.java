@@ -67,7 +67,7 @@ public class NpPointViewActivity extends Activity {
         List<NpPointEntry> npLineEntries1 = new ArrayList<>();
         List<NpPointEntry> npLineEntries2 = new ArrayList<>();
 
-        String[] week = new String[]{"周一", "周一", "周一", "周一", "周一", "周一", "周一"};
+        String[] week = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
 
 
         for (int i = 0; i < 7; i++) {
