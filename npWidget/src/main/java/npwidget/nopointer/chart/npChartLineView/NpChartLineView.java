@@ -202,7 +202,7 @@ public class NpChartLineView extends BaseView {
         viewRectF.top = getPaddingTop();
         viewRectF.right = getMeasuredWidth() - getPaddingRight();
         viewRectF.bottom = getMeasuredHeight() - getPaddingBottom();
-        NpViewLog.log("矩形：" + viewRectF.toString());
+        NpViewLog.log("onMeasure 矩形：" + viewRectF.toString());
         if (viewRectF.width() > 0 && viewRectF.height() > 0) {
             bitmap = Bitmap.createBitmap(viewRectF.width(), viewRectF.height(), Bitmap.Config.ARGB_8888);
             canvas = new Canvas(bitmap);
@@ -212,6 +212,7 @@ public class NpChartLineView extends BaseView {
 
 
     private void draw() {
+        NpViewLog.log("draw ====> ");
         if (canDraw()) {
             clearBitmap(canvasBg);
             if (chartBean != null) {
@@ -388,7 +389,14 @@ public class NpChartLineView extends BaseView {
                     //计算柱子的中心点
                     float xPosition = i * labelWidthSpace + viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f;
                     labelText = chartLabels.get(i);
-                    paint.setTextAlign(Paint.Align.CENTER);
+
+                    if (chartBean.isAdaptationFirstLabel() && i == 0) {
+                        paint.setTextAlign(Paint.Align.LEFT);
+                    } else if (chartBean.isAdaptationLastLabel() && i == maxLabel - 1) {
+                        paint.setTextAlign(Paint.Align.RIGHT);
+                    } else {
+                        paint.setTextAlign(Paint.Align.CENTER);
+                    }
                     RectF rectF = new RectF(xPosition, viewRectF.bottom - bottomLabelRangeHeight, xPosition, viewRectF.bottom);
                     Paint.FontMetrics fontMetrics = paint.getFontMetrics();
                     float distance = (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
@@ -660,16 +668,6 @@ public class NpChartLineView extends BaseView {
                 for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
                     List<NpLineEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
                     if (npLineEntries != null && npLineEntries.size() > 1) {
-                        dataLinePaint.setStrokeWidth(npChartLineDataBean.getLineThickness());
-                        if (npChartLineDataBean.isShowShadow()) {
-                            float shadowRadius = npChartLineDataBean.getShadowRadius();
-                            float shadowX = npChartLineDataBean.getShadowX();
-                            float shadowY = npChartLineDataBean.getShadowY();
-                            dataLinePaint.setShadowLayer(shadowRadius, shadowX, shadowY, npChartLineDataBean.getShadowColor());
-                        }
-//                        PathData pathData = getPath(npLineEntries, false);
-//                        dataLinePaint.setColor(npChartLineDataBean.getColor());
-//                        canvas.drawPath(pathData.getPath(), dataLinePaint);
 
                         float xDisAdd = labelWidthSpace;
                         for (int i = 0; i < npLineEntries.size(); i++) {
@@ -713,8 +711,6 @@ public class NpChartLineView extends BaseView {
                 }
                 drawSelect(lineDataBeanList);
             }
-
-
         } else {
             NpViewLog.log("chartBean.getNpChartLineDataBeans()=null !!!!");
         }
@@ -986,14 +982,19 @@ public class NpChartLineView extends BaseView {
                 xVelocity = (int) velocityTracker.getXVelocity();
                 autoVelocityScroll(xVelocity);
                 velocityTracker.clear();
+//                invalidate();
+                postInvalidateDelayed(20);
                 break;
         }
-        postInvalidateDelayed(20);
         return true;
     }
 
     private void autoVelocityScroll(int xVelocity) {
+        if (chartBean.getShowDataType() == NpShowDataType.Equal) {
+            return;
+        }
         NpViewLog.log("xVelocity:" + xVelocity);
+
         //惯性滑动的代码,速率和滑动距离,以及滑动时间需要控制的很好,应该网上已经有关于这方面的算法了吧。。这里是经过N次测试调节出来的惯性滑动
         if (Math.abs(xVelocity) < 2000) {
             return;
@@ -1115,6 +1116,7 @@ public class NpChartLineView extends BaseView {
                         }
                     }
                 }
+
                 if (onLineSelectListener != null && lastSelectIndex != -1) {
                     onLineSelectListener.onSelectLine(lineDataBeanList, lastSelectIndex);
                 }

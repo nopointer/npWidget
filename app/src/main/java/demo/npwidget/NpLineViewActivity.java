@@ -10,6 +10,7 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
@@ -47,12 +48,14 @@ public class NpLineViewActivity extends Activity {
 
     private void debug(boolean isEmpty) {
         NpChartLineBean chartBean = new NpChartLineBean();
+        chartBean.setShowYAxis(false);
         chartBean.setShowXAxis(true);
         chartBean.setXAxisLineColor(0xFFAAAAAA);
-        chartBean.setShowYAxis(true);
         chartBean.setShowRefreshLine(true);
         chartBean.setRefreshLineCount(4);
-        chartBean.setRefreshValueCount(2);
+        chartBean.setRefreshValueCount(0);
+        chartBean.setAdaptationFirstLabel(true);
+        chartBean.setAdaptationLastLabel(true);
         chartBean.setBottomHeight(100);
 //        chartBean.setLabelTextSize(100);
 
@@ -60,20 +63,36 @@ public class NpLineViewActivity extends Activity {
         List<NpChartLineDataBean> npChartLineDataBeans = new ArrayList<>();
 
 
-        List<String> stringList = new ArrayList<>();
-
         NpChartLineDataBean npChartLineDataBean1 = new NpChartLineDataBean();
         NpChartLineDataBean npChartLineDataBean2 = new NpChartLineDataBean();
 
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
 
-        String[] week = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+//        String[] week = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
 
-        for (int i = 0; i < 7; i++) {
+
+
+        //底部标签
+        List<String> labelList = new ArrayList<>();
+
+        for (int i = 0; i < 288; i++) {
+
+            if (i % 72 == 0) {
+                labelList.add(String.format(Locale.US, "%02d:00", (i * 5) / 60));
+            } else if (i == 287) {
+                labelList.add("23:59");
+            } else {
+                labelList.add("");
+            }
+        }
+
+        chartBean.setNpLabelList(labelList);
+
+        for (int i = 0; i < 140; i++) {
             npLineEntries1.add(new NpLineEntry((i * 6) % 11));
             npLineEntries2.add(new NpLineEntry((i * 12) % 23));
-            stringList.add(week[i ]);
+//            stringList.add(week[i ]);
         }
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpPointEntry(0));
@@ -101,9 +120,9 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
 //        npChartLineDataBeans.add(npChartLineDataBean2);
 
-        chartBean.setNpLabelList(stringList);
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
         chartBean.setShowDataType(NpShowDataType.Equal);
+        chartBean.setBottomHeight(50);
         chartBean.setLabelSpaceWidth(QMUIDisplayHelper.dp2px(this, 70));
         chartBean.setMinY(0);
         chartBean.setMaxY(20);
@@ -127,7 +146,7 @@ public class NpLineViewActivity extends Activity {
 
 
         chartBean.setNpChartLineType(NpChartLineType.LINE);
-//        chartBean.setLabelTextSize(40);
+        chartBean.setLabelTextSize(30);
         if (isEmpty) {
             npChartLineView.setChartBean(null);
         } else {

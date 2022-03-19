@@ -27,7 +27,7 @@ public class BaseView extends View {
     //画布
     protected Canvas canvas;
     protected Bitmap bitmap;
-    private int canvasBg =0xFFFFFFFF;
+    private int canvasBg = 0xFFFFFFFF;
 
 
     //是否可以触摸
@@ -46,8 +46,7 @@ public class BaseView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (canvas != null && bitmap != null) {
-            NpViewLog.log("canvas.width()" + canvas.getWidth());
-            NpViewLog.log("bitmap.width()" + bitmap.getWidth());
+            NpViewLog.log("canvas W = " + canvas.getWidth() + ",H = " + bitmap.getHeight());
 //            canvas.drawColor(canvasBg);
             canvas.drawBitmap(bitmap, (canvas.getWidth() - bitmap.getWidth()) / 2, 0, null);
         }
@@ -72,7 +71,7 @@ public class BaseView extends View {
     protected void clearBitmap(int color) {
         if (canvas == null)
             return;
-        this.canvasBg =color;
+        this.canvasBg = color;
         canvas.drawColor(color, PorterDuff.Mode.CLEAR);
     }
 

@@ -48,6 +48,8 @@ public class NpChartLineBean {
     private int refreshValueCount = 2;
 
 
+
+
     /**
      * 数据展示方式，有两种 一种是可滑动 一种是平分宽度，默认是平分给定的宽度
      */
@@ -131,6 +133,16 @@ public class NpChartLineBean {
      * 选择线颜色
      */
     private int selectLineColor;
+
+    /**
+     * 是否适配第一个label，（数据较多的时候，可能会显示不全，适配的话 就偏右边一些）
+     */
+    private boolean adaptationFirstLabel = false;
+
+    /**
+     * 是否适配最后一个label，（数据较多的时候，可能会显示不全，适配的话 就偏右边一些）
+     */
+    private boolean adaptationLastLabel = false;
 
 
     public NpShowDataType getShowDataType() {
@@ -373,6 +385,22 @@ public class NpChartLineBean {
 
     public void setSelectLineColor(int selectLineColor) {
         this.selectLineColor = selectLineColor;
+    }
+
+    public boolean isAdaptationFirstLabel() {
+        return adaptationFirstLabel;
+    }
+
+    public void setAdaptationFirstLabel(boolean adaptationFirstLabel) {
+        this.adaptationFirstLabel = adaptationFirstLabel;
+    }
+
+    public boolean isAdaptationLastLabel() {
+        return adaptationLastLabel;
+    }
+
+    public void setAdaptationLastLabel(boolean adaptationLastLabel) {
+        this.adaptationLastLabel = adaptationLastLabel;
     }
 
     @Override

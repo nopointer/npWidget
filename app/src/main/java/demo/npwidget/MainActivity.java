@@ -216,8 +216,8 @@ public class MainActivity extends FragmentActivity {
 
         loadBattery();
 
-//        startActivity(new Intent(this,NpColumnViewActivity.class));
-        startActivity(new Intent(this,NpLineViewActivity.class));
+        startActivity(new Intent(this,NpColumnViewActivity.class));
+//        startActivity(new Intent(this,NpLineViewActivity.class));
 //        startActivity(new Intent(this,NpPointViewActivity.class));
 //        startActivity(new Intent(this, NpCircleProgressViewActivity.class));
 

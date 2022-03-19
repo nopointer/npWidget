@@ -46,7 +46,7 @@ public class NpColumnViewActivity extends Activity {
         NpChartColumnBean chartBean = new NpChartColumnBean();
         chartBean.setShowRefreshLine(true);
         chartBean.setRefreshLineCount(4);
-        chartBean.setRefreshValueCount(2);
+        chartBean.setRefreshValueCount(0);
         chartBean.setTopRound(true);
         chartBean.setBottomRound(true);
         chartBean.setShowSelectValue(true);
