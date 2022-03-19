@@ -118,7 +118,7 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBean2.setStartColor(0xFF000000);
         npChartLineDataBean2.setEndColor(0xFFFFFFFF);
         npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
-//        npChartLineDataBeans.add(npChartLineDataBean2);
+        npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
         chartBean.setShowDataType(NpShowDataType.Equal);
@@ -140,7 +140,7 @@ public class NpLineViewActivity extends Activity {
         chartBean.setSelectFilledCircleR(15);
 
 
-        chartBean.setSelectLineColor(0xFFFF00FF);
+        chartBean.setSelectLineColor(0xFF000000);
         chartBean.setSelectLineWidth(2);
 
 

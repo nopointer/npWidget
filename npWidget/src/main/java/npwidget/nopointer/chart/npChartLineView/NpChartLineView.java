@@ -458,6 +458,13 @@ public class NpChartLineView extends BaseView {
 
                 int count = 0;
                 int tempIndex = 0;
+
+                NpViewLog.log("lineDataBeanList.size() = " + lineDataBeanList.size());
+
+                if (chartBean.getNpChartLineType() == NpChartLineType.LINE) {
+                    drawSelectLine(lineDataBeanList);
+                }
+
                 for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
                     List<NpLineEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
                     if (npLineEntries != null && npLineEntries.size() > 1) {
@@ -491,6 +498,27 @@ public class NpChartLineView extends BaseView {
 
         } else {
             NpViewLog.log("chartBean.getNpChartLineDataBeans()=null !!!!");
+        }
+    }
+
+    private void drawSelectLine(List<NpChartLineDataBean> lineDataBeanList) {
+        for (int i = 0; i < lineDataBeanList.size(); i++) {
+            List<NpLineEntry> npLineEntries = lineDataBeanList.get(i).getNpLineEntryList();
+            if (npLineEntries != null && npLineEntries.size() > 0) {
+
+                NpViewLog.log("lastSelectIndex:" + lastSelectIndex);
+                if (lastSelectIndex != -1) {
+                    Paint paint = new Paint();
+                    paint.setAntiAlias(true);
+                    float x = dataMarginLeft + labelWidthSpace * lastSelectIndex + labelWidthSpace / 2;
+                    NpLineEntry npPointEntry = npLineEntries.get(lastSelectIndex);
+                    if (npPointEntry.isClick()) {
+                        paint.setColor(chartBean.getSelectLineColor());
+                        paint.setStrokeWidth(chartBean.getSelectLineWidth());
+                        canvas.drawLine(x, viewRectF.top + topSpaceHeight, x, viewRectF.bottom - bottomLabelRangeHeight, paint);
+                    }
+                }
+            }
         }
     }
 
@@ -564,8 +592,7 @@ public class NpChartLineView extends BaseView {
 
                     switch (chartBean.getNpSelectStyle()) {
                         //空心圆
-                        case HOLLOW_CIRCLE:
-                        default: {
+                        case HOLLOW_CIRCLE: {
                             paint.setStyle(Paint.Style.STROKE);
                             paint.setColor(chartBean.getSelectHollowCircleColor());
                             paint.setStrokeWidth(chartBean.getSelectHollowCircleWidth());
@@ -582,16 +609,16 @@ public class NpChartLineView extends BaseView {
                         break;
 
 
-                        //竖线
-                        case VERTICAL_LINE: {
-                            NpLineEntry npPointEntry = npLineEntries.get(lastSelectIndex);
-                            if (npPointEntry.isClick()) {
-                                paint.setColor(chartBean.getSelectLineColor());
-                                paint.setStrokeWidth(chartBean.getSelectLineWidth());
-                                canvas.drawLine(x, viewRectF.top + topSpaceHeight, x, viewRectF.bottom - bottomLabelRangeHeight, paint);
-                            }
-                        }
-                        break;
+//                        //竖线
+//                        case VERTICAL_LINE: {
+//                            NpLineEntry npPointEntry = npLineEntries.get(lastSelectIndex);
+//                            if (npPointEntry.isClick()) {
+//                                paint.setColor(chartBean.getSelectLineColor());
+//                                paint.setStrokeWidth(chartBean.getSelectLineWidth());
+//                                canvas.drawLine(x, viewRectF.top + topSpaceHeight, x, viewRectF.bottom - bottomLabelRangeHeight, paint);
+//                            }
+//                        }
+//                        break;
 
                         //竖线+空心圆
                         case VERTICAL_LINE_AND_HOLLOW_CIRCLE: {
@@ -664,6 +691,11 @@ public class NpChartLineView extends BaseView {
                 int tempIndex = 0;
 
                 NpViewLog.log("lineDataBeanList.size() = " + lineDataBeanList.size());
+
+
+                if (chartBean.getNpSelectStyle() == NpSelectStyle.VERTICAL_LINE) {
+                    drawSelectLine(lineDataBeanList);
+                }
 
                 for (NpChartLineDataBean npChartLineDataBean : lineDataBeanList) {
                     List<NpLineEntry> npLineEntries = npChartLineDataBean.getNpLineEntryList();
