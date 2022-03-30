@@ -29,6 +29,15 @@ public class BaseView extends View {
     protected Bitmap bitmap;
     private int canvasBg = 0xFFFFFFFF;
 
+    private boolean debugRect =false;
+
+    public boolean isDebugRect() {
+        return debugRect;
+    }
+
+    public void setDebugRect(boolean debugRect) {
+        this.debugRect = debugRect;
+    }
 
     //是否可以触摸
     private boolean enableTouch = true;

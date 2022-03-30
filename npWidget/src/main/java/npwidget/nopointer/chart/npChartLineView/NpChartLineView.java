@@ -219,12 +219,15 @@ public class NpChartLineView extends BaseView {
                 loadCfg();
                 drawXYAxis();
                 drawReferenceLine();
+
                 //绘制可是区域的范围，调试用
-                Paint paint = new Paint();
-                paint.setAntiAlias(true);
-                paint.setStyle(Paint.Style.FILL);
-                paint.setColor(0x30000000);
-                canvas.drawRect(viewRectF, paint);
+                if (isDebugRect()) {
+                    Paint paint = new Paint();
+                    paint.setAntiAlias(true);
+                    paint.setStyle(Paint.Style.FILL);
+                    paint.setColor(0x30000000);
+                    canvas.drawRect(viewRectF, paint);
+                }
 
                 canvas.save();
                 NpViewLog.log("此时的位移是:" + tranlateX);
@@ -805,9 +808,9 @@ public class NpChartLineView extends BaseView {
      */
     private float getDataPointYPosition(NpLineEntry npLineEntry) {
 
-        NpViewLog.log("topSpaceHeight = "+topSpaceHeight);
+        NpViewLog.log("topSpaceHeight = " + topSpaceHeight);
 
-        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight-topSpaceHeight;
+        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight - topSpaceHeight;
         float min = chartBean.getMinY();
         float max = chartBean.getMaxY();
 
@@ -824,14 +827,14 @@ public class NpChartLineView extends BaseView {
 
         float precent1 = (tmpValue1 - min) / (max - min);
 
-        return (thisTotalHeight * (1.0f - precent1))+topSpaceHeight;
+        return (thisTotalHeight * (1.0f - precent1)) + topSpaceHeight;
 
     }
 
     private PathData getPath(List<NpLineEntry> lineEntryList, boolean isClosed) {
         PathData pathData = new PathData();
         Path path = new Path();
-        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight-topSpaceHeight;
+        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight - topSpaceHeight;
         float leftMargin = dataMarginLeft;
         float xDisAdd = labelWidthSpace;
 
@@ -856,7 +859,7 @@ public class NpChartLineView extends BaseView {
         precent1 = (tmpValue1 - min) / (max - min);
 
 //        path.moveTo(leftMargin + labelWidthSpace / 2, (thisTotalHeight * (1.0f - precent1))+topSpaceHeight);
-        path.moveTo(viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f, (thisTotalHeight * (1.0f - precent1))+topSpaceHeight);
+        path.moveTo(viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f, (thisTotalHeight * (1.0f - precent1)) + topSpaceHeight);
 //        if (isClosed) {
 //            precent1 = (tmpValue1 - min) / (max - min);
 //            //先把点移动到最开始的位置
@@ -916,8 +919,8 @@ public class NpChartLineView extends BaseView {
 
         if (isClosed) {
             path.lineTo((dataLen - 1) * xDisAdd + leftMargin + labelWidthSpace / 2, (thisTotalHeight * (1.0f - precent2)));
-            path.lineTo((dataLen - 1) * xDisAdd + leftMargin + labelWidthSpace / 2, thisTotalHeight);
-            path.lineTo(viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f, thisTotalHeight);
+            path.lineTo((dataLen - 1) * xDisAdd + leftMargin + labelWidthSpace / 2, thisTotalHeight + topSpaceHeight);
+            path.lineTo(viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f, thisTotalHeight + topSpaceHeight);
         }
 
         pathData.setPath(path);

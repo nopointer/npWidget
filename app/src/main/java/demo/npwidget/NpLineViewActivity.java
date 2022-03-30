@@ -48,7 +48,7 @@ public class NpLineViewActivity extends Activity {
     private void debug(boolean isEmpty) {
         NpChartLineBean chartBean = new NpChartLineBean();
         chartBean.setShowYAxis(false);
-        chartBean.setShowXAxis(false);
+        chartBean.setShowXAxis(true);
         chartBean.setXAxisLineColor(0xFFAAAAAA);
         chartBean.setShowRefreshLine(true);
         chartBean.setRefreshLineCount(4);
@@ -81,22 +81,24 @@ public class NpLineViewActivity extends Activity {
 
         chartBean.setNpLabelList(labelList);
 
-        for (int i = 0; i < 20; i++) {
+        npLineEntries1.add(new NpLineEntry(30));
             npLineEntries1.add(new NpLineEntry(100));
-//            npLineEntries2.add(new NpLineEntry((i * 12) ));
-//            stringList.add(week[i ]);
-        }
+            npLineEntries1.add(new NpLineEntry(20));
+            npLineEntries1.add(new NpLineEntry(65));
+            npLineEntries1.add(new NpLineEntry(48));
+        npLineEntries1.add(new NpLineEntry(50));
+        npLineEntries1.add(new NpLineEntry(90));
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpPointEntry(0));
 //            npLineEntries2.add(new NpPointEntry(0));
 //            stringList.add(i + "D");
 //        }
         npChartLineDataBean1.setLineThickness(3);
-        npChartLineDataBean1.setShowGradient(true);
+        npChartLineDataBean1.setShowGradient(false);
         npChartLineDataBean1.setShowShadow(false);
 
         npChartLineDataBean1.setColor(0xFFFF00FF);
-        npChartLineDataBean1.setStartColor(0xFF000000);
+        npChartLineDataBean1.setStartColor(0xFFFF0000);
         npChartLineDataBean1.setEndColor(0xFFFFFFFF);
         npChartLineDataBean1.setNpLineEntryList(npLineEntries1);
         npChartLineDataBeans.add(npChartLineDataBean1);
@@ -114,7 +116,7 @@ public class NpLineViewActivity extends Activity {
 
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
         chartBean.setShowDataType(NpShowDataType.Equal);
-        chartBean.setBottomHeight(50);
+//        chartBean.setBottomHeight(50);
         chartBean.setLabelSpaceWidth(QMUIDisplayHelper.dp2px(this, 70));
         chartBean.setMinY(0);
         chartBean.setMaxY(100);
