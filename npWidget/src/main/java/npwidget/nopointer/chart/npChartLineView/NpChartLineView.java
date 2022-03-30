@@ -220,11 +220,11 @@ public class NpChartLineView extends BaseView {
                 drawXYAxis();
                 drawReferenceLine();
                 //绘制可是区域的范围，调试用
-//                Paint paint = new Paint();
-//                paint.setAntiAlias(true);
-//                paint.setStyle(Paint.Style.FILL);
-//                paint.setColor(0x30000000);
-//                canvas.drawRect(viewRectF, paint);
+                Paint paint = new Paint();
+                paint.setAntiAlias(true);
+                paint.setStyle(Paint.Style.FILL);
+                paint.setColor(0x30000000);
+                canvas.drawRect(viewRectF, paint);
 
                 canvas.save();
                 NpViewLog.log("此时的位移是:" + tranlateX);
@@ -804,27 +804,34 @@ public class NpChartLineView extends BaseView {
      * @return
      */
     private float getDataPointYPosition(NpLineEntry npLineEntry) {
-        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
+
+        NpViewLog.log("topSpaceHeight = "+topSpaceHeight);
+
+        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight-topSpaceHeight;
         float min = chartBean.getMinY();
         float max = chartBean.getMaxY();
+
         if (max == min) {
             max = min * 1.05f;
-
         }
         float tmpValue1 = npLineEntry.getValue();
         if (tmpValue1 <= min) {
             tmpValue1 = min;
         }
+        if (tmpValue1 > max) {
+            tmpValue1 = max;
+        }
 
         float precent1 = (tmpValue1 - min) / (max - min);
-        return (thisTotalHeight * (1.0f - precent1));
+
+        return (thisTotalHeight * (1.0f - precent1))+topSpaceHeight;
 
     }
 
     private PathData getPath(List<NpLineEntry> lineEntryList, boolean isClosed) {
         PathData pathData = new PathData();
         Path path = new Path();
-        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight;
+        float thisTotalHeight = viewRectF.height() - bottomLabelRangeHeight-topSpaceHeight;
         float leftMargin = dataMarginLeft;
         float xDisAdd = labelWidthSpace;
 
@@ -847,7 +854,9 @@ public class NpChartLineView extends BaseView {
         }
 
         precent1 = (tmpValue1 - min) / (max - min);
-        path.moveTo(leftMargin + labelWidthSpace / 2, (thisTotalHeight * (1.0f - precent1)));
+
+//        path.moveTo(leftMargin + labelWidthSpace / 2, (thisTotalHeight * (1.0f - precent1))+topSpaceHeight);
+        path.moveTo(viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f, (thisTotalHeight * (1.0f - precent1))+topSpaceHeight);
 //        if (isClosed) {
 //            precent1 = (tmpValue1 - min) / (max - min);
 //            //先把点移动到最开始的位置
@@ -879,7 +888,7 @@ public class NpChartLineView extends BaseView {
             precent1 = (tmpValue1 - min) / (max - min);
 
             float x1 = i * xDisAdd + leftMargin + labelWidthSpace / 2;
-            float y1 = (thisTotalHeight * (1.0f - precent1)) + getPaddingTop() + viewRectF.top;
+            float y1 = (thisTotalHeight * (1.0f - precent1)) + getPaddingTop() + topSpaceHeight;
 
 
             tmpValue2 = lineEntryList.get(i + 1).getValue();
@@ -893,7 +902,7 @@ public class NpChartLineView extends BaseView {
             precent2 = (tmpValue2 - min) / (max - min);
 
             float x2 = (i + 1) * xDisAdd + leftMargin + labelWidthSpace / 2;
-            float y2 = (thisTotalHeight * (1.0f - precent2)) + getPaddingTop() + viewRectF.top;
+            float y2 = (thisTotalHeight * (1.0f - precent2)) + getPaddingTop() + topSpaceHeight;
 
             PointF startp = new PointF(x1, y1);
             PointF endp = new PointF(x2, y2);
@@ -908,7 +917,7 @@ public class NpChartLineView extends BaseView {
         if (isClosed) {
             path.lineTo((dataLen - 1) * xDisAdd + leftMargin + labelWidthSpace / 2, (thisTotalHeight * (1.0f - precent2)));
             path.lineTo((dataLen - 1) * xDisAdd + leftMargin + labelWidthSpace / 2, thisTotalHeight);
-            path.lineTo(leftMargin, thisTotalHeight);
+            path.lineTo(viewRectF.left + dataMarginLeft + labelWidthSpace / 2.0f, thisTotalHeight);
         }
 
         pathData.setPath(path);

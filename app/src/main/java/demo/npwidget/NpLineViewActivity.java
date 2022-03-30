@@ -10,7 +10,6 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
@@ -49,11 +48,11 @@ public class NpLineViewActivity extends Activity {
     private void debug(boolean isEmpty) {
         NpChartLineBean chartBean = new NpChartLineBean();
         chartBean.setShowYAxis(false);
-        chartBean.setShowXAxis(true);
+        chartBean.setShowXAxis(false);
         chartBean.setXAxisLineColor(0xFFAAAAAA);
         chartBean.setShowRefreshLine(true);
         chartBean.setRefreshLineCount(4);
-        chartBean.setRefreshValueCount(0);
+        chartBean.setRefreshValueCount(4);
         chartBean.setAdaptationFirstLabel(true);
         chartBean.setAdaptationLastLabel(true);
         chartBean.setBottomHeight(100);
@@ -69,29 +68,22 @@ public class NpLineViewActivity extends Activity {
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
         List<NpLineEntry> npLineEntries2 = new ArrayList<>();
 
-//        String[] week = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+        String[] week = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
 
 
 
         //底部标签
         List<String> labelList = new ArrayList<>();
 
-        for (int i = 0; i < 288; i++) {
-
-            if (i % 72 == 0) {
-                labelList.add(String.format(Locale.US, "%02d:00", (i * 5) / 60));
-            } else if (i == 287) {
-                labelList.add("23:59");
-            } else {
-                labelList.add("");
-            }
+        for (int i = 0; i < 7; i++) {
+            labelList.add(week[i]);
         }
 
         chartBean.setNpLabelList(labelList);
 
-        for (int i = 0; i < 140; i++) {
-            npLineEntries1.add(new NpLineEntry((i * 6) % 11));
-            npLineEntries2.add(new NpLineEntry((i * 12) % 23));
+        for (int i = 0; i < 20; i++) {
+            npLineEntries1.add(new NpLineEntry(100));
+//            npLineEntries2.add(new NpLineEntry((i * 12) ));
 //            stringList.add(week[i ]);
         }
 //        for (int i = 1; i <= 10; i++) {
@@ -100,7 +92,7 @@ public class NpLineViewActivity extends Activity {
 //            stringList.add(i + "D");
 //        }
         npChartLineDataBean1.setLineThickness(3);
-        npChartLineDataBean1.setShowGradient(false);
+        npChartLineDataBean1.setShowGradient(true);
         npChartLineDataBean1.setShowShadow(false);
 
         npChartLineDataBean1.setColor(0xFFFF00FF);
@@ -125,7 +117,7 @@ public class NpLineViewActivity extends Activity {
         chartBean.setBottomHeight(50);
         chartBean.setLabelSpaceWidth(QMUIDisplayHelper.dp2px(this, 70));
         chartBean.setMinY(0);
-        chartBean.setMaxY(20);
+        chartBean.setMaxY(100);
         chartBean.setShowLabels(true);
         chartBean.setNpSelectMode(NpSelectMode.SELECT_FIRST);
 
