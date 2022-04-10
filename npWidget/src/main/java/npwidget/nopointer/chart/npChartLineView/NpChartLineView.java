@@ -1004,18 +1004,37 @@ public class NpChartLineView extends BaseView {
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                currentX = event.getX();
-                //滑动时候,通过假设的滑动距离,做超出左边界以及右边界的限制。
-                if (Math.abs(currentX - downX) > SizeUtils.dp2px(getContext(), 20)) {
-                    tranlateX = currentX - downX + lastX;
-                    if (tranlateX >= 0) {
-                        tranlateX = 0;
-                    } else {
-                        if ((maxLabel - 1) * labelWidthSpace <= viewRectF.width() - dataMarginLeft - dataMarginRight) {
-                            NpViewLog.log("不能左滑动？");
+
+                //如果是等宽显示的话
+                if (chartBean.getShowDataType() == NpShowDataType.Equal) {
+                    float downX = event.getX();
+                    NpViewLog.log("fuck" + downX + "///");
+                    for (int i = 0; i < allTmpRectList.size(); i++) {
+                        RectF rangeRect = allTmpRectList.get(i);
+                        float xPosition = event.getX() - tranlateX;
+
+                        if (rangeRect.left <= xPosition && rangeRect.right >= xPosition) {
+                            lastSelectIndex = i;
+                            hasClick = true;
+                            postInvalidateDelayed(20);
+                            NpViewLog.log("lastSelectIndex===>" + lastSelectIndex);
+                            break;
+                        }
+                    }
+                } else {
+                    currentX = event.getX();
+                    //滑动时候,通过假设的滑动距离,做超出左边界以及右边界的限制。
+                    if (Math.abs(currentX - downX) > SizeUtils.dp2px(getContext(), 20)) {
+                        tranlateX = currentX - downX + lastX;
+                        if (tranlateX >= 0) {
                             tranlateX = 0;
-                        } else if (tranlateX <= getWhichScaleMovex()) {
-                            tranlateX = getWhichScaleMovex();
+                        } else {
+                            if ((maxLabel - 1) * labelWidthSpace <= viewRectF.width() - dataMarginLeft - dataMarginRight) {
+                                NpViewLog.log("不能左滑动？");
+                                tranlateX = 0;
+                            } else if (tranlateX <= getWhichScaleMovex()) {
+                                tranlateX = getWhichScaleMovex();
+                            }
                         }
                     }
                 }

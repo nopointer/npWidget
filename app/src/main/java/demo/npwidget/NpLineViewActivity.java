@@ -40,7 +40,7 @@ public class NpLineViewActivity extends Activity {
         findViewById(R.id.click_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NpLineViewActivity.this,MainActivity.class));
+                startActivity(new Intent(NpLineViewActivity.this, MainActivity.class));
             }
         });
     }
@@ -66,28 +66,33 @@ public class NpLineViewActivity extends Activity {
         NpChartLineDataBean npChartLineDataBean2 = new NpChartLineDataBean();
 
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
-        List<NpLineEntry> npLineEntries2 = new ArrayList<>();
+//        List<NpLineEntry> npLineEntries2 = new ArrayList<>();
 
         String[] week = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
-
 
 
         //底部标签
         List<String> labelList = new ArrayList<>();
 
-        for (int i = 0; i < 7; i++) {
-            labelList.add(week[i]);
+        for (int i = 0; i < 288; i++) {
+//            labelList.add(week[i]);
+            labelList.add(i + "");
         }
 
         chartBean.setNpLabelList(labelList);
 
-        npLineEntries1.add(new NpLineEntry(30));
-            npLineEntries1.add(new NpLineEntry(100));
-            npLineEntries1.add(new NpLineEntry(20));
-            npLineEntries1.add(new NpLineEntry(65));
-            npLineEntries1.add(new NpLineEntry(48));
-        npLineEntries1.add(new NpLineEntry(50));
-        npLineEntries1.add(new NpLineEntry(90));
+
+        for (int i = 0; i < 288; i++) {
+            npLineEntries1.add(new NpLineEntry(300 / (i+1)));
+        }
+
+
+//            npLineEntries1.add(new NpLineEntry(100));
+//            npLineEntries1.add(new NpLineEntry(20));
+//            npLineEntries1.add(new NpLineEntry(65));
+//            npLineEntries1.add(new NpLineEntry(48));
+//        npLineEntries1.add(new NpLineEntry(50));
+//        npLineEntries1.add(new NpLineEntry(90));
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpPointEntry(0));
 //            npLineEntries2.add(new NpPointEntry(0));
@@ -111,7 +116,7 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBean2.setColor(0xFFFF00FF);
         npChartLineDataBean2.setStartColor(0xFF000000);
         npChartLineDataBean2.setEndColor(0xFFFFFFFF);
-        npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
+//        npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
         npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
@@ -119,7 +124,7 @@ public class NpLineViewActivity extends Activity {
 //        chartBean.setBottomHeight(50);
         chartBean.setLabelSpaceWidth(QMUIDisplayHelper.dp2px(this, 70));
         chartBean.setMinY(0);
-        chartBean.setMaxY(100);
+        chartBean.setMaxY(300);
         chartBean.setShowLabels(true);
         chartBean.setNpSelectMode(NpSelectMode.SELECT_FIRST);
 
@@ -136,7 +141,6 @@ public class NpLineViewActivity extends Activity {
 
         chartBean.setSelectLineColor(0xFF000000);
         chartBean.setSelectLineWidth(2);
-
 
 
         chartBean.setNpChartLineType(NpChartLineType.LINE);
