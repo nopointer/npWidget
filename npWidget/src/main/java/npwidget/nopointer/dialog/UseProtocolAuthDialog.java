@@ -13,17 +13,19 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import cn.droidlover.xrichtext.XRichText;
 import npwidget.nopointer.R;
 
 /**
  * 用户使用协议的 授权的对话框,
  * 上传googleplay的 带有来电提醒 短信提醒 需要获取权限的app 都要使用此提示框来 让用户选择授权与否
+ *
+ * 不再推荐使用了
  */
+@Deprecated
 public class UseProtocolAuthDialog extends Dialog implements View.OnClickListener {
 
     private TextView titleText;
-    private XRichText messageText;
+    private TextView messageText;
 
     private Button cancelBtn;
     private Button sureBtn;
@@ -71,29 +73,29 @@ public class UseProtocolAuthDialog extends Dialog implements View.OnClickListene
     public void setTextShow(String title, String message) {
         show();
         titleText.setText(title);
-        messageText.callback(new XRichText.Callback() {
-            @Override
-            public void onImageClick(List<String> urlList, int position) {
-
-            }
-
-            @Override
-            public boolean onLinkClick(String url) {
-                onUrlClick(url);
-                return true;
-            }
-
-            @Override
-            public void onFix(XRichText.ImageHolder holder) {
-                if (holder.getPosition() % 3 == 0) {
-                    holder.setStyle(XRichText.Style.LEFT);
-                } else if (holder.getPosition() % 3 == 1) {
-                    holder.setStyle(XRichText.Style.CENTER);
-                } else {
-                    holder.setStyle(XRichText.Style.RIGHT);
-                }
-            }
-        }).text(message);
+//        messageText.callback(new XRichText.Callback() {
+//            @Override
+//            public void onImageClick(List<String> urlList, int position) {
+//
+//            }
+//
+//            @Override
+//            public boolean onLinkClick(String url) {
+//                onUrlClick(url);
+//                return true;
+//            }
+//
+//            @Override
+//            public void onFix(XRichText.ImageHolder holder) {
+//                if (holder.getPosition() % 3 == 0) {
+//                    holder.setStyle(XRichText.Style.LEFT);
+//                } else if (holder.getPosition() % 3 == 1) {
+//                    holder.setStyle(XRichText.Style.CENTER);
+//                } else {
+//                    holder.setStyle(XRichText.Style.RIGHT);
+//                }
+//            }
+//        }).text(message);
 //                .text("<a href=\"http://my.oschina.net/u/1756518\" >西夏一品堂</a>  <a href=\"http://my.oschina.net/u/175651811\" >@西夏一品堂2</a>");
     }
 
