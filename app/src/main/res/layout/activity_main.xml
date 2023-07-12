@@ -8,12 +8,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaView
-        android:id="@+id/NpChartLineView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:paddingBottom="15dp" />
-
 
     <npwidget.nopointer.progress.npColorBars.cursorTop.NpColorBarProgressView
         android:id="@+id/npCircleProgressView"
@@ -24,12 +18,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp" />
 
-    <npwidget.nopointer.progress.battery.NpBatteryView
-        android:id="@+id/npBatteryView"
-        android:layout_width="15dp"
-        android:layout_height="28dp"
-        android:layout_gravity="center_horizontal"
-        android:rotation="90" />
 
     <Button
         android:id="@+id/debug_btn"

@@ -2,7 +2,8 @@ package demo.npwidget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 import npwidget.nopointer.wave.bloodOxygen.NpBloodOxygenWaveView;
 

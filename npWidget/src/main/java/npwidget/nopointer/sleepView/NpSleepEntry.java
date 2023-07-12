@@ -25,6 +25,8 @@ public class NpSleepEntry {
      */
     private int color;
 
+    private int selectColor;
+
     /**
      * 该状态的数据在等分高度中的位置（该参数只对睡眠区间的等分模式有效）,从0开始
      */
@@ -68,6 +70,14 @@ public class NpSleepEntry {
 
     public void setColor(int color) {
         this.color = color;
+    }
+
+    public int getSelectColor() {
+        return selectColor;
+    }
+
+    public void setSelectColor(int selectColor) {
+        this.selectColor = selectColor;
     }
 
     public int getPosition() {

@@ -1,7 +1,8 @@
 package npwidget.extra.dovar.dtoast.inner;
 
-import android.support.annotation.IdRes;
 import android.view.View;
+
+import androidx.annotation.IdRes;
 
 import npwidget.extra.dovar.dtoast.DToast;
 

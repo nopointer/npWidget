@@ -3,11 +3,12 @@ package npwidget.extra.kongzue.dialog.util.view;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewPropertyAnimator;
 import android.widget.LinearLayout;
+
+import androidx.annotation.Nullable;
 
 /**
  * @author: Kongzue

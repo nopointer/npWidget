@@ -1,4 +1,4 @@
-package demo.npwidget;
+package demo.npwidget.demos;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import demo.npwidget.R;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.chart.npChartPointView.NpChartPointBean;
@@ -18,6 +19,9 @@ import npwidget.nopointer.chart.npChartPointView.NpChartPointDataBean;
 import npwidget.nopointer.chart.npChartPointView.NpChartPointView;
 import npwidget.nopointer.chart.npChartPointView.NpPointEntry;
 
+/**
+ * 点统计图
+ */
 public class NpPointViewActivity extends Activity {
 
     NpChartPointView npChartPointView;
@@ -35,12 +39,7 @@ public class NpPointViewActivity extends Activity {
                 debug(false);
             }
         });
-        findViewById(R.id.click_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(NpPointViewActivity.this, MainActivity.class));
-            }
-        });
+
     }
 
     private void debug(boolean isEmpty) {
@@ -85,7 +84,7 @@ public class NpPointViewActivity extends Activity {
 
             }
             npLineEntries2.add(new NpPointEntry((i * 12) % 23));
-            stringList.add(week[i ]);
+            stringList.add(week[i]);
         }
 //        for (int i = 1; i <= 10; i++) {
 //            npLineEntries1.add(new NpPointEntry(0));

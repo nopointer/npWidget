@@ -3,11 +3,12 @@ package npwidget.extra.dovar.dtoast.inner;
 import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewManager;
 import android.view.ViewParent;
 import android.view.WindowManager;
+
+import androidx.annotation.NonNull;
 
 import java.util.Comparator;
 

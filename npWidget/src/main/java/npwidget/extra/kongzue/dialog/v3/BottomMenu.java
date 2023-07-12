@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,6 +37,9 @@ import npwidget.nopointer.R;
 
 import static npwidget.extra.kongzue.dialog.util.DialogSettings.blurAlpha;
 import static npwidget.extra.kongzue.dialog.util.DialogSettings.menuTitleInfo;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 
 /**

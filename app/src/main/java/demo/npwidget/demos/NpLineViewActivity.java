@@ -1,4 +1,4 @@
-package demo.npwidget;
+package demo.npwidget.demos;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import demo.npwidget.R;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineBean;
@@ -40,7 +41,7 @@ public class NpLineViewActivity extends Activity {
         findViewById(R.id.click_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NpLineViewActivity.this, MainActivity.class));
+
             }
         });
     }

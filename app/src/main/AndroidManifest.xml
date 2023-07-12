@@ -10,7 +10,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -26,8 +25,8 @@
 
         <activity android:name=".NpTimeCirclePickerViewActivity" />
         <activity android:name=".NpWaterViewActivity" />
-        <activity android:name=".NpLineViewActivity" />
-        <activity android:name=".NpLineViewActivity" />
+        <activity android:name=".demos.NpLineViewActivity" />
+        <activity android:name=".demos.NpLineViewActivity" />
         <activity android:name=".NpRectViewActivity" />
         <activity android:name=".NpOxWaveViewActivity" />
         <activity android:name=".NpOxWaveViewActivity" />
@@ -37,7 +36,10 @@
         <activity android:name=".NpPolylineViewActivity" />
         <activity android:name=".NpCircleProgressViewActivity" />
         <activity android:name=".NpColorBarProgressViewActivity" />
-        <activity android:name=".NpPointViewActivity" />
+        <activity android:name=".demos.NpPointViewActivity" />
+        <activity android:name=".demos.NpSleepStateAreaViewAct" />
+        <activity android:name=".demos.DemoListActivity" />
+        <activity android:name=".demos.NpBatteryViewActivity" />
 
     </application>
 

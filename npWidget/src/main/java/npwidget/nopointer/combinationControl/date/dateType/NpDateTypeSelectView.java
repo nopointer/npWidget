@@ -4,8 +4,6 @@ package npwidget.nopointer.combinationControl.date.dateType;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -13,6 +11,9 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 
 import npwidget.nopointer.R;
 import npwidget.nopointer.combinationControl.date.NpDateType;

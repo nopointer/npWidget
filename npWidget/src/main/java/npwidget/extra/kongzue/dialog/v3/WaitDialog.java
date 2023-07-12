@@ -1,6 +1,7 @@
 package npwidget.extra.kongzue.dialog.v3;
 
-import android.support.v4.app.FragmentActivity;
+
+import androidx.fragment.app.FragmentActivity;
 
 /**
  * Author: @Kongzue

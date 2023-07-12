@@ -6,6 +6,8 @@ import android.graphics.Path;
 import android.os.Build;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatImageView;
+
 /**
  * @author: Kongzue
  * @github: https://github.com/kongzue/
@@ -13,7 +15,7 @@ import android.util.AttributeSet;
  * @mail: myzcxhh@live.cn
  * @createTime: 2019/11/17 23:53
  */
-public class ActivityScreenShotImageView extends android.support.v7.widget.AppCompatImageView {
+public class ActivityScreenShotImageView extends AppCompatImageView {
     
     float width, height,mRadius;
     

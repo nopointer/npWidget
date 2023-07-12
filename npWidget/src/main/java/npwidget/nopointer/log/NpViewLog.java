@@ -36,7 +36,7 @@ public class NpViewLog {
                 StackTraceElement caller = getCallerStackTraceElement();
                 content = "[" + getCallPathAndLineNumber(caller) + "]：" + content;
             }
-            Log.d(tag, content);
+            Log.e(tag, content);
         }
     }
 

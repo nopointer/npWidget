@@ -7,9 +7,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;

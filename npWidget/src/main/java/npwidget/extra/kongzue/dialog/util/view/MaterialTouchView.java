@@ -1,11 +1,12 @@
 package npwidget.extra.kongzue.dialog.util.view;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ViewParent;
 import android.widget.LinearLayout;
+
+import androidx.annotation.Nullable;
 
 /**
  * Author: @Kongzue

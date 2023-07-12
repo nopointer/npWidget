@@ -7,11 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.IBinder;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -23,6 +18,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
+import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;

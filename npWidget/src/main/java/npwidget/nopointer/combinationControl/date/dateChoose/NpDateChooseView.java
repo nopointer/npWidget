@@ -3,7 +3,6 @@ package npwidget.nopointer.combinationControl.date.dateChoose;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -12,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.Date;
 

@@ -3,13 +3,14 @@ package npwidget.extra.dovar.dtoast.inner;
 import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationManagerCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationManagerCompat;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;

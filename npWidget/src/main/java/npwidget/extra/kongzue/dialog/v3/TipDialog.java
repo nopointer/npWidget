@@ -3,9 +3,6 @@ package npwidget.extra.kongzue.dialog.v3;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
-import android.support.annotation.DrawableRes;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +27,10 @@ import npwidget.extra.kongzue.dialog.util.view.ProgressView;
 import npwidget.nopointer.R;
 
 import static npwidget.extra.kongzue.dialog.util.DialogSettings.blurAlpha;
+
+import androidx.annotation.DrawableRes;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 
 /**

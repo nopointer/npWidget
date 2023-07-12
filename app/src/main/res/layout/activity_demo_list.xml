@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnViewSleep"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="睡眠状态图" />
+
+        <Button
+            android:id="@+id/btnViewNpPoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="点统计图" />
+
+        <Button
+            android:id="@+id/btnViewNpLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="线统计图" />
+
+        <Button
+            android:id="@+id/btnViewBattery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="电池效果" />
+
+        <Button
+            android:id="@+id/btnViewNpColorBarProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="带有颜色额度进度条" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="" />
+
+
+    </LinearLayout>
+
+
+</androidx.core.widget.NestedScrollView>

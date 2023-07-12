@@ -5,11 +5,12 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 
 import npwidget.extra.dovar.dtoast.DToast;
 import npwidget.extra.dovar.dtoast.DUtil;

@@ -21,6 +21,16 @@ public class NpSleepStateAreaBean {
     private StateAreaType stateAreaType = StateAreaType.ALL_HEIGHT;
 
     /**
+     * 选中后的颜色
+     */
+    private StateAreaSelectType stateAreaSelectType = StateAreaSelectType.UNIFY;
+
+    /**
+     * 等分高的时候 填充比例默认填满
+     */
+    private float splitHeightRatio = 1f;
+
+    /**
      * 数据列表
      */
     private List<NpSleepEntry> dataList = new ArrayList<>();
@@ -56,7 +66,6 @@ public class NpSleepStateAreaBean {
     private float leftRightTextSize = 12;
 
 
-
     /**
      * 是否点击可以显示睡眠碎片区域
      */
@@ -73,14 +82,80 @@ public class NpSleepStateAreaBean {
     private int clipLineColor = 0xFFFFFFFF;
 
     /**
+     * 是否显示分割线
+     */
+    public boolean showClipLine = true;
+
+    /**
      * 分割线的宽度
      */
     private float clipLineWidth = 1;
+
+
+    /**
+     * 最大值 y轴上
+     */
+    private float maxY;
+    /**
+     * 最小值 y轴上
+     */
+    private float minY;
+
+    /**
+     * 是否显示X轴
+     */
+    private boolean showXAxis;
+
+    /**
+     * x轴的颜色
+     */
+    private int XAxisLineColor = 0xFFFF0000;
+
+    /**
+     * x轴的粗细
+     */
+    private int XAxisLineWidth = 1;
+
+    /**
+     * 是否显示Y轴
+     */
+    private boolean showYAxis;
+
+    /**
+     * y轴的颜色
+     */
+    private int YAxisLineColor = 0xFFFF0000;
+
+    /**
+     * x轴的粗细
+     */
+    private int YAxisLineWidth = 1;
+
+    //是否显示参考线
+    private boolean showRefreshLine = false;
+
+    //参考线条数
+    private int refreshLineCount = 4;
+
+
+    //参考值个数
+    private int refreshValueCount = 2;
+
+
+    /**
+     * 底部绘制横向标签的高度
+     */
+    private float bottomHeight = 40;
 
     /**
      * 选择的睡眠碎片 点击后显示的详情的文字大小
      */
     private int selectPartTextInfoSize = 24;
+
+    /**
+     * 显示碎片之间的连线
+     */
+    private boolean showPartLigature = true;
 
     public StateAreaType getStateAreaType() {
         return stateAreaType;
@@ -121,7 +196,6 @@ public class NpSleepStateAreaBean {
     public void setRightText(String rightText) {
         this.rightText = rightText;
     }
-
 
 
     public int getLeftTextColor() {
@@ -196,6 +270,131 @@ public class NpSleepStateAreaBean {
         this.clipLineWidth = clipLineWidth;
     }
 
+
+    public float getSplitHeightRatio() {
+        return splitHeightRatio;
+    }
+
+    public void setSplitHeightRatio(float splitHeightRatio) {
+        this.splitHeightRatio = splitHeightRatio;
+        if (this.splitHeightRatio < 0 || this.splitHeightRatio > 1) {
+            this.splitHeightRatio = 1;
+        }
+    }
+
+    public boolean isShowRefreshLine() {
+        return showRefreshLine;
+    }
+
+    public void setShowRefreshLine(boolean showRefreshLine) {
+        this.showRefreshLine = showRefreshLine;
+    }
+
+    public int getRefreshLineCount() {
+        return refreshLineCount;
+    }
+
+    public void setRefreshLineCount(int refreshLineCount) {
+        this.refreshLineCount = refreshLineCount;
+    }
+
+    public int getRefreshValueCount() {
+        return refreshValueCount;
+    }
+
+    public void setRefreshValueCount(int refreshValueCount) {
+        this.refreshValueCount = refreshValueCount;
+    }
+
+    public float getBottomHeight() {
+        return bottomHeight;
+    }
+
+    public void setBottomHeight(float bottomHeight) {
+        this.bottomHeight = bottomHeight;
+    }
+
+    public float getMaxY() {
+        return maxY;
+    }
+
+    public void setMaxY(float maxY) {
+        this.maxY = maxY;
+    }
+
+    public float getMinY() {
+        return minY;
+    }
+
+    public void setMinY(float minY) {
+        this.minY = minY;
+    }
+
+    public boolean isShowXAxis() {
+        return showXAxis;
+    }
+
+    public void setShowXAxis(boolean showXAxis) {
+        this.showXAxis = showXAxis;
+    }
+
+    public int getXAxisLineColor() {
+        return XAxisLineColor;
+    }
+
+    public void setXAxisLineColor(int XAxisLineColor) {
+        this.XAxisLineColor = XAxisLineColor;
+    }
+
+    public boolean isShowYAxis() {
+        return showYAxis;
+    }
+
+    public void setShowYAxis(boolean showYAxis) {
+        this.showYAxis = showYAxis;
+    }
+
+    public int getYAxisLineColor() {
+        return YAxisLineColor;
+    }
+
+    public void setYAxisLineColor(int YAxisLineColor) {
+        this.YAxisLineColor = YAxisLineColor;
+    }
+
+    public int getXAxisLineWidth() {
+        return XAxisLineWidth;
+    }
+
+    public void setXAxisLineWidth(int XAxisLineWidth) {
+        this.XAxisLineWidth = XAxisLineWidth;
+    }
+
+    public int getYAxisLineWidth() {
+        return YAxisLineWidth;
+    }
+
+    public void setYAxisLineWidth(int YAxisLineWidth) {
+        this.YAxisLineWidth = YAxisLineWidth;
+    }
+
+    public StateAreaSelectType getStateAreaSelectType() {
+        return stateAreaSelectType;
+    }
+
+    public void setStateAreaSelectType(StateAreaSelectType stateAreaSelectType) {
+        this.stateAreaSelectType = stateAreaSelectType;
+    }
+
+
+    public boolean isShowPartLigature() {
+        return showPartLigature;
+    }
+
+    public void setShowPartLigature(boolean showPartLigature) {
+        this.showPartLigature = showPartLigature;
+    }
+
     /**
      * 区间图样式
      */
@@ -208,6 +407,28 @@ public class NpSleepStateAreaBean {
          * 等分高，该状态在整列中占一个等比高度位置(从上往下)
          */
         SPLIT_HEIGHT
+    }
+
+    /**
+     * 选择后的颜色类型
+     * 目前支持指定颜色 和 半透明 还有统一颜色
+     */
+    public enum StateAreaSelectType {
+        /**
+         * 指定颜色
+         */
+        SPECIFY,
+
+        /**
+         * 半透明 TRANSLUCENT
+         */
+        TRANSLUCENT,
+
+        /**
+         * 统一颜色
+         */
+        UNIFY
+
     }
 
 

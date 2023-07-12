@@ -6,10 +6,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,6 +38,11 @@ import npwidget.extra.kongzue.dialog.util.view.TableLayout;
 import npwidget.nopointer.R;
 
 import static npwidget.extra.kongzue.dialog.util.DialogSettings.blurAlpha;
+
+import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.RoundedBitmapDrawable;
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
+import androidx.fragment.app.FragmentActivity;
 
 /**
  * Author: @Kongzue

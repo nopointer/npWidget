@@ -1,14 +1,34 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
-        maven { url 'https://jitpack.io' }
-        google()
+        maven {
+            url 'https://dl.google.com/dl/android/maven2/'
+        }
+        mavenCentral()
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter/'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+
+        maven {
+            url 'https://dl.google.com/dl/android/maven2/'
+        }
+        maven {
+            url 'https://www.jitpack.io'
+        }
+        maven {
+            url 'https://jitpack.io'
+        }
+        mavenCentral()
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.5.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -18,9 +38,29 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
-        google()
+        maven {
+            url 'https://dl.google.com/dl/android/maven2/'
+        }
+        mavenCentral()
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter/'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/groups/public/'
+        }
+
+        maven {
+            url 'https://dl.google.com/dl/android/maven2/'
+        }
+        maven {
+            url 'https://www.jitpack.io'
+        }
+        maven {
+            url 'https://jitpack.io'
+        }
+        mavenCentral()
         jcenter()
+        google()
     }
 }
 
@@ -34,20 +74,20 @@ ext {
             // SDK And Tools
             minSdkVersion        : 19,
             targetSdkVersion     : 28,
-            compileSdkVersion    : 28,
-            buildToolsVersion    : "27.0.0",
+            compileSdkVersion    : 31,
+            buildToolsVersion    : "28.0.0",
             //Dependencies
-            supportLibraryVersion: "27.0.0"
+            supportLibraryVersion: "28.0.0"
     ]
 }
 
 subprojects {
-    project.configurations.all {
-        resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'com.android.support'
-                    && !details.requested.name.contains('multidex') ) {
-                details.useVersion "27.0.0"
-            }
-        }
-    }
+//    project.configurations.all {
+//        resolutionStrategy.eachDependency { details ->
+//            if (details.requested.group == 'com.android.support'
+//                    && !details.requested.name.contains('multidex') ) {
+//                details.useVersion "27.0.0"
+//            }
+//        }
+//    }
 }

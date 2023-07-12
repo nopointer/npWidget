@@ -1,11 +1,12 @@
 package npwidget.extra.kongzue.dialog.v3;
 
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+
+import androidx.fragment.app.FragmentActivity;
 
 import java.lang.ref.WeakReference;
 
