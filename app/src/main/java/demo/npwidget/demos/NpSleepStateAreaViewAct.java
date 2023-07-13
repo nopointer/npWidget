@@ -1,8 +1,11 @@
 package demo.npwidget.demos;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,11 +37,15 @@ public class NpSleepStateAreaViewAct extends AppCompatActivity {
         setContentView(R.layout.activity_demo_sleep);
         npSleepStateAreaView = findViewById(R.id.npSleepStateAreaView);
         npSleepStateLineView = findViewById(R.id.npSleepStateLineView);
-        loadDebug();
+
+        findViewById(R.id.btnClear).setOnClickListener(v -> {
+            loadDebug(false);
+        });
+        loadDebug(true);
     }
 
 
-    private void loadDebug() {
+    private void loadDebug(boolean notNull) {
         NpSleepStateAreaBean npStateBean = new NpSleepStateAreaBean();
         npStateBean.setStateAreaType(NpSleepStateAreaBean.StateAreaType.SPLIT_HEIGHT);
         npStateBean.setSplitHeightRatio(0.5f);
@@ -90,8 +97,11 @@ public class NpSleepStateAreaViewAct extends AppCompatActivity {
             npSleepEntry.setDuration(Integer.parseInt(string.substring(12 * i + 8, 12 * i + 10), 16));
             dataList.add(npSleepEntry);
         }
-        npStateBean.setDataList(dataList);
-
+        if (notNull) {
+            npStateBean.setDataList(dataList);
+        } else {
+            npStateBean.setDataList(null);
+        }
         npStateBean.setLeftText("00:00");
         npStateBean.setLeftTextColor(0xFF000000);
         npStateBean.setRightText("23:59");
@@ -130,8 +140,12 @@ public class NpSleepStateAreaViewAct extends AppCompatActivity {
             }
         });
         npStateBean.setLeftRightTextSize(30);
+        npSleepStateAreaView.setNoDataTextSize(40);
+        npSleepStateAreaView.setNoDataTextColor(0xFFFF0000);
+        npSleepStateAreaView.setNoDataText("无数据");
         npSleepStateAreaView.setNpStateBean(npStateBean);
         npSleepStateAreaView.invalidate();
-
     }
+
+
 }

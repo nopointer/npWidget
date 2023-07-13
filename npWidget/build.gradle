@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion var.minSdkVersion
         targetSdkVersion var.targetSdkVersion
-        versionCode 76
-        versionName "beta_0.0.76"
+        versionCode 77
+        versionName "beta_0.0.77"
     }
 
     buildTypes {
@@ -25,6 +25,10 @@ android {
         flatDir {
             dirs 'libs'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 

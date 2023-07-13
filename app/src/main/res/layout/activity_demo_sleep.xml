@@ -14,6 +14,12 @@
         android:layout_height="200dp"
         android:layout_margin="20dp" />
 
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="无数据" />
+
 
     <npwidget.nopointer.sleepView.sleepStateLineView.NpSleepStateLineView
         android:id="@+id/npSleepStateLineView"

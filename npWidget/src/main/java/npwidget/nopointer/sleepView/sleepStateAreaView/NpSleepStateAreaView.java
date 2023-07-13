@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -26,14 +27,17 @@ import npwidget.nopointer.sleepView.NpSleepEntry;
 public class NpSleepStateAreaView extends BaseView {
     public NpSleepStateAreaView(Context context) {
         super(context);
+        init(context);
     }
 
     public NpSleepStateAreaView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
     }
 
     public NpSleepStateAreaView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context);
     }
 
     /**
@@ -59,6 +63,30 @@ public class NpSleepStateAreaView extends BaseView {
 
     private float topSpaceHeight = 0;
 
+    //无数据时的画笔
+    private Paint noDataPaint = null;
+
+    //绘制没有数据的时候的文字大小
+    private float noDataTextSize = 0;
+
+    //绘制没有数据的时候的文字
+    private String noDataText = "no data ~ ";
+
+    //无数据是文本的颜色
+    private int noDataTextColor = 0xFF888888;
+
+    public void setNoDataTextSize(float noDataTextSize) {
+        this.noDataTextSize = noDataTextSize;
+    }
+
+    public void setNoDataText(String noDataText) {
+        this.noDataText = noDataText;
+    }
+
+    public void setNoDataTextColor(int noDataTextColor) {
+        this.noDataTextColor = noDataTextColor;
+    }
+
     public void setNpStateBean(NpSleepStateAreaBean npStateBean) {
         this.npStateBean = npStateBean;
         sleepPartCount = 0;
@@ -80,6 +108,11 @@ public class NpSleepStateAreaView extends BaseView {
     private int selectPartIndex = -1;
 
 
+    void init(Context context) {
+        noDataPaint = new Paint();
+        noDataPaint.setAntiAlias(true);
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -99,21 +132,25 @@ public class NpSleepStateAreaView extends BaseView {
 
     private void draw() {
         if (canDraw() && npStateBean != null) {
-
             loadCfg();
             clearBitmap();
             //绘制X Y 轴
             drawXYAxis();
             //绘制参考线
             drawReferenceLine();
-            //先绘制分割线
-            drawPartClipLine();
-            //在碎片的图层上绘制碎片数据
-            drawSleepParts();
-            //在碎片的图层上绘制碎片选中的效果
-            drawSelectPart();
-            //在底部绘制文本
-            drawBottomText();
+
+            if (npStateBean.getDataList() == null) {
+                drawNoData();
+            } else {
+                //先绘制分割线
+                drawPartClipLine();
+                //在碎片的图层上绘制碎片数据
+                drawSleepParts();
+                //在碎片的图层上绘制碎片选中的效果
+                drawSelectPart();
+                //在底部绘制文本
+                drawBottomText();
+            }
         }
     }
 
@@ -384,5 +421,18 @@ public class NpSleepStateAreaView extends BaseView {
                 canvas.drawText(text, viewRectF.left + 10, yPosition + 36, paint);
             }
         }
+    }
+
+
+    //绘制没有数据的时候的显示样子
+    private void drawNoData() {
+        noDataPaint.setTextAlign(Paint.Align.CENTER);
+        noDataPaint.setAntiAlias(true);
+        noDataPaint.setTextSize(noDataTextSize);
+        noDataPaint.setColor(noDataTextColor);
+        String text = TextUtils.isEmpty(noDataText) ? "no Data" : noDataText;
+        NpViewLog.log("无数据 = 绘制 " + noDataText);
+
+        canvas.drawText(text, viewRectF.centerX(), viewRectF.centerY() - bottomLabelRangeHeight / 2 + noDataTextSize / 1.95f, noDataPaint);
     }
 }
