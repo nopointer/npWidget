@@ -38,8 +38,11 @@ public class NpSleepStateAreaViewAct extends AppCompatActivity {
         npSleepStateAreaView = findViewById(R.id.npSleepStateAreaView);
         npSleepStateLineView = findViewById(R.id.npSleepStateLineView);
 
-        findViewById(R.id.btnClear).setOnClickListener(v -> {
-            loadDebug(false);
+        findViewById(R.id.btnClear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadDebug(false);
+            }
         });
         loadDebug(true);
     }
