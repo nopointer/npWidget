@@ -85,5 +85,22 @@
 
     </declare-styleable>
 
+    <declare-styleable name="NpCircleProgressView">
+        <!--        开始角度-->
+        <attr name="startAngle" format="integer" />
+        <attr name="progress" format="float" />
+        <attr name="circleProgressBgColor" format="color" />
+        <attr name="circleProgressColor" format="color" />
+        <attr name="circleWidth" format="dimension" />
+        <attr name="dotR" format="dimension" />
+        <attr name="dotColor" format="color" />
+        <attr name="showCursor" format="boolean" />
+        <attr name="cursorR" format="dimension" />
+        <attr name="cursorColor" format="color" />
+        <attr name="cursorShadowR" format="dimension" />
+        <attr name="cursorShadowColor" format="color" />
+        <attr name="showCursorShadow" format="boolean" />
+
+    </declare-styleable>
 
 </resources>

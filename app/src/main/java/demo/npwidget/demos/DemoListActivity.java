@@ -7,6 +7,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import demo.npwidget.NpCircleProgressViewActivity;
 import demo.npwidget.NpColorBarProgressViewActivity;
 import demo.npwidget.R;
 
@@ -52,6 +53,15 @@ public class DemoListActivity extends AppCompatActivity {
                 startActivity(new Intent(DemoListActivity.this, NpColorBarProgressViewActivity.class));
             }
         });
+
+        findViewById(R.id.btnViewNpCircleProgress).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DemoListActivity.this, NpCircleProgressViewActivity.class));
+            }
+        });
+
+
 
     }
 }

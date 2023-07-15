@@ -10,7 +10,18 @@
 
     <npwidget.nopointer.progress.NpCircleProgressView
         android:id="@+id/npCircleProgressView"
-        android:layout_width="300dp"
-        android:layout_height="300dp" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        app:circleProgressBgColor="#FF888888"
+        app:circleProgressColor="#FF005536"
+        app:circleWidth="12dp"
+        app:cursorColor="#FF0000FF"
+        app:cursorR="6dp"
+        app:dotColor="@color/white"
+        app:dotR="3dp"
+        app:progress="0.5"
+        app:showCursor="false" />
 
 </LinearLayout>

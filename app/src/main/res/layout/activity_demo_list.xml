@@ -44,9 +44,10 @@
             android:text="带有颜色额度进度条" />
 
         <Button
+            android:id="@+id/btnViewNpCircleProgress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="圆形进度条" />
 
         <Button
             android:layout_width="match_parent"

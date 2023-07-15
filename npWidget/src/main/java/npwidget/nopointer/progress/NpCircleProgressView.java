@@ -1,12 +1,14 @@
 package npwidget.nopointer.progress;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
+import npwidget.nopointer.R;
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.utils.SizeUtils;
@@ -21,38 +23,31 @@ public class NpCircleProgressView extends BaseView {
      * 可以绘制的RectF 边界，是一个正方形 会根据小边长适配大小
      */
     private RectF viewRectF = new RectF();
-    private float mProgress = 0.5f;
+    //当前进度
+    private float mProgress = 0.0f;
 
-    /**
-     * 开始的角度，默认-90 即12点钟方向
-     */
+    //开始的角度，默认-90 即12点钟方向
     private float startAngle = -90;
 
-    /**
-     * 背景颜色
-     */
-    private int circleProgressBgColor = 0xFF00FFFF;
+    //进度圆环的 背景颜色 默认没有颜色
+    private int circleProgressBgColor = 0x00000000;
 
-    /**
-     * 进度的颜色
-     */
-    private int circleProgressColor = 0xFF00FF00;
-    /**
-     * 进度线的宽度
-     */
+    //进度的颜色 进度颜色 默认没有颜色
+    private int circleProgressColor = 0x00000000;
+
+    //进度圆环的粗细
     private float circleWidth = 2;
 
     private float dotR = 2;
-    private int dotColor = 0x00FFFFFF;
+    private int dotColor = 0x00000000;
 
-    /**
-     * 是否显示游标
-     */
+    //是否显示游标
     private boolean showCursor;
 
     private float cursorR = 30;
 
-    private int cursorColor = 0xFF00FFFF;
+    //进度游标的颜色,默认没有颜色
+    private int cursorColor = 0x00000000;
 
     //阴影的范围
     private float cursorShadowR = 0;
@@ -60,7 +55,7 @@ public class NpCircleProgressView extends BaseView {
     //阴影的颜色
     private int cursorShadowColor = 0xFFFFFFFF;
 
-    //是否显示阴影
+    //是否显示游标的阴影 默认不显示
     private boolean showCursorShadow = false;
 
 
@@ -131,17 +126,17 @@ public class NpCircleProgressView extends BaseView {
 
     public NpCircleProgressView(Context context) {
         super(context);
-        init(context);
+        init(context, null);
     }
 
     public NpCircleProgressView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, attrs);
     }
 
     public NpCircleProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        init(context, attrs);
     }
 
 
@@ -161,8 +156,35 @@ public class NpCircleProgressView extends BaseView {
         this.dotColor = dotColor;
     }
 
-    private void init(Context context) {
+    private void init(Context context, AttributeSet attrs) {
         circleWidth = SizeUtils.dp2px(context, 6);
+        dotR = SizeUtils.dp2px(context, 0);
+        cursorR = SizeUtils.dp2px(context, 6);
+        cursorShadowR = SizeUtils.dp2px(context, 0);
+
+        if (attrs != null) {
+            TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NpCircleProgressView);
+
+
+            startAngle = typedArray.getDimension(R.styleable.NpCircleProgressView_startAngle, -90);
+            mProgress = typedArray.getFloat(R.styleable.NpCircleProgressView_progress, mProgress);
+            circleProgressBgColor = typedArray.getColor(R.styleable.NpCircleProgressView_circleProgressBgColor, circleProgressBgColor);
+            circleProgressColor = typedArray.getColor(R.styleable.NpCircleProgressView_circleProgressColor, circleProgressColor);
+
+            circleWidth = typedArray.getDimension(R.styleable.NpCircleProgressView_circleWidth, circleWidth);
+            dotR = typedArray.getDimension(R.styleable.NpCircleProgressView_dotR, dotR);
+            dotColor = typedArray.getColor(R.styleable.NpCircleProgressView_dotColor, dotColor);
+            showCursor = typedArray.getBoolean(R.styleable.NpCircleProgressView_showCursor, showCursor);
+            cursorR = typedArray.getDimension(R.styleable.NpCircleProgressView_cursorR, cursorR);
+            cursorColor = typedArray.getColor(R.styleable.NpCircleProgressView_cursorColor, cursorColor);
+            cursorShadowR = typedArray.getDimension(R.styleable.NpCircleProgressView_cursorShadowR, cursorShadowR);
+            cursorShadowColor = typedArray.getColor(R.styleable.NpCircleProgressView_cursorShadowColor, cursorShadowColor);
+            showCursorShadow = typedArray.getBoolean(R.styleable.NpCircleProgressView_showCursorShadow, showCursorShadow);
+
+            typedArray.recycle();
+            NpViewLog.log("attrs!=null:" + (attrs != null));
+        }
+
     }
 
 
