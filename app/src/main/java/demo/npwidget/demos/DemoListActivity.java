@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import demo.npwidget.NpCircleProgressViewActivity;
 import demo.npwidget.NpColorBarProgressViewActivity;
+import demo.npwidget.NpColumnViewActivity;
 import demo.npwidget.R;
 
 public class DemoListActivity extends AppCompatActivity {
@@ -58,6 +59,13 @@ public class DemoListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(DemoListActivity.this, NpCircleProgressViewActivity.class));
+            }
+        });
+
+        findViewById(R.id.btnViewNpNpColumn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DemoListActivity.this, NpColumnViewActivity.class));
             }
         });
 

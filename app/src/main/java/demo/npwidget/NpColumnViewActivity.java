@@ -37,9 +37,9 @@ public class NpColumnViewActivity extends Activity {
 
     private void debug() {
 
-        String[]  week =new String[]{"周一","周一","周一","周一","周一","周一","周一"};
+        String[] week = new String[]{"周一", "周一", "周一", "周一", "周一", "周一", "周一"};
 
-        for (int i = 0; i <7; i++) {
+        for (int i = 0; i < 7; i++) {
             NpViewLog.log("index i:" + i);
         }
 
@@ -48,15 +48,20 @@ public class NpColumnViewActivity extends Activity {
         chartBean.setRefreshLineCount(4);
         chartBean.setRefreshValueCount(0);
         chartBean.setTopRound(true);
-        chartBean.setBottomRound(true);
+        chartBean.setBottomRound(false);
         chartBean.setShowSelectValue(true);
         chartBean.setSelectValueTextSize(20);
         chartBean.setShowXAxis(true);
         chartBean.setShowYAxis(false);
         chartBean.setMinY(0);
         chartBean.setMaxY(100);
-        chartBean.setNpSelectMode(NpSelectMode.SELECT_FIRST_NOT_NULL);
+        chartBean.setNpSelectMode(NpSelectMode.SELECT_LAST_NOT_NULL);
 
+        chartBean.setShowSelectLine(true);
+        chartBean.setSelectLineColor(0xFFFF0000);
+        chartBean.setSelectLineWidth(3);
+        chartBean.setSelectLineHeightScale(0.80f);
+        chartBean.setSelectLineShowType(NpChartColumnBean.SelectLineShowType_BOTTOM);
         chartBean.setMinY(0);
 
         chartBean.setYAxisFormatter(new NpValueFormatter() {
@@ -87,10 +92,10 @@ public class NpColumnViewActivity extends Activity {
             npChartColumnDataBean.setColorList(colorList);
 
             List<NpColumnEntry> npColumnEntries = new ArrayList<>();
-            if (i==0){
+            if (i == 0) {
                 npColumnEntries.add(new NpColumnEntry(0.10f));
-            }else{
-                npColumnEntries.add(new NpColumnEntry(0));
+            } else {
+                npColumnEntries.add(new NpColumnEntry(45));
             }
 //            npColumnEntries.add(new NpColumnEntry((i * 18)%25));
 //            if (i % 7 == 0) {

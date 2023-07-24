@@ -103,7 +103,24 @@ public class NpChartColumnBean {
      */
     private int labelTextColor = 0xFF000000;
 
+    //显示选中的线条
+    private boolean showSelectLine = false;
+    //选中的线条的颜色
+    private int selectLineColor = 0x00000000;
+    //选中的线条的高度比例
+    private float selectLineHeightScale = 1.0f;
 
+    private int selectLineWidth = 1;
+
+    /**
+     * 在柱子上面
+     */
+    public static final int SelectLineShowType_TOP = 1;
+    /**
+     * 在柱子下面面
+     */
+    public static final int SelectLineShowType_BOTTOM = 0;
+    private int selectLineShowType = SelectLineShowType_BOTTOM;
     private NpSelectMode npSelectMode = NpSelectMode.NONE;
 
 
@@ -397,6 +414,47 @@ public class NpChartColumnBean {
         this.valueFormatter = valueFormatter;
     }
 
+    public boolean isShowSelectLine() {
+        return showSelectLine;
+    }
+
+    public void setShowSelectLine(boolean showSelectLine) {
+        this.showSelectLine = showSelectLine;
+    }
+
+    public int getSelectLineColor() {
+        return selectLineColor;
+    }
+
+    public void setSelectLineColor(int selectLineColor) {
+        this.selectLineColor = selectLineColor;
+    }
+
+    public float getSelectLineHeightScale() {
+        return selectLineHeightScale;
+    }
+
+    public void setSelectLineHeightScale(float selectLineHeightScale) {
+        this.selectLineHeightScale = selectLineHeightScale;
+    }
+
+    public int getSelectLineWidth() {
+        return selectLineWidth;
+    }
+
+    public void setSelectLineWidth(int selectLineWidth) {
+        this.selectLineWidth = selectLineWidth;
+    }
+
+
+    public int getSelectLineShowType() {
+        return selectLineShowType;
+    }
+
+    public void setSelectLineShowType(int selectLineShowType) {
+        this.selectLineShowType = selectLineShowType;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NpChartColumnBean{");
@@ -408,6 +466,8 @@ public class NpChartColumnBean {
         sb.append(", refreshValueCount=").append(refreshValueCount);
         sb.append(", XAxisLineColor=").append(XAxisLineColor);
         sb.append(", showYAxis=").append(showYAxis);
+        sb.append(", YAxisFormatter=").append(YAxisFormatter);
+        sb.append(", valueFormatter=").append(valueFormatter);
         sb.append(", YAxisLineColor=").append(YAxisLineColor);
         sb.append(", showDataType=").append(showDataType);
         sb.append(", columnWidth=").append(columnWidth);
@@ -419,6 +479,11 @@ public class NpChartColumnBean {
         sb.append(", bottomHeight=").append(bottomHeight);
         sb.append(", topHeight=").append(topHeight);
         sb.append(", labelTextColor=").append(labelTextColor);
+        sb.append(", showSelectLine=").append(showSelectLine);
+        sb.append(", selectLineColor=").append(selectLineColor);
+        sb.append(", selectLineHeightScale=").append(selectLineHeightScale);
+        sb.append(", selectLineWidth=").append(selectLineWidth);
+        sb.append(", selectLineShowType=").append(selectLineShowType);
         sb.append(", npSelectMode=").append(npSelectMode);
         sb.append(", npChartColumnDataBeans=").append(npChartColumnDataBeans);
         sb.append(", selectColumnColorList=").append(selectColumnColorList);

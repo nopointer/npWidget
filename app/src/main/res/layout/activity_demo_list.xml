@@ -50,9 +50,10 @@
             android:text="圆形进度条" />
 
         <Button
+            android:id="@+id/btnViewNpNpColumn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="柱状图" />
 
         <Button
             android:layout_width="match_parent"

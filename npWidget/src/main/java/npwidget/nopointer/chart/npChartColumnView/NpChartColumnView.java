@@ -153,7 +153,7 @@ public class NpChartColumnView extends BaseView {
 
                     for (NpChartColumnDataBean chartColumnDataBean : chartColumnBean.getNpChartColumnDataBeans()) {
                         for (NpColumnEntry columnEntry : chartColumnDataBean.getNpColumnEntryList()) {
-                            NpViewLog.log("columnEntry = "+columnEntry.toString());
+                            NpViewLog.log("columnEntry = " + columnEntry.toString());
 
                             dataSum += columnEntry.getValue();
                         }
@@ -363,6 +363,14 @@ public class NpChartColumnView extends BaseView {
 
         RectF rectF = new RectF(pathData.clickRange);
 
+        //显示在下面
+        if (chartColumnBean.isShowSelectLine() && chartColumnBean.getSelectLineShowType() == NpChartColumnBean.SelectLineShowType_BOTTOM) {
+            paint.setColor(chartColumnBean.getSelectLineColor());
+            paint.setStrokeWidth(chartColumnBean.getSelectLineWidth());
+            float totalHeight = (viewRectF.height() - (viewRectF.bottom - rectF.bottom)) * chartColumnBean.getSelectLineHeightScale();
+            canvas.drawLine(rectF.centerX(), rectF.bottom - totalHeight, rectF.centerX(), rectF.bottom, paint);
+        }
+
 
         if (chartColumnBean.isShowSelectValue()) {
             //先绘制选中的值
@@ -412,7 +420,13 @@ public class NpChartColumnView extends BaseView {
                 canvas.drawRect(tmpDrawRectF, paint);
             }
         }
-
+        //显示在上面
+        if (chartColumnBean.isShowSelectLine() && chartColumnBean.getSelectLineShowType() == NpChartColumnBean.SelectLineShowType_TOP) {
+            paint.setColor(chartColumnBean.getSelectLineColor());
+            paint.setStrokeWidth(chartColumnBean.getSelectLineWidth());
+            float totalHeight = (viewRectF.height() - (viewRectF.bottom - rectF.bottom)) * chartColumnBean.getSelectLineHeightScale();
+            canvas.drawLine(rectF.centerX(), rectF.bottom - totalHeight, rectF.centerX(), rectF.bottom, paint);
+        }
 
         if (onColumnSelectListener != null) {
             onColumnSelectListener.onSelectColumn(chartColumnBean.getNpChartColumnDataBeans().get(lastSelectIndex), lastSelectIndex);
