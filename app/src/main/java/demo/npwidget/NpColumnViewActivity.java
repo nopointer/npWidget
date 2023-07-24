@@ -62,6 +62,7 @@ public class NpColumnViewActivity extends Activity {
         chartBean.setSelectLineWidth(3);
         chartBean.setSelectLineHeightScale(0.80f);
         chartBean.setSelectLineShowType(NpChartColumnBean.SelectLineShowType_BOTTOM);
+
         chartBean.setMinY(0);
 
         chartBean.setYAxisFormatter(new NpValueFormatter() {

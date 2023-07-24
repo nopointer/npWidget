@@ -84,7 +84,7 @@ public class NpSleepStateAreaBean {
     /**
      * 是否显示分割线
      */
-    public boolean showClipLine = true;
+    private boolean showClipLine = true;
 
     /**
      * 分割线的宽度
@@ -156,6 +156,26 @@ public class NpSleepStateAreaBean {
      * 显示碎片之间的连线
      */
     private boolean showPartLigature = true;
+
+
+    //显示选中的线条
+    private boolean showSelectLine = false;
+    //选中的线条的颜色
+    private int selectLineColor = 0x00000000;
+    //选中的线条的高度比例
+    private float selectLineHeightScale = 1.0f;
+    //选中的线条的宽度
+    private int selectLineWidth = 1;
+
+    /**
+     * 在柱子上面
+     */
+    public static final int SelectLineShowType_TOP = 1;
+    /**
+     * 在柱子下面面
+     */
+    public static final int SelectLineShowType_BOTTOM = 0;
+    private int selectLineShowType = SelectLineShowType_BOTTOM;
 
     public StateAreaType getStateAreaType() {
         return stateAreaType;
@@ -393,6 +413,96 @@ public class NpSleepStateAreaBean {
 
     public void setShowPartLigature(boolean showPartLigature) {
         this.showPartLigature = showPartLigature;
+    }
+
+    public boolean isShowSelectLine() {
+        return showSelectLine;
+    }
+
+    public void setShowSelectLine(boolean showSelectLine) {
+        this.showSelectLine = showSelectLine;
+    }
+
+    public int getSelectLineColor() {
+        return selectLineColor;
+    }
+
+    public void setSelectLineColor(int selectLineColor) {
+        this.selectLineColor = selectLineColor;
+    }
+
+    public float getSelectLineHeightScale() {
+        return selectLineHeightScale;
+    }
+
+    public void setSelectLineHeightScale(float selectLineHeightScale) {
+        this.selectLineHeightScale = selectLineHeightScale;
+    }
+
+    public int getSelectLineWidth() {
+        return selectLineWidth;
+    }
+
+    public void setSelectLineWidth(int selectLineWidth) {
+        this.selectLineWidth = selectLineWidth;
+    }
+
+    public boolean isShowClipLine() {
+        return showClipLine;
+    }
+
+    public void setShowClipLine(boolean showClipLine) {
+        this.showClipLine = showClipLine;
+    }
+
+    public int getSelectLineShowType() {
+        return selectLineShowType;
+    }
+
+    public void setSelectLineShowType(int selectLineShowType) {
+        this.selectLineShowType = selectLineShowType;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("NpSleepStateAreaBean{");
+        sb.append("sleepStateCount=").append(sleepStateCount);
+        sb.append(", stateAreaType=").append(stateAreaType);
+        sb.append(", stateAreaSelectType=").append(stateAreaSelectType);
+        sb.append(", splitHeightRatio=").append(splitHeightRatio);
+        sb.append(", dataList=").append(dataList);
+        sb.append(", selectPartRectColor=").append(selectPartRectColor);
+        sb.append(", leftText='").append(leftText).append('\'');
+        sb.append(", leftTextColor=").append(leftTextColor);
+        sb.append(", rightText='").append(rightText).append('\'');
+        sb.append(", rightTextColor=").append(rightTextColor);
+        sb.append(", leftRightTextSize=").append(leftRightTextSize);
+        sb.append(", isEnableClickPart=").append(isEnableClickPart);
+        sb.append(", selectPartTextInfoColor=").append(selectPartTextInfoColor);
+        sb.append(", clipLineColor=").append(clipLineColor);
+        sb.append(", showClipLine=").append(showClipLine);
+        sb.append(", clipLineWidth=").append(clipLineWidth);
+        sb.append(", maxY=").append(maxY);
+        sb.append(", minY=").append(minY);
+        sb.append(", showXAxis=").append(showXAxis);
+        sb.append(", XAxisLineColor=").append(XAxisLineColor);
+        sb.append(", XAxisLineWidth=").append(XAxisLineWidth);
+        sb.append(", showYAxis=").append(showYAxis);
+        sb.append(", YAxisLineColor=").append(YAxisLineColor);
+        sb.append(", YAxisLineWidth=").append(YAxisLineWidth);
+        sb.append(", showRefreshLine=").append(showRefreshLine);
+        sb.append(", refreshLineCount=").append(refreshLineCount);
+        sb.append(", refreshValueCount=").append(refreshValueCount);
+        sb.append(", bottomHeight=").append(bottomHeight);
+        sb.append(", selectPartTextInfoSize=").append(selectPartTextInfoSize);
+        sb.append(", showPartLigature=").append(showPartLigature);
+        sb.append(", showSelectLine=").append(showSelectLine);
+        sb.append(", selectLineColor=").append(selectLineColor);
+        sb.append(", selectLineHeightScale=").append(selectLineHeightScale);
+        sb.append(", selectLineWidth=").append(selectLineWidth);
+        sb.append(", selectLineShowType=").append(selectLineShowType);
+        sb.append('}');
+        return sb.toString();
     }
 
     /**

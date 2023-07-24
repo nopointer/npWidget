@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import demo.npwidget.R;
+import npwidget.nopointer.chart.npChartColumnView.NpChartColumnBean;
 import npwidget.nopointer.sleepView.NpSleepEntry;
 import npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaBean;
 import npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaView;
@@ -53,7 +54,7 @@ public class NpSleepStateAreaViewAct extends AppCompatActivity {
         npStateBean.setStateAreaType(NpSleepStateAreaBean.StateAreaType.SPLIT_HEIGHT);
         npStateBean.setSplitHeightRatio(0.5f);
 
-        npStateBean.setStateAreaSelectType(NpSleepStateAreaBean.StateAreaSelectType.TRANSLUCENT);
+        npStateBean.setStateAreaSelectType(NpSleepStateAreaBean.StateAreaSelectType.UNIFY);
 
         //X Y 轴的配置
         npStateBean.setShowXAxis(true);
@@ -68,9 +69,15 @@ public class NpSleepStateAreaViewAct extends AppCompatActivity {
         npStateBean.setRefreshValueCount(0);
 
         //分割线的配置
-        npStateBean.showClipLine = false;
+        npStateBean.setShowClipLine(false);
         npStateBean.setClipLineWidth(1);
         npStateBean.setClipLineColor(Color.BLACK);
+
+        npStateBean.setShowSelectLine(true);
+        npStateBean.setSelectLineColor(0xFFFF0000);
+        npStateBean.setSelectLineWidth(3);
+        npStateBean.setSelectLineHeightScale(0.80f);
+        npStateBean.setSelectLineShowType(NpChartColumnBean.SelectLineShowType_BOTTOM);
 
         npStateBean.setSelectPartRectColor(0xFF808080);
         npStateBean.setSleepStateCount(3);

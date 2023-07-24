@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
+    <LinearLayout
 
-    <npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaView
-        android:id="@+id/npSleepStateAreaView"
+        android:id="@+id/rlayout"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_margin="20dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnClear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="无数据" />
+        <npwidget.nopointer.sleepView.sleepStateAreaView.NpSleepStateAreaView
+            android:id="@+id/npSleepStateAreaView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="20dp" />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="无数据" />
 
 
-    <npwidget.nopointer.sleepView.sleepStateLineView.NpSleepStateLineView
-        android:id="@+id/npSleepStateLineView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        <npwidget.nopointer.sleepView.sleepStateLineView.NpSleepStateLineView
+            android:id="@+id/npSleepStateLineView"
+            android:layout_width="match_parent"
+            android:layout_height="1000dp" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+
 

@@ -109,7 +109,7 @@ public class NpChartColumnBean {
     private int selectLineColor = 0x00000000;
     //选中的线条的高度比例
     private float selectLineHeightScale = 1.0f;
-
+    //选中的线条的宽度
     private int selectLineWidth = 1;
 
     /**

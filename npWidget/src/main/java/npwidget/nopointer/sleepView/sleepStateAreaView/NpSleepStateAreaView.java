@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Locale;
 
 import npwidget.nopointer.base.BaseView;
+import npwidget.nopointer.chart.npChartColumnView.NpChartColumnBean;
 import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.sleepView.NpSleepEntry;
 
@@ -181,22 +182,36 @@ public class NpSleepStateAreaView extends BaseView {
             paint.setAntiAlias(true);
             paint.setStyle(Paint.Style.FILL);
 
-            switch (npStateBean.getStateAreaSelectType()) {
-                case UNIFY:
-                default:
-                    paint.setColor(npStateBean.getSelectPartRectColor());
-                    break;
-                case SPECIFY:
-                    paint.setColor(npStateBean.getDataList().get(selectPartIndex).getSelectColor());
-                    break;
-                case TRANSLUCENT:
-                    paint.setColor(npStateBean.getDataList().get(selectPartIndex).getColor());
-                    paint.setAlpha(0x80);
-                    break;
+
+            RectF rectF = sleepPartRectList.get(selectPartIndex);
+
+
+            //显示在下面
+            if (npStateBean.isShowSelectLine() && npStateBean.getSelectLineShowType() == NpChartColumnBean.SelectLineShowType_BOTTOM) {
+                paint.setColor(npStateBean.getSelectLineColor());
+                paint.setStrokeWidth(npStateBean.getSelectLineWidth());
+
+                float bottom = viewRectF.bottom - bottomLabelRangeHeight;
+                float totalHeight = (viewRectF.height() - bottomLabelRangeHeight) * npStateBean.getSelectLineHeightScale();
+                canvas.drawLine(rectF.centerX(), bottom - totalHeight, rectF.centerX(), bottom, paint);
             }
 
-
-            canvas.drawRect(sleepPartRectList.get(selectPartIndex), paint);
+            {
+                switch (npStateBean.getStateAreaSelectType()) {
+                    case UNIFY:
+                    default:
+                        paint.setColor(npStateBean.getSelectPartRectColor());
+                        break;
+                    case SPECIFY:
+                        paint.setColor(npStateBean.getDataList().get(selectPartIndex).getSelectColor());
+                        break;
+                    case TRANSLUCENT:
+                        paint.setColor(npStateBean.getDataList().get(selectPartIndex).getColor());
+                        paint.setAlpha(0x80);
+                        break;
+                }
+                canvas.drawRect(rectF, paint);
+            }
 
             if (partSelectCallback != null) {
                 paint.setColor(npStateBean.getSelectPartTextInfoColor());
@@ -207,6 +222,14 @@ public class NpSleepStateAreaView extends BaseView {
                 canvas.drawText(text, viewRectF.centerX(), viewRectF.top + npStateBean.getSelectPartTextInfoSize() * 2, paint);
             }
 
+
+            //显示在上面
+            if (npStateBean.isShowSelectLine() && npStateBean.getSelectLineShowType() == NpChartColumnBean.SelectLineShowType_TOP) {
+                paint.setColor(npStateBean.getSelectLineColor());
+                paint.setStrokeWidth(npStateBean.getSelectLineWidth());
+                float totalHeight = (viewRectF.height() - (viewRectF.bottom - rectF.bottom)) * npStateBean.getSelectLineHeightScale();
+                canvas.drawLine(rectF.centerX(), rectF.bottom - totalHeight, rectF.centerX(), rectF.bottom, paint);
+            }
         }
 
     }
@@ -216,7 +239,7 @@ public class NpSleepStateAreaView extends BaseView {
      * 绘制背景分割线
      */
     private void drawPartClipLine() {
-        if (npStateBean == null || !npStateBean.showClipLine) {
+        if (npStateBean == null || !npStateBean.isShowClipLine()) {
             NpViewLog.log("不绘制分割线");
             return;
         }
@@ -308,26 +331,52 @@ public class NpSleepStateAreaView extends BaseView {
         }
     }
 
+    private boolean isDisallowIntercept;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!isEnableTouch()) {
             return false;
         }
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (sleepPartCount != 0 && npStateBean.isEnableClickPart()) {
-                for (int i = 0; i < sleepPartCount; i++) {
-                    if (sleepPartRectList.get(i).contains(event.getX(), event.getY())) {
-                        selectPartIndex = i;
-                        break;
+        final int x = (int) event.getX();
+        final int y = (int) event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE: {
+
+                if (!isDisallowIntercept && Math.abs(event.getY() - y) < Math.abs(event.getX() - x)) {
+                    isDisallowIntercept = true;
+                    if (getParent() != null) {
+                        getParent().requestDisallowInterceptTouchEvent(true);
                     }
                 }
-                if (selectPartIndex != -1 && partSelectCallback != null) {
-                    partSelectCallback.onSelect(selectPartIndex, npStateBean.getDataList().get(selectPartIndex));
+
+                if (sleepPartCount != 0 && npStateBean.isEnableClickPart()) {
+                    for (int i = 0; i < sleepPartCount; i++) {
+                        if (sleepPartRectList.get(i).left <= event.getX() && sleepPartRectList.get(i).right >= event.getX()) {
+                            selectPartIndex = i;
+                            break;
+                        }
+                    }
+                    if (selectPartIndex != -1 && partSelectCallback != null) {
+                        partSelectCallback.onSelect(selectPartIndex, npStateBean.getDataList().get(selectPartIndex));
+                    }
+                    invalidate();
                 }
-                invalidate();
             }
+            break;
+            case MotionEvent.ACTION_UP:
+                isDisallowIntercept = false;
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                isDisallowIntercept = false;
+                break;
         }
-        return super.onTouchEvent(event);
+
+
+//        return super.onTouchEvent(event);
+        return true;
     }
 
     public interface PartSelectCallback {
