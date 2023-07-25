@@ -1,5 +1,7 @@
 package npwidget.nopointer.chart.npChartLineView;
 
+import npwidget.nopointer.chart.npChartColumnView.NpColumnEntry;
+
 /**
  * 线的数据节点对象，最小单元
  */
@@ -13,7 +15,7 @@ public class NpLineEntry {
      * 横向的小标签
      */
     private Object tag;
-
+    public Object extraData;
 
     /**
      * 这个点是否是要显示
@@ -69,12 +71,16 @@ public class NpLineEntry {
     public void setClick(boolean click) {
         isClick = click;
     }
-
+    public NpLineEntry setExtraData(Object extraData) {
+        this.extraData = extraData;
+        return this;
+    }
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NpLineEntry{");
         sb.append("value=").append(value);
         sb.append(", tag=").append(tag);
+        sb.append(", extraData=").append(extraData);
         sb.append(", isDraw=").append(isDraw);
         sb.append(", isClick=").append(isClick);
         sb.append('}');

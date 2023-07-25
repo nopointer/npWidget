@@ -603,25 +603,51 @@ public class NpChartColumnView extends BaseView {
         super.invalidate();
     }
 
+
+    private boolean isDisallowIntercept;
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!isEnableTouch()) {
             return false;
         }
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            NpViewLog.log("x=>" + event.getX() + " ///y=>" + event.getY());
-            for (int i = 0; i < allTmpRectList.size(); i++) {
-                if (allTmpRectList.get(i).contains(event.getX(), event.getY())) {
-                    lastSelectIndex = i;
-                    hasClick = true;
-                    postInvalidateDelayed(20);
-                    NpViewLog.log("lastSelectIndex===>" + lastSelectIndex);
-                    break;
+
+        final int x = (int) event.getX();
+        final int y = (int) event.getY();
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_MOVE: {
+                if (!isDisallowIntercept && Math.abs(event.getY() - y) < Math.abs(event.getX() - x)) {
+                    isDisallowIntercept = true;
+                    if (getParent() != null) {
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                    }
+                }
+                NpViewLog.log("x=>" + event.getX() + " ///y=>" + event.getY());
+                for (int i = 0; i < allTmpRectList.size(); i++) {
+                    if (allTmpRectList.get(i).contains(event.getX(), event.getY())) {
+                        lastSelectIndex = i;
+                        hasClick = true;
+                        postInvalidateDelayed(20);
+                        NpViewLog.log("lastSelectIndex===>" + lastSelectIndex);
+                        break;
+                    }
                 }
             }
-
+            break;
+            case MotionEvent.ACTION_UP:
+                isDisallowIntercept = false;
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                isDisallowIntercept = false;
+                break;
         }
-        return super.onTouchEvent(event);
+
+
+
+
+        return true;
 
     }
 

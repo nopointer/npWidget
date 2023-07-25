@@ -971,12 +971,15 @@ public class NpChartLineView extends BaseView {
 
     private int xVelocity;
 
+    private boolean isDisallowIntercept;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (!isEnableTouch()) {
             return false;
         }
+        final int x = (int) event.getX();
+        final int y = (int) event.getY();
         hasTouch = true;
         velocityTracker.computeCurrentVelocity(1500);
         velocityTracker.addMovement(event);
@@ -1004,7 +1007,12 @@ public class NpChartLineView extends BaseView {
 
                 break;
             case MotionEvent.ACTION_MOVE:
-
+                if (!isDisallowIntercept && Math.abs(event.getY() - y) < Math.abs(event.getX() - x)) {
+                    isDisallowIntercept = true;
+                    if (getParent() != null) {
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                    }
+                }
                 //如果是等宽显示的话
                 if (chartBean.getShowDataType() == NpShowDataType.Equal) {
                     float downX = event.getX();
@@ -1040,6 +1048,7 @@ public class NpChartLineView extends BaseView {
                 }
                 break;
             case MotionEvent.ACTION_UP:
+                isDisallowIntercept = false;
                 //手指抬起时候制造惯性滑动
                 lastX = tranlateX;
                 xVelocity = (int) velocityTracker.getXVelocity();
@@ -1047,6 +1056,10 @@ public class NpChartLineView extends BaseView {
                 velocityTracker.clear();
 //                invalidate();
                 postInvalidateDelayed(20);
+                break;
+
+            case MotionEvent.ACTION_CANCEL:
+                isDisallowIntercept = false;
                 break;
         }
         return true;

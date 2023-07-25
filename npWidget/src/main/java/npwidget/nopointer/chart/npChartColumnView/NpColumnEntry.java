@@ -14,6 +14,8 @@ public class NpColumnEntry {
      */
     private Object tag;
 
+    public Object extraData;
+
     public NpColumnEntry() {
     }
 
@@ -42,11 +44,19 @@ public class NpColumnEntry {
         this.tag = tag;
     }
 
+
+    public NpColumnEntry setExtraData(Object extraData) {
+        this.extraData = extraData;
+        return this;
+    }
+
     @Override
     public String toString() {
-        return "NpColumnEntry{" +
-                "value=" + value +
-                ", tag='" + tag + '\'' +
-                '}';
+        final StringBuffer sb = new StringBuffer("NpColumnEntry{");
+        sb.append("value=").append(value);
+        sb.append(", tag=").append(tag);
+        sb.append(", extraData=").append(extraData);
+        sb.append('}');
+        return sb.toString();
     }
 }
