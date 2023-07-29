@@ -101,7 +101,7 @@ public class NpChartColumnView extends BaseView {
 
     private void init(Context context) {
         getNoDataTextSize = SizeUtils.sp2px(context, 14);
-        clickRangeWidth = SizeUtils.dp2px(context, 20);
+        clickRangeWidth = SizeUtils.dp2px(context, 0);
     }
 
     public NpChartColumnBean getChartColumnBean() {
@@ -561,8 +561,11 @@ public class NpChartColumnView extends BaseView {
         }
         pathData.setRectFList(rectFList);
         RectF clickRangeRect = new RectF(0, columnBottomPosition - thisTotalHeight, 0, columnBottomPosition);
+        if (clickRangeWidth == 0) {
+            clickRangeWidth = columnWidth / 2;
+        }
         clickRangeRect.left = xColumnCenterX - clickRangeWidth;
-        clickRangeRect.right = clickRangeRect.left + clickRangeWidth * 2;
+        clickRangeRect.right = xColumnCenterX + clickRangeWidth;
         pathData.clickRange = clickRangeRect;
         return pathData;
     }
@@ -616,17 +619,19 @@ public class NpChartColumnView extends BaseView {
         final int y = (int) event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                break;
-            case MotionEvent.ACTION_MOVE: {
-                if (!isDisallowIntercept && Math.abs(event.getY() - y) < Math.abs(event.getX() - x)) {
+                if (!isDisallowIntercept) {
                     isDisallowIntercept = true;
                     if (getParent() != null) {
                         getParent().requestDisallowInterceptTouchEvent(true);
                     }
                 }
+                break;
+            case MotionEvent.ACTION_MOVE: {
                 NpViewLog.log("x=>" + event.getX() + " ///y=>" + event.getY());
                 for (int i = 0; i < allTmpRectList.size(); i++) {
-                    if (allTmpRectList.get(i).contains(event.getX(), event.getY())) {
+
+                    RectF tmpRect = allTmpRectList.get(i);
+                    if (tmpRect.left <= event.getX() && event.getX() <= tmpRect.right) {
                         lastSelectIndex = i;
                         hasClick = true;
                         postInvalidateDelayed(20);
@@ -643,8 +648,6 @@ public class NpChartColumnView extends BaseView {
                 isDisallowIntercept = false;
                 break;
         }
-
-
 
 
         return true;

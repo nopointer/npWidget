@@ -784,6 +784,14 @@ public class NpChartPointView extends BaseView {
         velocityTracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+
+                if (!isDisallowIntercept) {
+                    isDisallowIntercept = true;
+                    if (getParent() != null) {
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                    }
+                }
+
                 //按下时如果属性动画还没执行完,就终止,记录下当前按下点的位置
                 if (valueAnimator != null && valueAnimator.isRunning()) {
                     valueAnimator.end();
@@ -806,12 +814,6 @@ public class NpChartPointView extends BaseView {
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (!isDisallowIntercept && Math.abs(event.getY() - y) < Math.abs(event.getX() - x)) {
-                    isDisallowIntercept = true;
-                    if (getParent() != null) {
-                        getParent().requestDisallowInterceptTouchEvent(true);
-                    }
-                }
                 currentX = event.getX();
                 //滑动时候,通过假设的滑动距离,做超出左边界以及右边界的限制。
                 if (Math.abs(currentX - downX) > SizeUtils.dp2px(getContext(), 20)) {

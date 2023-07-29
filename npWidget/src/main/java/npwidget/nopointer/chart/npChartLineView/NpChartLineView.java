@@ -985,6 +985,12 @@ public class NpChartLineView extends BaseView {
         velocityTracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                if (!isDisallowIntercept) {
+                    isDisallowIntercept = true;
+                    if (getParent() != null) {
+                        getParent().requestDisallowInterceptTouchEvent(true);
+                    }
+                }
                 //按下时如果属性动画还没执行完,就终止,记录下当前按下点的位置
                 if (valueAnimator != null && valueAnimator.isRunning()) {
                     valueAnimator.end();
@@ -1007,12 +1013,6 @@ public class NpChartLineView extends BaseView {
 
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (!isDisallowIntercept && Math.abs(event.getY() - y) < Math.abs(event.getX() - x)) {
-                    isDisallowIntercept = true;
-                    if (getParent() != null) {
-                        getParent().requestDisallowInterceptTouchEvent(true);
-                    }
-                }
                 //如果是等宽显示的话
                 if (chartBean.getShowDataType() == NpShowDataType.Equal) {
                     float downX = event.getX();

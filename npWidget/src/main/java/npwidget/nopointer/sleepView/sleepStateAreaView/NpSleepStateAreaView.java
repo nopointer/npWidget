@@ -342,16 +342,14 @@ public class NpSleepStateAreaView extends BaseView {
         final int y = (int) event.getY();
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                break;
-            case MotionEvent.ACTION_MOVE: {
-
-                if (!isDisallowIntercept && Math.abs(event.getY() - y) < Math.abs(event.getX() - x)) {
+                if (!isDisallowIntercept) {
                     isDisallowIntercept = true;
                     if (getParent() != null) {
                         getParent().requestDisallowInterceptTouchEvent(true);
                     }
                 }
-
+                break;
+            case MotionEvent.ACTION_MOVE: {
                 if (sleepPartCount != 0 && npStateBean.isEnableClickPart()) {
                     for (int i = 0; i < sleepPartCount; i++) {
                         if (sleepPartRectList.get(i).left <= event.getX() && sleepPartRectList.get(i).right >= event.getX()) {

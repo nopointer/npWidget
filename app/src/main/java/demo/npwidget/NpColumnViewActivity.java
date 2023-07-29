@@ -37,10 +37,11 @@ public class NpColumnViewActivity extends Activity {
 
     private void debug() {
 
-        String[] week = new String[]{"周一", "周一", "周一", "周一", "周一", "周一", "周一"};
+        String[] week = new String[31];
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 31; i++) {
             NpViewLog.log("index i:" + i);
+            week[i] = "" + (i + 1);
         }
 
         NpChartColumnBean chartBean = new NpChartColumnBean();
@@ -124,7 +125,7 @@ public class NpColumnViewActivity extends Activity {
         chartBean.setNpChartColumnDataBeans(npChartColumnDataBeans);
         chartBean.setShowLabels(true);
         chartBean.setMaxY(60);
-        chartBean.setColumnWidth(40);
+        chartBean.setColumnWidth(50);
         chartBean.setLabelTextColor(0xFF660000);
         chartBean.setLabelTextSize(40);
         chartBean.setBottomHeight(80);
