@@ -14,10 +14,14 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import npwidget.nopointer.R;
 import npwidget.nopointer.combinationControl.date.NpDateType;
+import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.utils.SizeUtils;
 
 /**
@@ -35,6 +39,11 @@ public class NpDateChooseView extends RelativeLayout {
     private int yearIndex = 0;
 
 
+    //日周月年的偏移量（防止 跨天的时候数据不显示）
+    private int dayAlignOffset = 0, weekAlignOffset = 0, monthAlignOffset = 0, yearAlignOffset = 0;
+
+    private String enterInitDate = "";//进入的初始日期
+
     private ImageView leftIconIv;
     private ImageView rightIconIv;
     private TextView titleTv;
@@ -45,7 +54,6 @@ public class NpDateChooseView extends RelativeLayout {
     //文字大小
     private float textSize = 14;
 
-
     private NpDateBean npDateBean;
 
     public NpDateBean getNpDateBean() {
@@ -53,8 +61,8 @@ public class NpDateChooseView extends RelativeLayout {
     }
 
     public void setDayIndex(int dayIndex) {
-        if (dayIndex > 0) {
-            dayIndex = 0;
+        if (dayIndex > dayAlignOffset) {
+            dayIndex = dayAlignOffset;
         }
         this.dayIndex = dayIndex;
         loadDateToView();
@@ -151,27 +159,28 @@ public class NpDateChooseView extends RelativeLayout {
         rightIconIv.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                refreshAlignOffset();
                 switch (dateType) {
                     case DAY:
-                        if (dayIndex < 0) {
+                        if (dayIndex < dayAlignOffset) {
                             dayIndex++;
                             loadDateToView();
                         }
                         break;
                     case WEEK:
-                        if (weekIndex < 0) {
+                        if (weekIndex < weekAlignOffset) {
                             weekIndex++;
                             loadDateToView();
                         }
                         break;
                     case MONTH:
-                        if (monthIndex < 0) {
+                        if (monthIndex < monthAlignOffset) {
                             monthIndex++;
                             loadDateToView();
                         }
                         break;
                     case YEAR:
-                        if (yearIndex < 0) {
+                        if (yearIndex < yearAlignOffset) {
                             yearIndex++;
                             loadDateToView();
                         }
@@ -183,9 +192,10 @@ public class NpDateChooseView extends RelativeLayout {
     }
 
     private void init() {
-
+        enterInitDate = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(System.currentTimeMillis());
         loadDateToView();
         refreshTextSize();
+        refreshAlignOffset();
     }
 
 
@@ -195,16 +205,16 @@ public class NpDateChooseView extends RelativeLayout {
     private void loadDateToView() {
         switch (dateType) {
             case DAY:
-                npDateBean = NpDateBean.getDayDateBean(new Date(System.currentTimeMillis()), dayIndex);
+                npDateBean = NpDateBean.getDayDateBean(new Date(System.currentTimeMillis()), dayIndex - dayAlignOffset);
                 break;
             case WEEK:
-                npDateBean = NpDateBean.getWeekDateBean(new Date(System.currentTimeMillis()), weekIndex);
+                npDateBean = NpDateBean.getWeekDateBean(new Date(System.currentTimeMillis()), weekIndex - weekAlignOffset);
                 break;
             case MONTH:
-                npDateBean = NpDateBean.getMonthDateBean(new Date(System.currentTimeMillis()), monthIndex);
+                npDateBean = NpDateBean.getMonthDateBean(new Date(System.currentTimeMillis()), monthIndex - monthAlignOffset);
                 break;
             case YEAR:
-                npDateBean = NpDateBean.getYearDateBean(new Date(System.currentTimeMillis()), yearIndex);
+                npDateBean = NpDateBean.getYearDateBean(new Date(System.currentTimeMillis()), yearIndex - yearAlignOffset);
                 break;
         }
         updateDateShow();
@@ -236,4 +246,97 @@ public class NpDateChooseView extends RelativeLayout {
         }
         titleTv.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
     }
+
+
+    /**
+     * 刷新偏移量
+     */
+    void refreshAlignOffset() {
+        NpViewLog.log("刷新对齐的 日周月年 偏移量");
+        long time = System.currentTimeMillis();
+        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(time);
+        NpViewLog.log("今天时间 = " + enterInitDate + " , 当前时间 = " + currentDate);
+
+        if (enterInitDate.equals(currentDate)) {
+            dayAlignOffset = 0;
+            weekAlignOffset = 0;
+            monthAlignOffset = 0;
+            yearAlignOffset = 0;
+        } else {
+            SimpleDateFormat smp = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+            try {
+
+                long referInitTime = smp.parse(enterInitDate).getTime();//参考日期（在时间没发生改变之前的日期，一般就是刚进入界面的日期）
+                long currentTime = smp.parse(currentDate).getTime();//实时日期（如果是跨天的话 还是当前的最新日期）
+
+                NpViewLog.log("计算日对齐偏移量: referInitTime = " + referInitTime + " , currentTime = " + currentTime);
+                long unitDay = 3600 * 24 * 1000L;
+                dayAlignOffset = (int) ((currentTime - referInitTime) / unitDay);
+                if ((currentTime - referInitTime) % unitDay != 0) {
+                    dayAlignOffset += 1;
+                }
+                NpViewLog.log("dayAlignOffset = " + dayAlignOffset);
+
+                //开始计算周的对齐偏移量
+                NpDateBean weekRange = NpDateBean.getWeekDateBean(new Date(referInitTime), 0);
+                //周结束的天 用来判断改变的日期是否是在结束的天后面，如果在前面就不处理
+                referInitTime = smp.parse(smp.format(weekRange.getEndDate())).getTime();
+                NpViewLog.log("计算周对齐偏移量:  referInitTime = " + referInitTime + " , currentTime = " + currentTime);
+
+                //超过周的最后一天了，进入下n周
+                if (currentTime > referInitTime) {
+                    weekAlignOffset = (int) ((currentTime - referInitTime) / (unitDay * 7));
+                    if ((currentTime - referInitTime) % (unitDay * 7) != 0) {
+                        weekAlignOffset += 1;
+                    }
+                }
+
+                //开始计算周的对齐偏移量
+                NpDateBean monthRange = NpDateBean.getMonthDateBean(new Date(referInitTime), 0);
+                //周结束的天 用来判断改变的日期是否是在结束的天后面，如果在前面就不处理
+                referInitTime = smp.parse(smp.format(monthRange.getEndDate())).getTime();
+                NpViewLog.log("计算月对齐偏移量:  referInitTime = " + referInitTime + " , currentTime = " + currentTime);
+
+                //超过月的最后一天了，进入下n月
+                if (currentTime > referInitTime) {
+                    int curYear = Integer.valueOf(currentDate.substring(0, 4));
+                    int curMonth = Integer.valueOf(currentDate.substring(5, 7));
+
+                    int refYear = Integer.valueOf(enterInitDate.substring(0, 4));
+                    int refMonth = Integer.valueOf(enterInitDate.substring(5, 7));
+
+                    NpViewLog.log("curYear = " + curYear + ",curMonth = " + curMonth);
+                    NpViewLog.log("refYear = " + refYear + ",refMonth = " + refMonth);
+
+                    int yearOffset = curYear - refYear;
+                    int monthOffset = curMonth - refMonth;
+
+                    if (monthOffset < 0) {
+                        monthOffset += 12;
+                        yearOffset -= 1;
+                    }
+                    monthAlignOffset = monthOffset + yearOffset * 12;
+                }
+
+
+                //开始计算年的对齐偏移量
+                NpDateBean yearRange = NpDateBean.getYearDateBean(new Date(referInitTime), 0);
+                referInitTime = smp.parse(smp.format(yearRange.getEndDate())).getTime();
+                NpViewLog.log("计算年对齐偏移量:  referInitTime = " + referInitTime + " , currentTime = " + currentTime);
+
+                //超过年的最后一天了，进入下n年
+                if (currentTime > referInitTime) {
+                    int curYear = Integer.valueOf(currentDate.substring(0, 4));
+                    int refYear = Integer.valueOf(enterInitDate.substring(0, 4));
+
+                    NpViewLog.log("curYear = " + curYear);
+                    NpViewLog.log("refYear = " + refYear);
+                    yearAlignOffset = curYear - refYear;
+                }
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 }

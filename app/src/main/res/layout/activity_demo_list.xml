@@ -56,9 +56,10 @@
             android:text="柱状图" />
 
         <Button
+            android:id="@+id/btnNpDateType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="" />
+            android:text="日期选择" />
 
         <Button
             android:layout_width="match_parent"

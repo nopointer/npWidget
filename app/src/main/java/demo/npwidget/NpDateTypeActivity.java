@@ -43,8 +43,7 @@ public class NpDateTypeActivity extends Activity {
         dateTypeSelectView.setTextSize(14);
         npDateChooseView.setTextSize(10);
 
-
-        npDateChooseView.setDayIndex(-10);
+        npDateChooseView.setDayIndex(0);
     }
 
 

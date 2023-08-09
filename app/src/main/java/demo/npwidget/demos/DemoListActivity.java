@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import demo.npwidget.NpCircleProgressViewActivity;
 import demo.npwidget.NpColorBarProgressViewActivity;
 import demo.npwidget.NpColumnViewActivity;
+import demo.npwidget.NpDateTypeActivity;
 import demo.npwidget.R;
 
 public class DemoListActivity extends AppCompatActivity {
@@ -69,6 +70,13 @@ public class DemoListActivity extends AppCompatActivity {
             }
         });
 
+
+        findViewById(R.id.btnNpDateType).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DemoListActivity.this, NpDateTypeActivity.class));
+            }
+        });
 
 
     }
