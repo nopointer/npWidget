@@ -19,7 +19,7 @@ import npwidget.nopointer.R;
 /**
  * 逐字文本工具
  */
-class NpFlowingTextView extends View {
+public class NpFlowingTextView extends View {
 
     private TextPaint textPaint;
     private float density;
