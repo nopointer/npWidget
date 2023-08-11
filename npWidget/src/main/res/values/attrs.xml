@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <declare-styleable name="Circle_Picker">
 
         <!--角度的周期-->
@@ -69,8 +68,8 @@
         <attr name="leftIcon" format="reference" />
         <attr name="rightIcon" format="reference" />
         <attr name="textColor" format="color" />
-        <!--自定义文字大小-->
         <attr name="textSize" format="dimension" />
+
     </declare-styleable>
 
 
@@ -105,12 +104,12 @@
 
 
     <declare-styleable name="NpFlowingTextView">
-        <attr name="textContent" format="string"></attr>
-        <attr name="textSize" format="dimension"></attr>
-        <attr name="textColor" format="color"></attr>
-        <attr name="textSpacingMult" format="float"></attr>
-        <attr name="textSpacingAdd" format="float"></attr>
-        <attr name="textXAlignment" format="string"></attr>
+        <attr name="ftTextContent" format="string"></attr>
+        <attr name="ftTextSize" format="dimension"></attr>
+        <attr name="ftTextColor" format="color"></attr>
+        <attr name="ftTextSpacingMult" format="float"></attr>
+        <attr name="ftTextSpacingAdd" format="float"></attr>
+        <attr name="ftTextXAlignment" format="string"></attr>
     </declare-styleable>
 
 </resources>

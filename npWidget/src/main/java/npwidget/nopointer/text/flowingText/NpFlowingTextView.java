@@ -19,7 +19,7 @@ import npwidget.nopointer.R;
 /**
  * 逐字文本工具
  */
- class NpFlowingTextView extends View {
+class NpFlowingTextView extends View {
 
     private TextPaint textPaint;
     private float density;
@@ -43,12 +43,12 @@ import npwidget.nopointer.R;
     public NpFlowingTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.NpFlowingTextView);
-        textContent = a.getString(R.styleable.NpFlowingTextView_textContent);
-        textColor = a.getColor(R.styleable.NpFlowingTextView_textColor, Color.BLACK);
-        textAlignment = a.getString(R.styleable.NpFlowingTextView_textXAlignment);
-        textSize = a.getDimension(R.styleable.NpFlowingTextView_textSize, 20);
-        textSpacingAdd = a.getFloat(R.styleable.NpFlowingTextView_textSpacingAdd, 0.0F);
-        textSpacingMult = a.getFloat(R.styleable.NpFlowingTextView_textSpacingMult, 1.0F);
+        textContent = a.getString(R.styleable.NpFlowingTextView_ftTextContent);
+        textColor = a.getColor(R.styleable.NpFlowingTextView_ftTextColor, Color.BLACK);
+        textAlignment = a.getString(R.styleable.NpFlowingTextView_ftTextXAlignment);
+        textSize = a.getDimension(R.styleable.NpFlowingTextView_ftTextSize, 20);
+        textSpacingAdd = a.getFloat(R.styleable.NpFlowingTextView_ftTextSpacingAdd, 0.0F);
+        textSpacingMult = a.getFloat(R.styleable.NpFlowingTextView_ftTextSpacingMult, 1.0F);
 
 
         init();
