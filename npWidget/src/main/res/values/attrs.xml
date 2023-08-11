@@ -103,4 +103,14 @@
 
     </declare-styleable>
 
+
+    <declare-styleable name="NpFlowingTextView">
+        <attr name="textContent" format="string"></attr>
+        <attr name="textSize" format="dimension"></attr>
+        <attr name="textColor" format="color"></attr>
+        <attr name="textSpacingMult" format="float"></attr>
+        <attr name="textSpacingAdd" format="float"></attr>
+        <attr name="textXAlignment" format="string"></attr>
+    </declare-styleable>
+
 </resources>
