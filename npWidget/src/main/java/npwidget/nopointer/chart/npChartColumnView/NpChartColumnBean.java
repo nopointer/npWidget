@@ -112,6 +112,9 @@ public class NpChartColumnBean {
     //选中的线条的宽度
     private int selectLineWidth = 1;
 
+    //无数据时 是否也绘制选择线（默认画）
+    private boolean noDataDrawSelectLine = true;
+
     /**
      * 在柱子上面
      */
@@ -455,6 +458,14 @@ public class NpChartColumnBean {
         this.selectLineShowType = selectLineShowType;
     }
 
+    public boolean isNoDataDrawSelectLine() {
+        return noDataDrawSelectLine;
+    }
+
+    public void setNoDataDrawSelectLine(boolean noDataDrawSelectLine) {
+        this.noDataDrawSelectLine = noDataDrawSelectLine;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NpChartColumnBean{");
@@ -483,6 +494,7 @@ public class NpChartColumnBean {
         sb.append(", selectLineColor=").append(selectLineColor);
         sb.append(", selectLineHeightScale=").append(selectLineHeightScale);
         sb.append(", selectLineWidth=").append(selectLineWidth);
+        sb.append(", noDataDrawSelectLine=").append(noDataDrawSelectLine);
         sb.append(", selectLineShowType=").append(selectLineShowType);
         sb.append(", npSelectMode=").append(npSelectMode);
         sb.append(", npChartColumnDataBeans=").append(npChartColumnDataBeans);

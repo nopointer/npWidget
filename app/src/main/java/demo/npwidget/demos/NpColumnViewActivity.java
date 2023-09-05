@@ -1,4 +1,4 @@
-package demo.npwidget;
+package demo.npwidget.demos;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import demo.npwidget.R;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpValueFormatter;
 import npwidget.nopointer.chart.npChartColumnView.NpChartColumnBean;
@@ -24,6 +25,12 @@ public class NpColumnViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_column_view);
         npChartColumnView = findViewById(R.id.npChartColumnView);
+        npChartColumnView.setOnColumnSelectListener(new NpChartColumnView.OnColumnSelectListener() {
+            @Override
+            public void onSelectColumn(NpChartColumnDataBean npChartColumnDataBean, int index) {
+                NpViewLog.log("index = " + index);
+            }
+        });
         debug();
 
         findViewById(R.id.debugBtn).setOnClickListener(new View.OnClickListener() {
@@ -63,6 +70,7 @@ public class NpColumnViewActivity extends Activity {
         chartBean.setSelectLineWidth(3);
         chartBean.setSelectLineHeightScale(0.80f);
         chartBean.setSelectLineShowType(NpChartColumnBean.SelectLineShowType_BOTTOM);
+        chartBean.setNoDataDrawSelectLine(false);
 
         chartBean.setMinY(0);
 
@@ -95,7 +103,7 @@ public class NpColumnViewActivity extends Activity {
 
             List<NpColumnEntry> npColumnEntries = new ArrayList<>();
             if (i == 0) {
-                npColumnEntries.add(new NpColumnEntry(0.10f));
+                npColumnEntries.add(new NpColumnEntry(0.0f));
             } else {
                 npColumnEntries.add(new NpColumnEntry(45));
             }

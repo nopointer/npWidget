@@ -197,7 +197,6 @@ public class NpChartColumnView extends BaseView {
                                     }
                                 }
                             }
-
                         }
                         drawSelectColumn();
                     }
@@ -363,8 +362,16 @@ public class NpChartColumnView extends BaseView {
 
         RectF rectF = new RectF(pathData.clickRange);
 
+        boolean canvasSelectLine = chartColumnBean.isShowSelectLine();
+
+        if (!chartColumnBean.isNoDataDrawSelectLine()) {
+            if (pathData.getCloumnValueSum() == 0.0f) {
+                canvasSelectLine = false;
+            }
+        }
+
         //显示在下面
-        if (chartColumnBean.isShowSelectLine() && chartColumnBean.getSelectLineShowType() == NpChartColumnBean.SelectLineShowType_BOTTOM) {
+        if (canvasSelectLine && chartColumnBean.getSelectLineShowType() == NpChartColumnBean.SelectLineShowType_BOTTOM) {
             paint.setColor(chartColumnBean.getSelectLineColor());
             paint.setStrokeWidth(chartColumnBean.getSelectLineWidth());
             float totalHeight = (viewRectF.height() - (viewRectF.bottom - rectF.bottom)) * chartColumnBean.getSelectLineHeightScale();
@@ -421,7 +428,7 @@ public class NpChartColumnView extends BaseView {
             }
         }
         //显示在上面
-        if (chartColumnBean.isShowSelectLine() && chartColumnBean.getSelectLineShowType() == NpChartColumnBean.SelectLineShowType_TOP) {
+        if (canvasSelectLine && chartColumnBean.getSelectLineShowType() == NpChartColumnBean.SelectLineShowType_TOP) {
             paint.setColor(chartColumnBean.getSelectLineColor());
             paint.setStrokeWidth(chartColumnBean.getSelectLineWidth());
             float totalHeight = (viewRectF.height() - (viewRectF.bottom - rectF.bottom)) * chartColumnBean.getSelectLineHeightScale();

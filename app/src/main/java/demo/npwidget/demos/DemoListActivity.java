@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import demo.npwidget.NpCircleProgressViewActivity;
 import demo.npwidget.NpColorBarProgressViewActivity;
-import demo.npwidget.NpColumnViewActivity;
 import demo.npwidget.NpDateTypeActivity;
 import demo.npwidget.R;
 
