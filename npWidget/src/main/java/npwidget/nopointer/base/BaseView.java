@@ -29,7 +29,10 @@ public class BaseView extends View {
     protected Bitmap bitmap;
     private int canvasBg = 0xFFFFFFFF;
 
-    private boolean debugRect =false;
+    private boolean debugRect = false;
+
+    //是否允许enableOnMeasure
+    private boolean enableOnMeasure = true;
 
     public boolean isDebugRect() {
         return debugRect;
@@ -37,6 +40,14 @@ public class BaseView extends View {
 
     public void setDebugRect(boolean debugRect) {
         this.debugRect = debugRect;
+    }
+
+    public boolean isEnableOnMeasure() {
+        return enableOnMeasure;
+    }
+
+    public void setEnableOnMeasure(boolean enableOnMeasure) {
+        this.enableOnMeasure = enableOnMeasure;
     }
 
     //是否可以触摸

@@ -130,15 +130,16 @@ public class NpChartColumnView extends BaseView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        viewRectF.left = getPaddingLeft();
-        viewRectF.top = getPaddingTop();
-        viewRectF.right = getMeasuredWidth() - getPaddingRight();
-        viewRectF.bottom = getMeasuredHeight() - getPaddingBottom();
-        bitmap = Bitmap.createBitmap(viewRectF.width(), viewRectF.height(), Bitmap.Config.ARGB_8888);
-        canvas = new Canvas(bitmap);
-        draw();
+        if (isEnableOnMeasure()) {
+            viewRectF.left = getPaddingLeft();
+            viewRectF.top = getPaddingTop();
+            viewRectF.right = getMeasuredWidth() - getPaddingRight();
+            viewRectF.bottom = getMeasuredHeight() - getPaddingBottom();
+            bitmap = Bitmap.createBitmap(viewRectF.width(), viewRectF.height(), Bitmap.Config.ARGB_8888);
+            canvas = new Canvas(bitmap);
+            draw();
+        }
     }
-
 
     private void draw() {
         if (canDraw()) {
