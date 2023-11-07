@@ -406,7 +406,9 @@ public class NpChartLineView extends BaseView {
                     Paint.FontMetrics fontMetrics = paint.getFontMetrics();
                     float distance = (fontMetrics.bottom - fontMetrics.top) / 2 - fontMetrics.bottom;
                     float baseline = rectF.centerY() + distance;
+                    canvas.rotate(chartBean.getLabelRotateAngle(), rectF.centerX(), baseline);
                     canvas.drawText(labelText, rectF.centerX(), baseline, paint);
+                    canvas.rotate(-chartBean.getLabelRotateAngle(), rectF.centerX(), baseline);
                 }
             }
         }

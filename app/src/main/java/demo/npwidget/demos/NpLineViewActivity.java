@@ -57,6 +57,7 @@ public class NpLineViewActivity extends Activity {
         chartBean.setAdaptationFirstLabel(true);
         chartBean.setAdaptationLastLabel(true);
         chartBean.setBottomHeight(100);
+        chartBean.setLabelRotateAngle(30);
 //        chartBean.setLabelTextSize(100);
 
 
@@ -77,7 +78,7 @@ public class NpLineViewActivity extends Activity {
 
         for (int i = 0; i < 288; i++) {
 //            labelList.add(week[i]);
-            labelList.add(i + "");
+            labelList.add(i + "45678");
         }
 
         chartBean.setNpLabelList(labelList);
@@ -121,7 +122,7 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
-        chartBean.setShowDataType(NpShowDataType.Equal);
+        chartBean.setShowDataType(NpShowDataType.Slide);
 //        chartBean.setBottomHeight(50);
         chartBean.setLabelSpaceWidth(QMUIDisplayHelper.dp2px(this, 70));
         chartBean.setMinY(0);

@@ -174,6 +174,9 @@ public class NpChartLineBean {
 
     private NpSelectMode npSelectMode = NpSelectMode.NONE;
 
+    //标签旋转
+    private float labelRotateAngle = 0;
+
 
     public NpSelectMode getNpSelectMode() {
         return npSelectMode;
@@ -403,6 +406,14 @@ public class NpChartLineBean {
         this.adaptationLastLabel = adaptationLastLabel;
     }
 
+    public float getLabelRotateAngle() {
+        return labelRotateAngle;
+    }
+
+    public void setLabelRotateAngle(float labelRotateAngle) {
+        this.labelRotateAngle = labelRotateAngle;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NpChartLineBean{");
@@ -431,9 +442,12 @@ public class NpChartLineBean {
         sb.append(", selectHollowCircleColor=").append(selectHollowCircleColor);
         sb.append(", selectLineWidth=").append(selectLineWidth);
         sb.append(", selectLineColor=").append(selectLineColor);
+        sb.append(", adaptationFirstLabel=").append(adaptationFirstLabel);
+        sb.append(", adaptationLastLabel=").append(adaptationLastLabel);
         sb.append(", npChartLineDataBeans=").append(npChartLineDataBeans);
         sb.append(", npLabelList=").append(npLabelList);
         sb.append(", npSelectMode=").append(npSelectMode);
+        sb.append(", labelRotateAngle=").append(labelRotateAngle);
         sb.append('}');
         return sb.toString();
     }
