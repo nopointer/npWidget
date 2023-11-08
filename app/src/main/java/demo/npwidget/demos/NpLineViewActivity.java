@@ -50,7 +50,7 @@ public class NpLineViewActivity extends Activity {
         chartBean.setAdaptationFirstLabel(true);
         chartBean.setAdaptationLastLabel(true);
         chartBean.setBottomHeight(100);
-        chartBean.setLabelRotateAngle(0);
+        chartBean.setLabelRotateAngle(15);
         chartBean.setTopHeight(80);
 //        chartBean.setLabelTextSize(100);
 
