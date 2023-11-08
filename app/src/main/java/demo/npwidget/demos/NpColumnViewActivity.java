@@ -76,14 +76,14 @@ public class NpColumnViewActivity extends Activity {
 
         chartBean.setYAxisFormatter(new NpValueFormatter() {
             @Override
-            public String format(float value) {
+            public String format(float value, int index) {
                 return String.format("%.2f", value);
             }
         });
 
         chartBean.setValueFormatter(new NpValueFormatter() {
             @Override
-            public String format(float value) {
+            public String format(float value, int index) {
                 return String.format("%.5f", value);
             }
         });

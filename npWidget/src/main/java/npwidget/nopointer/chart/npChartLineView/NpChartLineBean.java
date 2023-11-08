@@ -3,6 +3,7 @@ package npwidget.nopointer.chart.npChartLineView;
 import java.util.ArrayList;
 import java.util.List;
 
+import npwidget.nopointer.chart.LineType;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
 
@@ -25,35 +26,18 @@ public class NpChartLineBean {
     /**
      * x轴的颜色
      */
-    private int XAxisLineColor = 0xFFFFFFFF;
-
-    /**
-     * 是否显示Y轴
-     */
-    private boolean showYAxis;
-
-    /**
-     * y轴的颜色
-     */
-    private int YAxisLineColor = 0xFFFFFF;
-
-    //是否显示参考线
-    private boolean showRefreshLine = false;
-
-    //参考线条数
-    private int refreshLineCount = 4;
-
-
-    //参考值个数
-    private int refreshValueCount = 2;
-
-
+    private int XAxisLineColor = 0xFF333333;
 
 
     /**
      * 数据展示方式，有两种 一种是可滑动 一种是平分宽度，默认是平分给定的宽度
      */
     private NpShowDataType showDataType = NpShowDataType.Equal;
+
+    /**
+     * 线类型，支持贝塞尔曲线，折线
+     */
+    private LineType lineType = LineType.Bezier;
 
 
     /**
@@ -211,14 +195,6 @@ public class NpChartLineBean {
         this.showXAxis = showXAxis;
     }
 
-    public boolean isShowYAxis() {
-        return showYAxis;
-    }
-
-    public void setShowYAxis(boolean showYAxis) {
-        this.showYAxis = showYAxis;
-    }
-
     public float getLabelSpaceWidth() {
         return labelSpaceWidth;
     }
@@ -268,45 +244,12 @@ public class NpChartLineBean {
         this.XAxisLineColor = XAxisLineColor;
     }
 
-    public int getYAxisLineColor() {
-        return YAxisLineColor;
-    }
-
-    public void setYAxisLineColor(int YAxisLineColor) {
-        this.YAxisLineColor = YAxisLineColor;
-    }
-
     public int getLabelTextColor() {
         return labelTextColor;
     }
 
     public void setLabelTextColor(int labelTextColor) {
         this.labelTextColor = labelTextColor;
-    }
-
-
-    public boolean isShowRefreshLine() {
-        return showRefreshLine;
-    }
-
-    public void setShowRefreshLine(boolean showRefreshLine) {
-        this.showRefreshLine = showRefreshLine;
-    }
-
-    public int getRefreshLineCount() {
-        return refreshLineCount;
-    }
-
-    public void setRefreshLineCount(int refreshLineCount) {
-        this.refreshLineCount = refreshLineCount;
-    }
-
-    public int getRefreshValueCount() {
-        return refreshValueCount;
-    }
-
-    public void setRefreshValueCount(int refreshValueCount) {
-        this.refreshValueCount = refreshValueCount;
     }
 
     public float getTopHeight() {
@@ -414,6 +357,14 @@ public class NpChartLineBean {
         this.labelRotateAngle = labelRotateAngle;
     }
 
+    public LineType getLineType() {
+        return lineType;
+    }
+
+    public void setLineType(LineType lineType) {
+        this.lineType = lineType;
+    }
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NpChartLineBean{");
@@ -421,12 +372,8 @@ public class NpChartLineBean {
         sb.append(", minY=").append(minY);
         sb.append(", showXAxis=").append(showXAxis);
         sb.append(", XAxisLineColor=").append(XAxisLineColor);
-        sb.append(", showYAxis=").append(showYAxis);
-        sb.append(", YAxisLineColor=").append(YAxisLineColor);
-        sb.append(", showRefreshLine=").append(showRefreshLine);
-        sb.append(", refreshLineCount=").append(refreshLineCount);
-        sb.append(", refreshValueCount=").append(refreshValueCount);
         sb.append(", showDataType=").append(showDataType);
+        sb.append(", lineType=").append(lineType);
         sb.append(", labelSpaceWidth=").append(labelSpaceWidth);
         sb.append(", showLabels=").append(showLabels);
         sb.append(", labelTextSize=").append(labelTextSize);

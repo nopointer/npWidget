@@ -328,7 +328,7 @@ public class NpChartColumnView extends BaseView {
 
             NpValueFormatter npValueFormatter = chartColumnBean.getYAxisFormatter();
             if (npValueFormatter != null) {
-                text = npValueFormatter.format(value);
+                text = npValueFormatter.format(value,i);
             }
             canvas.drawText(text, viewRectF.left + 10, yPosition + 36, paint);
         }
@@ -391,7 +391,7 @@ public class NpChartColumnView extends BaseView {
 
             NpValueFormatter valueFormatter = chartColumnBean.getValueFormatter();
             if (valueFormatter != null) {
-                text = valueFormatter.format(value);
+                text = valueFormatter.format(value,lastSelectIndex);
             }
             canvas.drawText(text, rectF.centerX(), rectF.top - chartColumnBean.getSelectValueMarginColumn(), paint);
         }

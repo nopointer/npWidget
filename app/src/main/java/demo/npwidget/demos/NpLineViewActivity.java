@@ -10,10 +10,14 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import demo.npwidget.R;
+import npwidget.nopointer.chart.LineType;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
+import npwidget.nopointer.chart.NpValueFormatter;
+import npwidget.nopointer.chart.YAxle;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineBean;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineDataBean;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineType;
@@ -30,7 +34,7 @@ public class NpLineViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_view);
         npChartLineView = findViewById(R.id.npChartLineView);
-        debug(true);
+        debug(false);
 
         findViewById(R.id.debugBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,28 +42,32 @@ public class NpLineViewActivity extends Activity {
                 debug(false);
             }
         });
-        findViewById(R.id.click_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     private void debug(boolean isEmpty) {
         NpChartLineBean chartBean = new NpChartLineBean();
-        chartBean.setShowYAxis(false);
         chartBean.setShowXAxis(true);
-        chartBean.setXAxisLineColor(0xFFAAAAAA);
-        chartBean.setShowRefreshLine(true);
-        chartBean.setRefreshLineCount(4);
-        chartBean.setRefreshValueCount(4);
         chartBean.setAdaptationFirstLabel(true);
         chartBean.setAdaptationLastLabel(true);
         chartBean.setBottomHeight(100);
-        chartBean.setLabelRotateAngle(30);
+        chartBean.setLabelRotateAngle(0);
+        chartBean.setTopHeight(80);
 //        chartBean.setLabelTextSize(100);
 
+        YAxle leftYAxle = new YAxle();
+        leftYAxle.showYAxis = true;
+        leftYAxle.showRefreshLine = true;
+        leftYAxle.refreshLineCount = 4;
+        leftYAxle.max = 300;
+        leftYAxle.refreshValueCount = 4;
+        leftYAxle.insideChart = false;
+        leftYAxle.valueFormatter = new NpValueFormatter() {
+            @Override
+            public String format(float value, int index) {
+                return Float.valueOf(value).intValue() + "";
+            }
+        };
+        npChartLineView.setLeftAxle(leftYAxle);
 
         List<NpChartLineDataBean> npChartLineDataBeans = new ArrayList<>();
 
@@ -68,26 +76,35 @@ public class NpLineViewActivity extends Activity {
         NpChartLineDataBean npChartLineDataBean2 = new NpChartLineDataBean();
 
         List<NpLineEntry> npLineEntries1 = new ArrayList<>();
-//        List<NpLineEntry> npLineEntries2 = new ArrayList<>();
+        List<NpLineEntry> npLineEntries2 = new ArrayList<>();
 
         String[] week = new String[]{"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
-
 
         //底部标签
         List<String> labelList = new ArrayList<>();
 
-        for (int i = 0; i < 288; i++) {
-//            labelList.add(week[i]);
-            labelList.add(i + "45678");
-        }
-
         chartBean.setNpLabelList(labelList);
 
-
-        for (int i = 0; i < 288; i++) {
-            npLineEntries1.add(new NpLineEntry(300 / (i+1)));
+//        npLineEntries1.add(new NpLineEntry(225));
+//        labelList.add("周一");
+//
+//        npLineEntries1.add(new NpLineEntry(150));
+//        labelList.add("周二");
+//
+//        npLineEntries1.add(new NpLineEntry(75));
+//        labelList.add("周三");
+//
+//        npLineEntries1.add(new NpLineEntry(300));
+//        labelList.add("周四");
+//
+//        npLineEntries1.add(new NpLineEntry(0));
+//        labelList.add("周五");
+//
+        for (int i = 0; i < 200; i++) {
+            npLineEntries1.add(new NpLineEntry(new Random().nextInt(180) + 50).setPointColor(i % 2 == 0 ? 0xFF005500 : 0xFFFF0000).setPointRadius(i % 2 == 0 ? 10 : 15));
+            npLineEntries2.add(new NpLineEntry(new Random().nextInt(150) + 50));
+            labelList.add("周-" + i);
         }
-
 
 //            npLineEntries1.add(new NpLineEntry(100));
 //            npLineEntries1.add(new NpLineEntry(20));
@@ -118,24 +135,23 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBean2.setColor(0xFFFF00FF);
         npChartLineDataBean2.setStartColor(0xFF000000);
         npChartLineDataBean2.setEndColor(0xFFFFFFFF);
-//        npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
+        npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
         npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
         chartBean.setShowDataType(NpShowDataType.Slide);
 //        chartBean.setBottomHeight(50);
-        chartBean.setLabelSpaceWidth(QMUIDisplayHelper.dp2px(this, 70));
+        chartBean.setLabelSpaceWidth(QMUIDisplayHelper.dp2px(this, 50));
         chartBean.setMinY(0);
         chartBean.setMaxY(300);
         chartBean.setShowLabels(true);
-        chartBean.setNpSelectMode(NpSelectMode.SELECT_FIRST);
+        chartBean.setNpSelectMode(NpSelectMode.NONE);
 
         chartBean.setNpSelectStyle(NpSelectStyle.VERTICAL_LINE);
 
         chartBean.setSelectHollowCircleR(20);
         chartBean.setSelectHollowCircleWidth(6);
         chartBean.setSelectHollowCircleColor(0xFFFF0000);
-
 
         chartBean.setSelectFilledCircleColor(0xFF00FF00);
         chartBean.setSelectFilledCircleR(15);
@@ -144,8 +160,10 @@ public class NpLineViewActivity extends Activity {
         chartBean.setSelectLineColor(0xFF000000);
         chartBean.setSelectLineWidth(2);
 
+        chartBean.setNpChartLineType(NpChartLineType.LINE);// 线/点
 
-        chartBean.setNpChartLineType(NpChartLineType.LINE);
+        chartBean.setLineType(LineType.Polyline);
+
         chartBean.setLabelTextSize(30);
         if (isEmpty) {
             npChartLineView.setChartBean(null);

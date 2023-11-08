@@ -2,7 +2,7 @@ package npwidget.nopointer.chart;
 
 public abstract class NpValueFormatter {
 
-    public abstract String format(float value);
+    public abstract String format(float value,int index);
 
 
 

@@ -78,5 +78,6 @@ public class DemoListActivity extends AppCompatActivity {
         });
 
 
+        startActivity(new Intent(this, NpLineViewActivity.class));
     }
 }

@@ -31,6 +31,7 @@ import npwidget.nopointer.R;
 import npwidget.nopointer.base.BaseView;
 import npwidget.nopointer.chart.NpSelectMode;
 import npwidget.nopointer.chart.NpShowDataType;
+import npwidget.nopointer.chart.PathData;
 import npwidget.nopointer.log.NpViewLog;
 import npwidget.nopointer.utils.SizeUtils;
 
@@ -110,8 +111,8 @@ public class NpChartPointView extends BaseView {
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.NpChartLineView);
-            dataMarginLeft = typedArray.getDimension(R.styleable.NpChartLineView_dataMarginLeft, SizeUtils.dp2px(context, 20));
-            dataMarginRight = typedArray.getDimension(R.styleable.NpChartLineView_dataMarginRight, SizeUtils.dp2px(context, 20));
+            dataMarginLeft = typedArray.getDimension(R.styleable.NpChartLineView_chartMargLeft, SizeUtils.dp2px(context, 20));
+            dataMarginRight = typedArray.getDimension(R.styleable.NpChartLineView_chartMargRight, SizeUtils.dp2px(context, 20));
             canvasBg = typedArray.getResourceId(R.styleable.NpChartLineView_canvasBg, 0xFFFFFFFF);
             typedArray.recycle();
             NpViewLog.log("attrs!=null:" + (attrs != null));
@@ -729,34 +730,6 @@ public class NpChartPointView extends BaseView {
     }
 
 
-    public class PathData {
-        private Path path = null;
-        private float maxValue = 0;
-
-        public Path getPath() {
-            return path;
-        }
-
-        public void setPath(Path path) {
-            this.path = path;
-        }
-
-        public float getMaxValue() {
-            return maxValue;
-        }
-
-        public void setMaxValue(float maxValue) {
-            this.maxValue = maxValue;
-        }
-
-        public PathData() {
-        }
-
-        public PathData(Path path, float maxValue) {
-            this.path = path;
-            this.maxValue = maxValue;
-        }
-    }
 
     @Override
     public void invalidate() {
