@@ -15,7 +15,7 @@ public class YAxle {
     /**
      * 最大值 y轴上
      */
-    public float max = 300;
+    public float max = 100;
     /**
      * 最小值 y轴上
      */
@@ -46,7 +46,7 @@ public class YAxle {
     /**
      * 参考值的位置
      */
-    public int refreshValuePosition = CENTER;
+    public int refreshValuePosition = BELOW;
 
 
     /**

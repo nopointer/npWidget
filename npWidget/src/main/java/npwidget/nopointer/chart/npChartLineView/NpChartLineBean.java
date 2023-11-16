@@ -35,6 +35,12 @@ public class NpChartLineBean {
     private NpShowDataType showDataType = NpShowDataType.Equal;
 
     /**
+     * 是否在等宽下 允许滚动
+     */
+    private boolean isEqualAllowSliding =false;
+
+
+    /**
      * 线类型，支持贝塞尔曲线，折线
      */
     private LineType lineType = LineType.Bezier;
@@ -365,6 +371,18 @@ public class NpChartLineBean {
         this.lineType = lineType;
     }
 
+
+    public boolean isEqualAllowSliding() {
+        return isEqualAllowSliding;
+    }
+
+    public void setEqualAllowSliding(boolean equalAllowSliding) {
+        isEqualAllowSliding = equalAllowSliding;
+    }
+
+
+
+
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("NpChartLineBean{");
@@ -373,6 +391,7 @@ public class NpChartLineBean {
         sb.append(", showXAxis=").append(showXAxis);
         sb.append(", XAxisLineColor=").append(XAxisLineColor);
         sb.append(", showDataType=").append(showDataType);
+        sb.append(", isEqualAllowSliding=").append(isEqualAllowSliding);
         sb.append(", lineType=").append(lineType);
         sb.append(", labelSpaceWidth=").append(labelSpaceWidth);
         sb.append(", showLabels=").append(showLabels);

@@ -1,7 +1,5 @@
 package npwidget.nopointer.chart.npChartLineView;
 
-import npwidget.nopointer.chart.npChartColumnView.NpColumnEntry;
-
 /**
  * 线的数据节点对象，最小单元
  */

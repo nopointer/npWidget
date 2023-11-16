@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -103,6 +105,15 @@ public class BaseView extends View {
     protected float maxScrollX = 0;
 
 
+    /**
+     * 是否允许在滑动的时候出界，停止滑动的时候回滚边界
+     */
+    protected boolean isAllowSlideOutInMove = false;
+
+    public void setAllowSlideOutInMove(boolean allowSlideOutInMove) {
+        isAllowSlideOutInMove = allowSlideOutInMove;
+    }
+
     public boolean isDebugRect() {
         return debugRect;
     }
@@ -136,7 +147,6 @@ public class BaseView extends View {
         super.onDraw(canvas);
         if (canvas != null && bitmap != null) {
             NpViewLog.log("canvas W = " + canvas.getWidth() + ",H = " + bitmap.getHeight());
-            canvas.drawColor(canvasBg);
             canvas.drawBitmap(bitmap, (canvas.getWidth() - bitmap.getWidth()) / 2, 0, null);
         }
     }
@@ -168,9 +178,26 @@ public class BaseView extends View {
      * @return
      */
     protected boolean canDraw() {
+        NpViewLog.log("canvas = " + canvas + " , bitmap = " + bitmap);
         return canvas != null && bitmap != null;
     }
 
+
+    /**
+     * 绘制调试矩形
+     *
+     * @param rect
+     */
+    protected void drawDebugRect(Rect rect) {
+        //绘制可是区域的范围，调试用
+        if (isDebugRect()) {
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setStyle(Paint.Style.FILL);
+            paint.setColor(0x30000000);
+            canvas.drawRect(rect, paint);
+        }
+    }
 
     /**
      * 回收bitmap
@@ -224,9 +251,6 @@ public class BaseView extends View {
                 moveOffsetX = scrollOffsetX;
                 invalidate();
             }
-        } else {
-//            lastScrollOffsetX = scrollOffsetX;
-//            moveOffsetX = scrollOffsetX;
         }
         NpViewLog.log("lastScrollOffsetX = " + lastScrollOffsetX + " , moveOffsetX = " + moveOffsetX);
     }
