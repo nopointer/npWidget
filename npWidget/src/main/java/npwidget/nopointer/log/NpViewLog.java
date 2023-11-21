@@ -17,7 +17,7 @@ public class NpViewLog {
 
 
     //是否允许打印日志，默认允许
-    public static boolean allowLog = true;
+    public static boolean allowLog = false;
 
 
 
