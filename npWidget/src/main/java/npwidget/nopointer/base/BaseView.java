@@ -178,7 +178,6 @@ public class BaseView extends View {
      * @return
      */
     protected boolean canDraw() {
-        NpViewLog.log("canvas = " + canvas + " , bitmap = " + bitmap);
         return canvas != null && bitmap != null;
     }
 
@@ -217,33 +216,33 @@ public class BaseView extends View {
         if (mScroller == null) return;
         boolean computeScrollOffset = mScroller.computeScrollOffset();
         int currX = mScroller.getCurrX(), finalX = mScroller.getFinalX();
-        NpViewLog.log("computeScrollOffset = " + computeScrollOffset + " , currX = " + currX + " , finalX = " + finalX + " , minScrollX = " + minScrollX + " , maxScrollX = " + maxScrollX);
+//        NpViewLog.log("computeScrollOffset = " + computeScrollOffset + " , currX = " + currX + " , finalX = " + finalX + " , minScrollX = " + minScrollX + " , maxScrollX = " + maxScrollX);
 
         if (computeScrollOffset) {
             if (currX != finalX) {
                 scrollOffsetX = lastScrollOffsetX + currX;
                 if (scrollOffsetX <= minScrollX) {
-                    NpViewLog.log("左边限制");
+//                    NpViewLog.log("左边限制");
                     scrollOffsetX = minScrollX;
                 }
 
                 if (scrollOffsetX > maxScrollX) {
-                    NpViewLog.log("右边限制");
+//                    NpViewLog.log("右边限制");
                     scrollOffsetX = maxScrollX;
                 }
 
-                NpViewLog.log("实时滑动距离 -> scrollOffsetX = " + scrollOffsetX);
+//                NpViewLog.log("实时滑动距离 -> scrollOffsetX = " + scrollOffsetX);
 //                scrollTo(scrollOffsetX, 0);
                 moveOffsetX = scrollOffsetX;
                 invalidate();
             } else {
                 if (scrollOffsetX <= minScrollX) {
-                    NpViewLog.log("左边限制");
+//                    NpViewLog.log("左边限制");
                     scrollOffsetX = minScrollX;
                 }
 
                 if (scrollOffsetX > maxScrollX) {
-                    NpViewLog.log("右边限制");
+//                    NpViewLog.log("右边限制");
                     scrollOffsetX = maxScrollX;
                 }
 
@@ -252,7 +251,7 @@ public class BaseView extends View {
                 invalidate();
             }
         }
-        NpViewLog.log("lastScrollOffsetX = " + lastScrollOffsetX + " , moveOffsetX = " + moveOffsetX);
+//        NpViewLog.log("lastScrollOffsetX = " + lastScrollOffsetX + " , moveOffsetX = " + moveOffsetX);
     }
 
 
