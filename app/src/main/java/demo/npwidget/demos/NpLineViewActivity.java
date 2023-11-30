@@ -24,6 +24,7 @@ import npwidget.nopointer.chart.npChartLineView.NpChartLineType;
 import npwidget.nopointer.chart.npChartLineView.NpChartLineView;
 import npwidget.nopointer.chart.npChartLineView.NpLineEntry;
 import npwidget.nopointer.chart.npChartLineView.NpSelectStyle;
+import npwidget.nopointer.log.NpViewLog;
 
 public class NpLineViewActivity extends Activity {
 
@@ -100,9 +101,10 @@ public class NpLineViewActivity extends Activity {
 //        npLineEntries1.add(new NpLineEntry(0));
 //        labelList.add("周五");
 //
-        for (int i = 0; i < 200; i++) {
-            npLineEntries1.add(new NpLineEntry(new Random().nextInt(180) + 50).setPointColor(i % 2 == 0 ? 0xFF005500 : 0xFFFF0000).setPointRadius(i % 2 == 0 ? 10 : 15));
-            npLineEntries2.add(new NpLineEntry(new Random().nextInt(150) + 50));
+        NpViewLog.allowLog =true;
+        for (int i = 0; i < 5; i++) {
+            npLineEntries1.add(new NpLineEntry(new Random().nextInt(180) + 50).setPointColor(i % 2 == 0 ? 0xFF005500 : 0xFFFF0000).setPointRadius(i % 2 == 0 ? 10 : 10));
+//            npLineEntries2.add(new NpLineEntry(new Random().nextInt(150) + 50));
             labelList.add("周-" + i);
         }
 
@@ -136,7 +138,7 @@ public class NpLineViewActivity extends Activity {
         npChartLineDataBean2.setStartColor(0xFF000000);
         npChartLineDataBean2.setEndColor(0xFFFFFFFF);
         npChartLineDataBean2.setNpLineEntryList(npLineEntries2);
-        npChartLineDataBeans.add(npChartLineDataBean2);
+//        npChartLineDataBeans.add(npChartLineDataBean2);
 
         chartBean.setNpChartLineDataBeans(npChartLineDataBeans);
         chartBean.setShowDataType(NpShowDataType.Slide);

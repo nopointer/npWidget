@@ -544,9 +544,10 @@ public class NpChartLineView extends BaseView {
                         NpViewLog.log("数据符合规范");
                         Paint paint = new Paint();
                         paint.setAntiAlias(true);
-                        float x = chartMargLeft;
+                        float x = chartMargLeft + leftYAxleWidth;
                         float y = getDataPointYPosition(npLineEntryList.get(0));
 
+                        NpViewLog.log("x = " + x + " , y = " + y);
                         RectF rectF = new RectF();
                         rectF.left = x - clickRangeWidth / 2;
                         rectF.right = rectF.left + clickRangeWidth;
@@ -554,12 +555,19 @@ public class NpChartLineView extends BaseView {
                         rectF.bottom = rectF.top + clickRangeWidth;
                         allTmpRectList.add(rectF);
 
-                        paint.setColor(Color.WHITE);
-                        paint.setStrokeWidth(unitDp);
-                        canvas.drawCircle(x, y, pointRadius, paint);
-                        paint.setStyle(Paint.Style.STROKE);
-                        paint.setColor(npChartLineDataBean.getColor());
-                        canvas.drawCircle(x, y, pointRadius, paint);
+                        NpLineEntry npLineEntry = npLineEntryList.get(0);
+                        if (npLineEntry.isShowPoint()) {
+                            NpViewLog.log("绘制数据点 = " + npLineEntry.getPointColor());
+                            linePointPaint.setColor(npLineEntry.getPointColor());
+                            canvas.drawCircle(rectF.centerX(), rectF.centerY(), npLineEntry.getPointRadius(), linePointPaint);
+                        }else {
+                            paint.setColor(Color.WHITE);
+                            paint.setStrokeWidth(unitDp);
+                            canvas.drawCircle(x, y, pointRadius, paint);
+                            paint.setStyle(Paint.Style.STROKE);
+                            paint.setColor(npChartLineDataBean.getColor());
+                            canvas.drawCircle(x, y, pointRadius, paint);
+                        }
                     }
                 }
                 if (chartBean.getNpSelectMode() != NpSelectMode.NONE) {
