@@ -46,7 +46,7 @@ public class YAxle {
     /**
      * 参考值的位置
      */
-    public int refreshValuePosition = BELOW;
+    public int refreshValuePosition = ABOVE;
 
 
     /**
@@ -71,6 +71,11 @@ public class YAxle {
     public boolean refreshLineDashed = false;
 
     public float[] dashedLineIntervals = new float[]{12, 12};
+
+    /**
+     * 是否显示参考值0
+     */
+    public boolean showRefreshValueZero = true;
 
 
 }

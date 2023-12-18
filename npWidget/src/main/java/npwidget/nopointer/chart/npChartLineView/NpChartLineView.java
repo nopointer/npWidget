@@ -215,6 +215,8 @@ public class NpChartLineView extends BaseView {
 
     private List<RectF> allTmpRectList = new ArrayList<>();
 
+    private int dataAreaBg = 0xFFFFFFFF;
+
     private OnLineSelectListener onLineSelectListener;
 
     public void setOnLineSelectListener(OnLineSelectListener onLineSelectListener) {
@@ -237,6 +239,10 @@ public class NpChartLineView extends BaseView {
 
     public YAxle getLeftAxle() {
         return leftAxle;
+    }
+
+    public void setDataAreaBg(int dataAreaBg) {
+        this.dataAreaBg = dataAreaBg;
     }
 
     @Override
@@ -315,6 +321,11 @@ public class NpChartLineView extends BaseView {
         float height = (viewRectF.height() - bottomLabelRangeHeight - topSpaceHeight) / (refValueCount);
 
         NpValueFormatter npValueFormatter = leftAxle.valueFormatter;
+
+        if (leftAxle.showRefreshValueZero) {
+            refValueCount += 1;
+        }
+
 
         float[] xs = new float[refValueCount];
         float[] ys = new float[refValueCount];
@@ -430,8 +441,8 @@ public class NpChartLineView extends BaseView {
 
         if (leftAxle.refreshLineDashed) {
             float intervals[] = leftAxle.dashedLineIntervals;
-            if (intervals==null){
-                intervals =new float[]{12,12};
+            if (intervals == null) {
+                intervals = new float[]{12, 12};
             }
             xyAxlsPaint.setPathEffect(new DashPathEffect(intervals, 0));
         }
@@ -441,6 +452,20 @@ public class NpChartLineView extends BaseView {
 
         NpViewLog.log("bottomLabelRangeHeight = " + bottomLabelRangeHeight + " , topSpaceHeight = " + topSpaceHeight);
         float height = (viewRectF.height() - bottomLabelRangeHeight - topSpaceHeight) / (refLineCount);
+
+
+        Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setColor(dataAreaBg);
+        paint.setStyle(Paint.Style.FILL);
+
+        RectF dataArea = new RectF();
+        dataArea.left = viewRectF.left;
+        dataArea.right = viewRectF.right;
+        dataArea.top = viewRectF.top + topSpaceHeight;
+        dataArea.bottom = viewRectF.bottom - bottomLabelRangeHeight;
+
+        canvas.drawRect(dataArea, paint);
 
 
         for (int i = 1; i <= refLineCount; i++) {

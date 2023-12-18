@@ -1,7 +1,6 @@
 package demo.npwidget.demos;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,6 +34,7 @@ public class NpLineViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_line_view);
         npChartLineView = findViewById(R.id.npChartLineView);
+        npChartLineView.setDataAreaBg(0x90000000);
         debug(false);
 
         findViewById(R.id.debugBtn).setOnClickListener(new View.OnClickListener() {

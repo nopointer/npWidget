@@ -9,17 +9,13 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="#000000" />
-
 
     <RelativeLayout
         android:id="@+id/click_layout"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
         android:orientation="vertical">
 
         <npwidget.nopointer.chart.npChartLineView.NpChartLineView
