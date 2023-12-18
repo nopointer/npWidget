@@ -59,5 +59,18 @@ public class YAxle {
      */
     public int refreshLineColor = 0xFF999999;
 
+    /**
+     * 参考线颜色
+     */
+    public int refreshValueColor = 0xFFff0000;
+
+
+    /**
+     * 参考线为虚线
+     */
+    public boolean refreshLineDashed = false;
+
+    public float[] dashedLineIntervals = new float[]{12, 12};
+
 
 }

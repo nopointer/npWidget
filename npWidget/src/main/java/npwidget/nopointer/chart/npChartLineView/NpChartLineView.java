@@ -371,7 +371,7 @@ public class NpChartLineView extends BaseView {
         canvas.drawRect(maskRectF, xyAxlsPaint);
 
         //绘制参考线
-        xyAxlsPaint.setColor(leftAxle.refreshLineColor);//设置颜色
+        xyAxlsPaint.setColor(leftAxle.refreshValueColor);//设置参考值颜色
 
 
         if (leftAxle.insideChart) {
@@ -427,8 +427,14 @@ public class NpChartLineView extends BaseView {
         if (leftAxle == null || !leftAxle.showRefreshLine) return;
 
         xyAxlsPaint.setColor(leftAxle.refreshLineColor);//设置颜色
-        xyAxlsPaint.setPathEffect(new DashPathEffect(new float[]{12, 12}, 0));
 
+        if (leftAxle.refreshLineDashed) {
+            float intervals[] = leftAxle.dashedLineIntervals;
+            if (intervals==null){
+                intervals =new float[]{12,12};
+            }
+            xyAxlsPaint.setPathEffect(new DashPathEffect(intervals, 0));
+        }
         int refLineCount = leftAxle.refreshLineCount;//参考线数量
 
         NpViewLog.log("参考线个数 = " + refLineCount + " , leftAxle.max = " + leftAxle.max + " ,leftAxle.min = " + leftAxle.min);
@@ -560,7 +566,7 @@ public class NpChartLineView extends BaseView {
                             NpViewLog.log("绘制数据点 = " + npLineEntry.getPointColor());
                             linePointPaint.setColor(npLineEntry.getPointColor());
                             canvas.drawCircle(rectF.centerX(), rectF.centerY(), npLineEntry.getPointRadius(), linePointPaint);
-                        }else {
+                        } else {
                             paint.setColor(Color.WHITE);
                             paint.setStrokeWidth(unitDp);
                             canvas.drawCircle(x, y, pointRadius, paint);

@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion var.minSdkVersion
         targetSdkVersion var.targetSdkVersion
-        versionCode 94
-        versionName "beta_0.0.94"
+        versionCode 95
+        versionName "beta_0.0.95"
     }
 
     buildTypes {
