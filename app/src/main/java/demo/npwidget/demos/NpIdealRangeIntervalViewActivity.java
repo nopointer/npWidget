@@ -19,7 +19,7 @@ public class NpIdealRangeIntervalViewActivity extends Activity {
         npIdealRangeIntervalView.setProgress(0.8f);
         npIdealRangeIntervalView.setProgressRadius(0);
         npIdealRangeIntervalView.setRangeProgressMin(0.65f);
-        npIdealRangeIntervalView.setRangeProgressMax(0.9f);
+        npIdealRangeIntervalView.setRangeProgressMax(0.75f);
     }
 
 }
