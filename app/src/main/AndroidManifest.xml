@@ -40,6 +40,7 @@
         <activity android:name=".demos.NpSleepStateAreaViewAct" />
         <activity android:name=".demos.DemoListActivity" />
         <activity android:name=".demos.NpBatteryViewActivity" />
+        <activity android:name=".demos.NpIdealRangeIntervalViewActivity" />
 
     </application>
 
